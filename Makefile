@@ -2,7 +2,7 @@ VERSION ?= $(shell git describe --tags --always --dirty | sed s'/dirty/dev/')
 TEMPLATES := $(shell find src/ -type f)
 .DEFAULT_GOAL := help
 
-header = $(call tprint,{a.b_magenta}==>{a.end} {a.bold}$(1){a.end} {a.b_magenta}<=={a.end})
+header = $(call tprint,{a.bold}==>{a.end} {a.magenta}$(1){a.end} {a.bold}<=={a.end})
 
 ## bootstrap | generate local dev environment
 .PHONY: bootstrap
