@@ -1,7 +1,4 @@
-# --------------------- [github.com/daylinmorgan/task.mk] -------------------- #
-# Copyright (c) 2022 Daylin Morgan
-# MIT License
-# ##- version -##
+#% include 'header.mk' %#
 
 #% include 'config.mk' %#
 
