@@ -20,10 +20,10 @@ vars v:
 
 endif
 
-## _print-colors | show all possible ansi color code combinations
+## _print-ansi | show all possible ansi color code combinations
 .PHONY:
-_print-colors:
-	$(call py,print_colors_py)
+_print-ansi:
+	$(call py,print_ansi_py)
 
 # functions to take f-string literals and pass to python print
 tprint = $(call py,info_py,$(1))

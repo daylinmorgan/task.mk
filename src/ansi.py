@@ -1,5 +1,5 @@
 #% extends "py-script.mk" %#
-#% block name %#color#% endblock %#
+#% block name %#ansi#% endblock %#
 #% block script %#
 import os
 import sys
@@ -28,26 +28,26 @@ def bg(byte):
     return 40 + byte
 
 
-class Colors:
+class Ansi:
     """ANSI color codes"""
 
-    def setcolor(self, name, escape_code):
+    def setcode(self, name, escape_code):
         if not sys.stdout.isatty() or os.getenv("NO_COLOR", False):
             setattr(self, name, "")
         else:
             setattr(self, name, escape_code)
 
     def __init__(self):
-        self.setcolor("end", "\033[0m")
+        self.setcode("end", "\033[0m")
         for name, byte in color2byte.items():
-            self.setcolor(name, f"\033[{fg(byte)}m")
-            self.setcolor(f"b_{name}", f"\033[1;{fg(byte)}m")
-            self.setcolor(f"d_{name}", f"\033[2;{fg(byte)}m")
+            self.setcode(name, f"\033[{fg(byte)}m")
+            self.setcode(f"b_{name}", f"\033[1;{fg(byte)}m")
+            self.setcode(f"d_{name}", f"\033[2;{fg(byte)}m")
             for bgname, bgbyte in color2byte.items():
-                self.setcolor(f"{name}_on_{bgname}", f"\033[{bg(bgbyte)};{fg(byte)}m")
+                self.setcode(f"{name}_on_{bgname}", f"\033[{bg(bgbyte)};{fg(byte)}m")
         for name, byte in state2byte.items():
-            self.setcolor(name, f"\033[{byte}m")
+            self.setcode(name, f"\033[{byte}m")
 
 
-c = color = Colors()
+a = ansi = Ansi()
 #% endblock %#

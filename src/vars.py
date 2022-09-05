@@ -4,15 +4,15 @@
 
 import os
 
-##- '$(color_py)' -##
+##- '$(ansi_py)' -##
 
 vars = "$2".split()
 length = max((len(v) for v in vars))
 
-print(f"{color.$(HEADER_COLOR)}vars:{color.end}\n")
+print(f"{ansi.$(HEADER_COLOR)}vars:{ansi.end}\n")
 
 for v in vars:
-    print(f"  {color.b_magenta}{v:<{length}}{color.end} = {os.getenv(v)}")
+    print(f"  {ansi.b_magenta}{v:<{length}}{ansi.end} = {os.getenv(v)}")
 
 print()
 #% endblock %#
