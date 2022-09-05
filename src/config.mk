@@ -9,7 +9,7 @@ EPILOG ?=
 
 # python f-string literal
 define USAGE ?=
-{colors.$(HEADER_COLOR)}usage{colors.end}:
+{color.$(HEADER_COLOR)}usage{color.end}:
   make <recipe>
 
 endef

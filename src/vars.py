@@ -9,10 +9,10 @@ import os
 vars = "$2".split()
 length = max((len(v) for v in vars))
 
-print(f"{colors.$(HEADER_COLOR)}vars:{colors.end}\n")
+print(f"{color.$(HEADER_COLOR)}vars:{color.end}\n")
 
 for v in vars:
-    print(f"  {colors.b_magenta}{v:<{length}}{colors.end} = {os.getenv(v)}")
+    print(f"  {color.b_magenta}{v:<{length}}{color.end} = {os.getenv(v)}")
 
 print()
 #% endblock %#

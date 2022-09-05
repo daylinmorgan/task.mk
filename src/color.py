@@ -49,5 +49,5 @@ class Colors:
             self.setcolor(name, f"\033[{byte}m")
 
 
-c = colors = Colors()
+c = color = Colors()
 #% endblock %#

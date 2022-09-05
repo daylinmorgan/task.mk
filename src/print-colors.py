@@ -9,6 +9,6 @@ codes_names = {
     if attr[0:1] != "_" and attr != "end" and attr != "setcolor"
 }
 for code in sorted(codes_names.keys(), key=lambda item: (len(item), item)):
-    print("{:>20} {}".format(codes_names[code], code + "******" + colors.end))
+    print("{:>20} {}".format(codes_names[code], code + "******" + color.end))
 
 #% endblock %#

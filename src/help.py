@@ -31,7 +31,7 @@ goal_len = max(len(goal[0]) for goal in goals)
 
 for goal, msg in goals:
     print(
-        f"{colors.$(GOAL_COLOR)}{goal:>{goal_len}}{colors.end} $(HELP_SEP) {colors.$(MSG_COLOR)}{msg}{colors.end}"
+        f"{color.$(GOAL_COLOR)}{goal:>{goal_len}}{color.end} $(HELP_SEP) {color.$(MSG_COLOR)}{msg}{color.end}"
     )
 
 print(f"""$(EPILOG)""")
