@@ -1,0 +1,36 @@
+# ---- [buitlin recipes] ---- #
+
+
+## h, help | show this help
+.PHONY: help h
+help h:
+	$(call py,help_py)
+
+.PHONY: _help
+_help: export SHOW_HIDDEN=true
+_help: help
+
+ifdef PRINT_VARS
+
+$(foreach v,$(PRINT_VARS),$(eval export $(v)))
+
+.PHONY: vars v
+vars v:
+	$(call py,vars_py,$(PRINT_VARS))
+
+endif
+
+## _print-colors | show all possible ansi color code combinations
+.PHONY:
+_print-colors:
+	$(call py,print_colors_py)
+
+# functions to take f-string literals and pass to python print
+tprint = $(call py,info_py,$(1))
+tprint-sh = $(call pysh,info_py,$(1))
+
+_update-task.mk:
+	$(call tprint,Updating task.mk)
+	curl https://raw.githubusercontent.com/daylinmorgan/task.mk/main/task.mk -o .task.mk
+
+export MAKEFILE_LIST

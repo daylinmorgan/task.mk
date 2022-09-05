@@ -1,0 +1,26 @@
+# ---- [python script runner] ---- #
+
+# modified from https://unix.stackexchange.com/a/223093
+define \n
+
+
+endef
+
+escape_shellstring = $(subst `,\`,$(subst ",\",$(subst $$,\$$,$(subst \,\\,$1))))
+
+escape_printf = $(subst \,\\,$(subst %,%%,$1))
+
+create_string = $(subst $(\n),\n,$(call escape_shellstring,$(call escape_printf,$1)))
+
+
+ifdef DEBUG
+define py
+@printf "Python Script:"
+@printf "$(call create_string,$($(1)))"
+@printf "$(call create_string,$($(1)))" | python3
+endef
+else
+py = @printf "$(call create_string,$($(1)))" | python3
+endif
+
+pysh = printf "$(call create_string,$($(1)))" | python3
