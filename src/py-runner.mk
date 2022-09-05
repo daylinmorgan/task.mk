@@ -15,8 +15,10 @@ create_string = $(subst $(\n),\n,$(call escape_shellstring,$(call escape_printf,
 
 ifdef DEBUG
 define py
-@printf "Python Script:"
-@printf "$(call create_string,$($(1)))"
+@printf "Python Script:\n"
+@printf -- "----------------\n"
+@printf "$(call create_string,$($(1)))\n"
+@printf -- "----------------\n"
 @printf "$(call create_string,$($(1)))" | python3
 endef
 else
