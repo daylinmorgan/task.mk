@@ -4,7 +4,7 @@
 
 #% include 'builtins.mk' %#
 
-#% include 'py-runner.mk' %#
+#% include 'runners.mk' %#
 
 # ---- [python scripts] ---- #
 

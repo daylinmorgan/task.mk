@@ -58,6 +58,17 @@ version-check:
 		$(call tprint-sh,{a.green}VERSION LOOKS GOOD!{a.end});\
 	fi
 
+
+define bash_script
+echo "This is from bash"
+cat /etc/hostname
+printf "%s\n" "$(2)"
+endef
+.PHONY: test-bash
+test-bash:
+	$(call tbash,bash_script,test bash multiline)
+
+
 define msg
 {a.b_yellow}
 It can even be multiline!{a.end}

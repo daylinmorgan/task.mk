@@ -1,4 +1,4 @@
-# ---- [python script runner] ---- #
+# ---- [python/bash script runner] ---- #
 
 # modified from https://unix.stackexchange.com/a/223093
 define \n
@@ -21,8 +21,16 @@ define py
 @printf -- "----------------\n"
 @printf "$(call create_string,$($(1)))" | python3
 endef
+define tbash
+@printf "Bash Script:\n"
+@printf -- "----------------\n"
+@printf "$(call create_string,$($(1)))\n"
+@printf -- "----------------\n"
+@printf "$(call create_string,$($(1)))" | bash
+endef
 else
 py = @printf "$(call create_string,$($(1)))" | python3
+tbash = @printf "$(call create_string,$($(1)))" | bash
 endif
 
 pysh = printf "$(call create_string,$($(1)))" | python3
