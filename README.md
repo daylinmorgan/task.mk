@@ -30,14 +30,14 @@ If someone tries to invoke `make help` it will download `.task.mk` for them.
 
 ```make
 -include .task.mk
-$(if $(filter help,$(MAKECMDGOALS)),.task.mk: ; curl -fsSL https://raw.githubusercontent.com/daylinmorgan/task.mk/22.9.5/task.mk -o .task.mk)
+$(if $(filter help,$(MAKECMDGOALS)),.task.mk: ; curl -fsSL https://raw.githubusercontent.com/daylinmorgan/task.mk/v22.9.5/task.mk -o .task.mk)
 ```
 
 If you intend to use any of the other features like `tprint` (see below),
 I'd recommend committing `.task.mk` into version control so behavior is consistent.
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/daylinmorgan/task.mk/22.9.5/task.mk -o .task.mk
+curl -fsSL https://raw.githubusercontent.com/daylinmorgan/task.mk/v22.9.5/task.mk -o .task.mk
 ```
 
 ## Usage
