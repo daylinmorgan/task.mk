@@ -1,7 +1,6 @@
 #% extends "py-script.mk" %#
 #% block name %#vars#% endblock %#
 #% block script %#
-
 import os
 
 ##- '$(ansi_py)' -##

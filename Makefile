@@ -84,6 +84,8 @@ info:
 	$(call tprint,{a.b_magenta}This is task-print output:{a.end})
 	$(call tprint,$(msg))
 
+task.mk:
+	./generate.py $(shell git describe --tags) > task.mk
 
 define USAGE
 {a.$(HEADER_COLOR)}usage:{a.end}

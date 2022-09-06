@@ -1,7 +1,7 @@
 # }> [github.com/daylinmorgan/task.mk] <{ #
 # Copyright (c) 2022 Daylin Morgan
 # MIT License
-# 22.9.5
+# v22.9.5-3-g9c67418
 #
 # task.mk should be included at the bottom of your Makefile.
 # See below for the standard configuration options that should be set prior to including this file.
@@ -103,7 +103,6 @@ pysh = printf "$(call create_string,$($(1)))" | python3
 
 define  help_py
 
-
 import os
 import re
 
@@ -141,11 +140,9 @@ for goal, msg in goals:
 
 print(f"""$(EPILOG)""")
 
-
 endef
 
 define  ansi_py
-
 
 import os
 import sys
@@ -197,21 +194,17 @@ class Ansi:
 
 a = ansi = Ansi()
 
-
 endef
 
 define  info_py
-
 
 $(ansi_py)
 
 print(f"""$(2)""")
 
-
 endef
 
 define  print_ansi_py
-
 
 $(ansi_py)
 
@@ -224,12 +217,9 @@ for code in sorted(codes_names.keys(), key=lambda item: (len(item), item)):
     print("{:>20} {}".format(codes_names[code], code + "******" + ansi.end))
 
 
-
 endef
 
 define  vars_py
-
-
 
 import os
 
@@ -244,7 +234,6 @@ for v in vars:
     print(f"  {ansi.b_magenta}{v:<{length}}{ansi.end} = {os.getenv(v)}")
 
 print()
-
 
 endef
 
