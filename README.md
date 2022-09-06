@@ -119,8 +119,8 @@ You can take advantage of the builtin python script runner and write multi-line 
 This is a simple example but a few lines of python in your `Makefile`
 may be easier than balancing sub-shells and strung together awk commands.
 
-When `make` expands the function it will take the parameters passed to `py` and expand them `$(1)` is the variable name.
-`$(2)` in this case is the implicit pattern from the rule. Pay attention to quotes.
+When `make` expands the function it will take the parameters passed to `py` and expand them.
+`$(1)` is the variable name and `$(2)` in this case is the implicit pattern from the rule. Pay attention to quotes.
 If you need to debug your python script, use `DEBUG=1` when you run `make` and it will first print the script that will be piped to `python`.
 
 ```make
@@ -135,7 +135,7 @@ list-%:
 	$(call py,list_files_py,$*)
 ```
 
-For what it's worth there is also a predefined function for `bash` (named `tbash`) as well should you need to accomplish something similar of more easily embedding your bash script rather than having to escape every line with '\'.
+For what it's worth there is also a predefined function for `bash` (named `tbash`) as well should you need to accomplish something similar of more easily embedding your bash script rather than having to escape every line with a backslash.
 
 ```make
 define bash_script
@@ -182,7 +182,7 @@ But I just want a basic help output, surely I don't need python for this... you 
 ```make
 ## h, help | show this help
 .PHONY: help h
-help h: Makefile params
+help h: Makefile
 	@awk -v fill=$(shell sed -n 's/^## \(.*\) | .*/\1/p' $< | wc -L)\
 		'match($$0,/^## (.*) \|/,name) && match($$0,/\| (.*)$$/,help)\
 		{printf "\033[1;93m%*s\033[0m | \033[30m%s\033[0m\n",\

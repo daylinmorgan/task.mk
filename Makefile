@@ -77,7 +77,7 @@ as python {a.bold}f-string{a.end} literals
 {a.end}
 endef
 
-## info | demonsrtate usage of tprint
+## info | demonstrate usage of tprint
 .PHONY: task
 info:
 	$(call header, Info Message)
