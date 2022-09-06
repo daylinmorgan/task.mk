@@ -81,7 +81,7 @@ endef
 .PHONY: task
 info:
 	$(call header, Info Message)
-	$(call tprint,{a.b_magenta}This is task-print output:{a.end})
+	$(call tprint,{a.black_on_cyan}This is task-print output:{a.end})
 	$(call tprint,$(msg))
 
 task.mk:
