@@ -10,6 +10,7 @@ bootstrap:
 	$(call msg,Bootstrap Environment)
 	@mamba create -p ./env python jinja2 black -y
 	@mamba run -p ./env pip install yartsu
+	@git config core.hooksPath .githooks
 
 ## lint | lint the python
 .PHONY: lint
@@ -36,10 +37,11 @@ list-%:
 .PHONY: release
 release: version-check
 	$(call msg,Release Project)
-	@./generate.py $(VERSION) > task.mk
+	# @./generate.py $(VERSION) > task.mk
+	@./make task.mk
 	@sed -i 's/task.mk\/.*\/task.mk/task.mk\/v$(VERSION)\/task.mk/g' README.md
 	@git add task.mk README.md
-	@git commit -m "release: v$(VERSION)"
+	@git commit -m "release: v$(VERSION)" --no-verify
 	@git tag v$(VERSION)
 
 ## c, clean | remove the generated files
@@ -86,9 +88,8 @@ info:
 	$(call tprint,$(mlmsg))
 	$(call tprint,{a.custom(fg=(148, 255, 15),bg=(103, 2, 15))}Custom Colors TOO!{a.end})
 
-.PHONY: task.mk
-task.mk:
-	./generate.py $(shell git describe --always | sed s'/dirty/dev/') > task.mk
+task.mk: $(TEMPLATES) generate.py
+	./generate.py $(VERSION) > task.mk
 
 define USAGE
 {a.$(HEADER_COLOR)}usage:{a.end}
