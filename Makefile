@@ -101,7 +101,7 @@ define USAGE
 
 endef
 
-EPILOG = \nfor more info: see github.com/daylinmorgan/task.mk
+EPILOG = \nfor more info: github.com/daylinmorgan/task.mk
 PRINT_VARS := VERSION
 
 -include .task.mk
