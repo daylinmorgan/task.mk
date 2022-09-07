@@ -40,6 +40,7 @@ release: version-check
 	@sed -i 's/task.mk\/.*\/task.mk/task.mk\/v$(VERSION)\/task.mk/g' README.md
 	@git add task.mk README.md
 	@git commit -m "release: v$(VERSION)"
+	@git tag v$(VERSION)
 
 ## c, clean | remove the generated files
 .PHONY: clean
