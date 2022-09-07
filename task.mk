@@ -1,7 +1,7 @@
 # }> [github.com/daylinmorgan/task.mk] <{ #
 # Copyright (c) 2022 Daylin Morgan
 # MIT License
-# version: v22.9.7-1-g41c3980-dev
+# version: v22.9.7-3-gc1771c1-dev
 #
 # task.mk should be included at the bottom of your Makefile.
 # See below for the standard configuration options that should be set prior to including this file.
@@ -70,27 +70,19 @@ define \n
 endef
 
 escape_shellstring = $(subst `,\`,$(subst ",\",$(subst $$,\$$,$(subst \,\\,$1))))
-
 escape_printf = $(subst \,\\,$(subst %,%%,$1))
-
 create_string = $(subst $(\n),\n,$(call escape_shellstring,$(call escape_printf,$1)))
 
-
 ifdef DEBUG
-define py
-@printf "Python Script:\n"
-@printf -- "----------------\n"
-@printf "$(call create_string,$($(1)))\n"
-@printf -- "----------------\n"
-@printf "$(call create_string,$($(1)))" | python3
+define _debug_runner
+@printf "$(1) Script:\n"
+@printf -- "<---------------->\n"
+@printf "$(call create_string,$(3))\n"
+@printf -- "<---------------->\n"
+@printf "$(call create_string,$(3))" | $(2)
 endef
-define tbash
-@printf "Bash Script:\n"
-@printf -- "----------------\n"
-@printf "$(call create_string,$($(1)))\n"
-@printf -- "----------------\n"
-@printf "$(call create_string,$($(1)))" | bash
-endef
+py = $(call _debug_runner,Python,python3,$($(1)))
+tbash = $(call _debug_runner,Bash,bash,$($(1)))
 else
 py = @printf "$(call create_string,$($(1)))" | python3
 tbash = @printf "$(call create_string,$($(1)))" | bash

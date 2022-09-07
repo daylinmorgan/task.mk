@@ -7,27 +7,19 @@ define \n
 endef
 
 escape_shellstring = $(subst `,\`,$(subst ",\",$(subst $$,\$$,$(subst \,\\,$1))))
-
 escape_printf = $(subst \,\\,$(subst %,%%,$1))
-
 create_string = $(subst $(\n),\n,$(call escape_shellstring,$(call escape_printf,$1)))
 
-
 ifdef DEBUG
-define py
-@printf "Python Script:\n"
-@printf -- "----------------\n"
-@printf "$(call create_string,$($(1)))\n"
-@printf -- "----------------\n"
-@printf "$(call create_string,$($(1)))" | python3
+define _debug_runner
+@printf "$(1) Script:\n"
+@printf -- "<---------------->\n"
+@printf "$(call create_string,$(3))\n"
+@printf -- "<---------------->\n"
+@printf "$(call create_string,$(3))" | $(2)
 endef
-define tbash
-@printf "Bash Script:\n"
-@printf -- "----------------\n"
-@printf "$(call create_string,$($(1)))\n"
-@printf -- "----------------\n"
-@printf "$(call create_string,$($(1)))" | bash
-endef
+py = $(call _debug_runner,Python,python3,$($(1)))
+tbash = $(call _debug_runner,Bash,bash,$($(1)))
 else
 py = @printf "$(call create_string,$($(1)))" | python3
 tbash = @printf "$(call create_string,$($(1)))" | bash
