@@ -5,8 +5,7 @@
 
 codes_names = {
     getattr(ansi, attr): attr
-    for attr in dir(ansi)
-    if attr[0:1] != "_" and attr != "end" and attr != "setcode"
+    for attr in ansi.__dict__
 }
 for code in sorted(codes_names.keys(), key=lambda item: (len(item), item)):
     print("{:>20} {}".format(codes_names[code], code + "******" + ansi.end))

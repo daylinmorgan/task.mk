@@ -86,8 +86,9 @@ info:
 	$(call tprint,$(mlmsg))
 	$(call tprint,{a.custom(fg=(148, 255, 15),bg=(103, 2, 15))}Custom Colors TOO!{a.end})
 
+.PHONY: task.mk
 task.mk:
-	./generate.py $(shell git describe --tags) > task.mk
+	./generate.py $(shell git describe --always | sed s'/dirty/dev/') > task.mk
 
 define USAGE
 {a.$(HEADER_COLOR)}usage:{a.end}

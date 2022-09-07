@@ -1,7 +1,7 @@
 # }> [github.com/daylinmorgan/task.mk] <{ #
 # Copyright (c) 2022 Daylin Morgan
 # MIT License
-# version: 22.9.7
+# version: c036a27
 #
 # task.mk should be included at the bottom of your Makefile.
 # See below for the standard configuration options that should be set prior to including this file.
@@ -240,8 +240,7 @@ $(ansi_py)
 
 codes_names = {
     getattr(ansi, attr): attr
-    for attr in dir(ansi)
-    if attr[0:1] != "_" and attr != "end" and attr != "setcode"
+    for attr in ansi.__dict__
 }
 for code in sorted(codes_names.keys(), key=lambda item: (len(item), item)):
     print("{:>20} {}".format(codes_names[code], code + "******" + ansi.end))
