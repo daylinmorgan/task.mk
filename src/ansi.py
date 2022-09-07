@@ -31,12 +31,6 @@ def bg(byte):
 class Ansi:
     """ANSI color codes"""
 
-    def setcode(self, name, escape_code):
-        if not sys.stdout.isatty() or os.getenv("NO_COLOR", False):
-            setattr(self, name, "")
-        else:
-            setattr(self, name, escape_code)
-
     def __init__(self):
         self.setcode("end", "\033[0m")
         for name, byte in color2byte.items():
@@ -47,6 +41,42 @@ class Ansi:
                 self.setcode(f"{name}_on_{bgname}", f"\033[{bg(bgbyte)};{fg(byte)}m")
         for name, byte in state2byte.items():
             self.setcode(name, f"\033[{byte}m")
+
+    def setcode(self, name, escape_code):
+        """create attr for style and escape code"""
+
+        if not sys.stdout.isatty() or os.getenv("NO_COLOR", False):
+            setattr(self, name, "")
+        else:
+            setattr(self, name, escape_code)
+
+    def custom(self, fg=None, bg=None):
+        """use custom color"""
+
+        code, end = "\033[", "m"
+        if fg:
+            if isinstance(fg, int):
+                code += f"38;5;{fg}"
+            elif (isinstance(fg, list) or isinstance(fg, tuple)) and len(fg) == 1:
+                code += f"38;5;{fg[0]}"
+            elif (isinstance(fg, list) or isinstance(fg, tuple)) and len(fg) == 3:
+                code += f"38;2;{';'.join((str(i) for i in fg))}"
+            else:
+                print("Expected one or three values for fg as a list")
+                sys.exit(1)
+
+        if bg:
+            if isinstance(bg, int):
+                code += f"{';' if fg else ''}48;5;{bg}"
+            elif (isinstance(bg, list) or isinstance(bg, tuple)) and len(bg) == 1:
+                code += f"{';' if fg else ''}48;5;{bg[0]}"
+            elif (isinstance(bg, list) or isinstance(bg, tuple)) and len(bg) == 3:
+                code += f"{';' if fg else ''}48;2;{';'.join((str(i) for i in bg))}"
+            else:
+                print("Expected one or three values for bg as a list")
+                sys.exit(1)
+
+        return code + end
 
 
 a = ansi = Ansi()

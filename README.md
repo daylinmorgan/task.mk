@@ -59,7 +59,7 @@ build:
   ...
 ```
 
-Now when you invoke `task.mk` it will parse these and generate your help output.
+Now when you invoke `make help` it will parse these and generate your help output.
 
 In addition to a generic help output you can expose some configuration settings with `make vars`.
 To do so define the variables you'd like to print with `PRINT_VARS := VAR1 VAR2 VAR3`.
@@ -88,6 +88,11 @@ To see the available colors and formatting(bold,italic,etc.) use the hidden reci
 **Note**: Any help commands starting with an underscore will be ignored.
 To view hidden `tasks` (or recipes in GNU Make land) you can use `make _help`.
 
+In addition, you can use custom colors using the builtin `ansi.custom` or (`a.custom`) method.
+It has two optional arguments `fg` and `bg`. Which can be used to specify either an 8-bit color from the [256 colors](https://en.wikipedia.org/wiki/8-bit_color).
+Or a tuple/list to define an RBG 24-bit color, for instance `a.custom(fg=(5,10,255))`.
+See this project's `make info` for an example.
+
 ## Configuration
 
 You can quickly customize some of the default behavior of `task.mk` by overriding the below variables prior to the `-include .task.mk`.
@@ -109,6 +114,12 @@ define USAGE ?=
   make <recipe>
 
 endef
+```
+
+To use a custom color for one of the predefined configuration variables specify only the custom method.
+
+```make
+HEADER_COLOR = custom(fg=171,bg=227)
 ```
 
 **NOTE**: `HELP_SEP` does not change the argument definitions syntax only the format of `make help`.
@@ -162,7 +173,7 @@ zstyle ':completion::complete:make:*:targets' call-command true
 ## Why Make?
 
 There are lot of `GNU Make` alternatives but none have near the same level of ubiquity.
-This project attaches to `make` some of native features of [`just`](https://github.com/casey/just), a command runner.
+This project attaches to `make` some of the native features of [`just`](https://github.com/casey/just), a command runner.
 
 Just is a great task runner, but it suffers two problems, users probably don't have it installed already, and there is no way to define file specific recipes.
 Most of my `Makefile`'s are comprised primarily of handy `.PHONY` recipes, but I always end up with a few file specific recipes.
@@ -170,13 +181,13 @@ Most of my `Makefile`'s are comprised primarily of handy `.PHONY` recipes, but I
 Another interesting project I've evaluated for these purposes is [`go-task/task`](https://github.com/go-task/task).
 `Task` has many of the features of `GNU Make` and some novel features of it's own.
 But like `just` it's a tool people don't usually already have and it's configured using a `yaml` file.
-`Yaml` files can be finicky to work with and and it uses a golang based shell runtime not your native shell, which might lead to unexpected behavior.
+`Yaml` files can be finicky to work with and and it uses a golang based shell runtime, not your native shell, which might lead to unexpected behavior.
 
 
 ## Simpler Alternative
 
 But I just want a basic help output, surely I don't need python for this... you would be right.
-`Task.mk` replaces my old `make help` recipe boilerplate which may better serve you.
+`Task.mk` replaces my old `make help` recipe boilerplate which may better serve you (so long as you have `sed`/`awk`).
 
 
 ```make

@@ -27,7 +27,7 @@ def get_help(file):
 print(f"""$(USAGE)""")
 
 goals = list(get_help(makefile))
-if os.getenv("SORT_HELP",False):
+if os.getenv("SORT_HELP", False):
     goals.sort(key=lambda i: i[0])
 goal_len = max(len(goal[0]) for goal in goals)
 

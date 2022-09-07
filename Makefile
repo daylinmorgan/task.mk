@@ -2,12 +2,12 @@ VERSION ?= $(shell git describe --tags --always --dirty | sed s'/dirty/dev/')
 TEMPLATES := $(shell find src/ -type f)
 .DEFAULT_GOAL := help
 
-header = $(call tprint,{a.bold}==>{a.end} {a.magenta}$(1){a.end} {a.bold}<=={a.end})
+msg = $(call tprint,{a.bold}==>{a.end} {a.magenta}$(1){a.end} {a.bold}<=={a.end})
 
 ## bootstrap | generate local dev environment
 .PHONY: bootstrap
 bootstrap:
-	$(call header,Bootstrap Environment)
+	$(call msg,Bootstrap Environment)
 	@mamba create -p ./env python jinja2 black -y
 	@mamba run -p ./env pip install yartsu
 
@@ -35,7 +35,7 @@ list-%:
 ## release | release new version of task.mk
 .PHONY: release
 release: version-check
-	$(call header,Release Project)
+	$(call msg,Release Project)
 	@./generate.py $(VERSION) > task.mk
 	@sed -i 's/task.mk\/.*\/task.mk/task.mk\/v$(VERSION)\/task.mk/g' README.md
 	@git add task.mk README.md
@@ -69,7 +69,7 @@ test-bash:
 	$(call tbash,bash_script,test bash multiline)
 
 
-define msg
+define mlmsg
 {a.b_yellow}
 It can even be multiline!{a.end}
 and styles can be defined{a.end}
@@ -80,9 +80,10 @@ endef
 ## info | demonstrate usage of tprint
 .PHONY: task
 info:
-	$(call header, Info Message)
+	$(call msg, Info Message)
 	$(call tprint,{a.black_on_cyan}This is task-print output:{a.end})
-	$(call tprint,$(msg))
+	$(call tprint,$(mlmsg))
+	$(call tprint,{a.custom(fg=(148, 255, 15),bg=(103, 2, 15))}Custom Colors TOO!{a.end})
 
 task.mk:
 	./generate.py $(shell git describe --tags) > task.mk
