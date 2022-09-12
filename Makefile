@@ -37,8 +37,7 @@ list-%:
 .PHONY: release
 release: version-check
 	$(call msg,Release Project)
-	# @./generate.py $(VERSION) > task.mk
-	@./make task.mk
+	@./generate.py $(VERSION) > task.mk
 	@sed -i 's/task.mk\/.*\/task.mk/task.mk\/v$(VERSION)\/task.mk/g' README.md
 	@git add task.mk README.md
 	@git commit -m "release: v$(VERSION)" --no-verify
@@ -83,7 +82,7 @@ endef
 ## info | demonstrate usage of tprint
 .PHONY: task
 info:
-	$(call msg, Info Message)
+	$(call msg,Info Message)
 	$(call tprint,{a.black_on_cyan}This is task-print output:{a.end})
 	$(call tprint,$(mlmsg))
 	$(call tprint,{a.custom(fg=(148, 255, 15),bg=(103, 2, 15))}Custom Colors TOO!{a.end})
