@@ -1,7 +1,7 @@
 # }> [github.com/daylinmorgan/task.mk] <{ #
 # Copyright (c) 2022 Daylin Morgan
 # MIT License
-# version: 22.9.12
+# version: v22.9.12-dev
 #
 # task.mk should be included at the bottom of your Makefile.
 # See below for the standard configuration options that should be set prior to including this file.
@@ -127,7 +127,7 @@ goal_len = max(len(goal[0]) for goal in goals)
 
 for goal, msg in goals:
     print(
-        f"{ansi.$(GOAL_COLOR)}{goal:>{goal_len}}{ansi.end} $(HELP_SEP) {ansi.$(MSG_COLOR)}{msg}{ansi.end}"
+        f"  {ansi.$(GOAL_COLOR)}{goal:>{goal_len}}{ansi.end} $(HELP_SEP) {ansi.$(MSG_COLOR)}{msg}{ansi.end}"
     )
 
 print(f"""$(EPILOG)""")
