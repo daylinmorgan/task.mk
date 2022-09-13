@@ -41,8 +41,7 @@ release: version-check
 .PHONY: clean
 c clean:
 	@rm -f task.mk .task.mk
-### | args: --divider
-### 
+### | args: --divider --whitespace
 ### examples of task.mk features | args: --divider --align center
 define list_files_py
 from pathlib import Path
