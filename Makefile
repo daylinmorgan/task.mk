@@ -4,6 +4,8 @@ TEMPLATES := $(shell find src/ -type f)
 
 msg = $(call tprint,{a.bold}==>{a.end} {a.magenta}$(1){a.end} {a.bold}<=={a.end})
 
+### task.mk development | args: --divider --align center
+
 ## bootstrap | generate local dev environment
 .PHONY: bootstrap
 bootstrap:
@@ -12,9 +14,10 @@ bootstrap:
 	@mamba run -p ./env pip install yartsu
 	@git config core.hooksPath .githooks
 
-## lint | lint the python
-.PHONY: lint
-lint:
+## l, lint | lint the python
+.PHONY: l lint
+l lint:
+	$(call msg,Linting)
 	@black generate.py
 	@black src/*.py --fast
 
@@ -22,16 +25,6 @@ lint:
 .PHONY: assets
 assets:
 	yartsu -o assets/help.svg -t "make help" -- make --no-print-directory help
-
-define list_files_py
-from pathlib import Path
-print("files in $(2)")
-print([f.name for f in (Path("$(2)").iterdir())])
-endef
-
-## list-% | use pathlib.Path to list files
-list-%:
-	$(call py,list_files_py,$*)
 
 ## release | release new version of task.mk
 .PHONY: release
@@ -47,6 +40,19 @@ release: version-check
 .PHONY: clean
 c clean:
 	@rm -f task.mk .task.mk
+### | args: --divider
+### 
+### examples of task.mk features | args: --divider --align center
+define list_files_py
+from pathlib import Path
+print("files in $(2)")
+print([f.name for f in (Path("$(2)").iterdir())])
+endef
+
+## list-% | use pathlib.Path to list files
+### name the directory in rule (make list-src) | args: --align sep
+list-%:
+	$(call py,list_files_py,$*)
 
 .PHONY: version-check
 version-check:
@@ -70,7 +76,6 @@ endef
 test-bash:
 	$(call tbash,bash_script,test bash multiline)
 
-
 define mlmsg
 {a.b_yellow}
 It can even be multiline!{a.end}
@@ -86,6 +91,8 @@ info:
 	$(call tprint,{a.black_on_cyan}This is task-print output:{a.end})
 	$(call tprint,$(mlmsg))
 	$(call tprint,{a.custom(fg=(148, 255, 15),bg=(103, 2, 15))}Custom Colors TOO!{a.end})
+
+### | args: --divider
 
 task.mk: $(TEMPLATES) generate.py
 	./generate.py $(VERSION) > task.mk

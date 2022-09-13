@@ -33,6 +33,8 @@ class Ansi:
 
     def __init__(self):
         self.setcode("end", "\033[0m")
+        self.setcode("default", "\033[38m")
+        self.setcode("bg_default", "\033[48m")
         for name, byte in color2byte.items():
             self.setcode(name, f"\033[{fg(byte)}m")
             self.setcode(f"b_{name}", f"\033[1;{fg(byte)}m")
