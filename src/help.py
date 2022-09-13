@@ -5,8 +5,11 @@ import argparse
 from collections import namedtuple
 import os
 import re
+from typing import Any
 
 ##- '$(ansi_py)' -##
+
+ansi: Any
 
 MaxLens = namedtuple("MaxLens", "goal msg")
 
@@ -45,9 +48,9 @@ def parse_make(file):
 
 def print_goal(goal, msg, max_goal_len):
     print(
-        f"  {ansi.$(GOAL_COLOR)}{goal:>{max_goal_len}}{ansi.end}"
-        " $(HELP_SEP) "
-        f"{ansi.$(MSG_COLOR)}{msg}{ansi.end}"
+        ansi.style(f"  {goal:>{max_goal_len}}", "$(GOAL_COLOR)")
+        + " $(HELP_SEP) "
+        + ansi.style(msg, "$(MSG_COLOR)")
     )
 
 
@@ -56,15 +59,17 @@ def print_rawmsg(msg, argstr, maxlens):
     if msg:
         if args.align == "sep":
             print(
-                f"{' '*(maxlens.goal+len('$(HELP_SEP)')+4)}{ansi.$(MSG_COLOR)}{msg}{ansi.end}"
+                f"{' '*(maxlens.goal+len('$(HELP_SEP)')+4)}{ansi.style(msg,'$(MSG_COLOR)')}"
             )
         elif args.align == "center":
-            print(f"  {ansi.$(MSG_COLOR)}{msg.center(sum(maxlens))}{ansi.end}")
+            print(f"  {ansi.style(msg.center(sum(maxlens)),'$(MSG_COLOR)')}")
         else:
-            print(f"  {ansi.$(MSG_COLOR)}{msg}{ansi.end}")
+            print(f"  {ansi.style(msg,'$(MSG_COLOR)')}")
     if args.divider:
         print(
-            f"{ansi.$(DIVIDER_COLOR)}  {'─'*(len('$(HELP_SEP)')+sum(maxlens)+2)}{ansi.end}"
+            ansi.style(
+                f"  {'─'*(len('$(HELP_SEP)')+sum(maxlens)+2)}", "$(DIVIDER_COLOR)"
+            )
         )
 
 
@@ -81,12 +86,6 @@ def print_help():
             print_goal(item["goal"], item["msg"], maxlens.goal)
         if "rawmsg" in item:
             print_rawmsg(item["rawmsg"], item.get("args", ""), maxlens)
-        if len(item) == 1 and "args" in item:
-            args, unknown = rawargs(item["args"])
-            if args.divider:
-                print(
-                    "  " + "─" * (len("$(HELP_SEP)") + maxlens.goal + maxlens.msg + 2)
-                )
 
     print(f"""$(EPILOG)""")
 

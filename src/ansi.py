@@ -80,6 +80,13 @@ class Ansi:
 
         return code + end
 
+    def style(self, text, style):
+        if style not in self.__dict__:
+            print(f"unknown style {style}")
+            sys.exit(1)
+        else:
+            return f"{self.__dict__[style]}{text}{self.__dict__['end']}"
+
 
 a = ansi = Ansi()
 #% endblock %#

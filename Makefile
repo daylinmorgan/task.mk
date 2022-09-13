@@ -2,7 +2,8 @@ VERSION ?= $(shell git describe --tags --always --dirty | sed s'/dirty/dev/')
 TEMPLATES := $(shell find src/ -type f)
 .DEFAULT_GOAL := help
 
-msg = $(call tprint,{a.bold}==>{a.end} {a.magenta}$(1){a.end} {a.bold}<=={a.end})
+msgfmt = {a.style('==>','bold')} {a.style('$(1)','b_magenta')} {a.style('<==','bold')}
+msg = $(call tprint,$(call msgfmt ,$(1)))
 
 ### task.mk development | args: --divider --align center
 
@@ -79,7 +80,7 @@ test-bash:
 define mlmsg
 {a.b_yellow}
 It can even be multiline!{a.end}
-and styles can be defined{a.end}
+{a.style('and styles can be defined','red')}
 as python {a.bold}f-string{a.end} literals
 {a.end}
 endef
@@ -101,7 +102,7 @@ define USAGE
 {a.$(HEADER_COLOR)}usage:{a.end}
 	make <recipe>
 
-  Turn your {a.b_magenta}`Makefile`{a.end} into
+  Turn your {a.style('`Makefile`','b_magenta')} into
   the {a.italic}{a.underline}task runner{a.end} you always needed.
   See the example output below.
 
