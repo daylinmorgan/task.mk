@@ -106,8 +106,9 @@ PARAMS_COLOR ?= b_magenta
 ACCENT_COLOR ?= b_yellow
 GOAL_COLOR ?= $(ACCENT_COLOR)
 MSG_COLOR ?= faint
-HELP_SEP ?= |
-HELP_SORT ?= # sort goals alphabetically
+DIVIDER_COLOR ?= default
+DIVIDER ?= ─
+HELP_SEP ?= │
 
 # python f-string literals
 EPILOG ?=
@@ -152,6 +153,7 @@ For what it's worth there is also a predefined function for `bash` (named `tbash
 
 ```make
 define bash_script
+figlet task.mk 2>/dev/null || echo 'no figlet :('
 echo "This is from bash"
 cat /etc/hostname
 printf "%s\n" "$(2)"
@@ -160,7 +162,6 @@ endef
 test-bash:
 	$(call tbash,bash_script,test bash multiline)
 ```
-
 
 
 ## Zsh Completions for GNU Make
