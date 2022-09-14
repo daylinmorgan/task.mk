@@ -93,6 +93,7 @@ info:
 	$(call tprint,$(mlmsg))
 	$(call tprint,{a.custom(fg=(148, 255, 15),bg=(103, 2, 15))}Custom Colors TOO!{a.end})
 
+## check | get user confirmation or exit
 .PHONY: check
 check:
 	$(call tconfirm,Would you like to proceed?)
