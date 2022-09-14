@@ -118,4 +118,5 @@ PRINT_VARS := VERSION
 
 -include .task.mk
 .task.mk: $(TEMPLATES) generate.py
+	$(call tprint,{a.b_yellow}re-jinjaing the local .task.mk{a.end})
 	@./generate.py $(VERSION) > .task.mk || (echo "generator failed!!" && rm .task.mk)

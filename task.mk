@@ -1,7 +1,7 @@
 # }> [github.com/daylinmorgan/task.mk] <{ #
 # Copyright (c) 2022 Daylin Morgan
 # MIT License
-# version: v22.9.14-2-g2e6f5d1-dev
+# version: v22.9.14-3-gf3050f1-dev
 #
 # task.mk should be included at the bottom of your Makefile.
 # See below for the standard configuration options that should be set prior to including this file.
@@ -46,6 +46,8 @@ vars v:
 
 endif
 
+### | args: -ws --hidden
+### task.mk builtins: | args: -d --hidden
 ## _print-ansi | show all possible ansi color code combinations
 .PHONY:
 _print-ansi:
@@ -57,8 +59,9 @@ tprint-sh = $(call pysh,info_py,$(1))
 
 tconfirm = $(call py,confirm_py,$(1))
 
+## _update-task.mk | downloads latest development version of task.mk
 _update-task.mk:
-	$(call tprint,Updating task.mk)
+	$(call tprint,{a.b_cyan}Updating task.mk{a.end})
 	curl https://raw.githubusercontent.com/daylinmorgan/task.mk/main/task.mk -o .task.mk
 
 export MAKEFILE_LIST
@@ -121,6 +124,7 @@ def rawargs(argstring):
     parser.add_argument("-d", "--divider", action="store_true")
     parser.add_argument("-ws", "--whitespace", action="store_true")
     parser.add_argument("-ms", "--msg-style", type=str)
+    parser.add_argument("--hidden",action="store_true")
     return parser.parse_args(argstring.split())
 
 
@@ -155,6 +159,8 @@ def print_goal(goal, msg, max_goal_len):
 def print_rawmsg(msg, argstr, maxlens):
     args = rawargs(argstr)
     msg_style = args.msg_style if args.msg_style else "$(MSG_COLOR)"
+    if not os.getenv("SHOW_HIDDEN") and args.hidden:
+        return
     if msg:
         if args.align == "sep":
             print(

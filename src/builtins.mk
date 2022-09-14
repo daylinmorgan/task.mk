@@ -19,6 +19,8 @@ vars v:
 
 endif
 
+### | args: -ws --hidden
+### task.mk builtins: | args: -d --hidden
 ## _print-ansi | show all possible ansi color code combinations
 .PHONY:
 _print-ansi:
@@ -30,8 +32,9 @@ tprint-sh = $(call pysh,info_py,$(1))
 
 tconfirm = $(call py,confirm_py,$(1))
 
+## _update-task.mk | downloads latest development version of task.mk
 _update-task.mk:
-	$(call tprint,Updating task.mk)
+	$(call tprint,{a.b_cyan}Updating task.mk{a.end})
 	curl https://raw.githubusercontent.com/daylinmorgan/task.mk/main/task.mk -o .task.mk
 
 export MAKEFILE_LIST
