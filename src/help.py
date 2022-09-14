@@ -24,6 +24,7 @@ def rawargs(argstring):
     parser.add_argument("--align")
     parser.add_argument("-d", "--divider", action="store_true")
     parser.add_argument("-ws", "--whitespace", action="store_true")
+    parser.add_argument("-ms", "--msg-style", type=str)
     return parser.parse_args(argstring.split())
 
 
@@ -57,15 +58,16 @@ def print_goal(goal, msg, max_goal_len):
 
 def print_rawmsg(msg, argstr, maxlens):
     args = rawargs(argstr)
+    msg_style = args.msg_style if args.msg_style else "$(MSG_COLOR)"
     if msg:
         if args.align == "sep":
             print(
-                f"{' '*(maxlens.goal+len('$(HELP_SEP)')+4)}{ansi.style(msg,'$(MSG_COLOR)')}"
+                f"{' '*(maxlens.goal+len('$(HELP_SEP)')+4)}{ansi.style(msg,msg_style)}"
             )
         elif args.align == "center":
-            print(f"  {ansi.style(msg.center(sum(maxlens)),'$(MSG_COLOR)')}")
+            print(f"  {ansi.style(msg.center(sum(maxlens)),msg_style)}")
         else:
-            print(f"  {ansi.style(msg,'$(MSG_COLOR)')}")
+            print(f"  {ansi.style(msg,msg_style)}")
     if args.divider:
         print(
             ansi.style(
