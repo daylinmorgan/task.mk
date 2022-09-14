@@ -6,7 +6,6 @@ msgfmt = {a.style('==>','bold')} {a.style('$(1)','b_magenta')} {a.style('<==','b
 msg = $(call tprint,$(call msgfmt ,$(1)))
 
 ### task.mk development | args: --divider --align center
-
 ## bootstrap | generate local dev environment
 .PHONY: bootstrap
 bootstrap:

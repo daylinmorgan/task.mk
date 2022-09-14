@@ -21,10 +21,10 @@ pattern = re.compile(
 
 def rawargs(argstring):
     parser = argparse.ArgumentParser()
-    parser.add_argument("-a", "--align")
+    parser.add_argument("--align")
     parser.add_argument("-d", "--divider", action="store_true")
     parser.add_argument("-ws", "--whitespace", action="store_true")
-    return parser.parse_known_args(argstring.split())
+    return parser.parse_args(argstring.split())
 
 
 def gen_makefile():
@@ -56,7 +56,7 @@ def print_goal(goal, msg, max_goal_len):
 
 
 def print_rawmsg(msg, argstr, maxlens):
-    args, unknown = rawargs(argstr)
+    args = rawargs(argstr)
     if msg:
         if args.align == "sep":
             print(
