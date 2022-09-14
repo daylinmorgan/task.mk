@@ -25,7 +25,7 @@ l lint:
 ## assets | generate assets
 .PHONY: assets
 assets:
-	yartsu -o assets/help.svg -t "make help" -- make --no-print-directory help
+	@yartsu -o assets/help.svg -t "make help" -- make --no-print-directory help
 
 ## release | release new version of task.mk
 .PHONY: release
@@ -41,6 +41,7 @@ release: version-check
 .PHONY: clean
 c clean:
 	@rm -f task.mk .task.mk
+
 ### | args: --divider --whitespace
 ### examples of task.mk features | args: --divider --align center
 define list_files_py
