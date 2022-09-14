@@ -112,4 +112,4 @@ PRINT_VARS := VERSION
 
 -include .task.mk
 .task.mk: $(TEMPLATES) generate.py
-	./generate.py $(VERSION) > .task.mk
+	@./generate.py $(VERSION) > .task.mk || (echo "generator failed!!" && rm .task.mk)
