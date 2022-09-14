@@ -5,7 +5,7 @@ TEMPLATES := $(shell find src/ -type f)
 msgfmt = {a.style('==>','bold')} {a.style('$(1)','b_magenta')} {a.style('<==','bold')}
 msg = $(call tprint,$(call msgfmt ,$(1)))
 
-### task.mk development | args: -d --align center -ms d_green
+### task.mk development | args: -d -ms b_green --align center
 ## bootstrap | generate local dev environment
 .PHONY: bootstrap
 bootstrap:
@@ -42,7 +42,7 @@ c clean:
 	@rm -f task.mk .task.mk
 
 ### | args: --divider --whitespace
-### examples of task.mk features | args: --divider --align center --msg-style d_red
+### examples of task.mk features | args: --divider --align center --msg-style b_red
 define list_files_py
 from pathlib import Path
 print("files in $(2)")
