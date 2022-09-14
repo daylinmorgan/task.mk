@@ -1,7 +1,7 @@
 # }> [github.com/daylinmorgan/task.mk] <{ #
 # Copyright (c) 2022 Daylin Morgan
 # MIT License
-# version: v22.9.12-7-g5eb3e21-dev
+# version: v22.9.12-8-gea398af-dev
 #
 # task.mk should be included at the bottom of your Makefile.
 # See below for the standard configuration options that should be set prior to including this file.
@@ -15,7 +15,7 @@ GOAL_COLOR ?= $(ACCENT_COLOR)
 MSG_COLOR ?= faint
 DIVIDER_COLOR ?= default
 DIVIDER ?= ─
-HELP_SEP ?= |
+HELP_SEP ?= │
 
 # python f-string literals
 EPILOG ?=
