@@ -23,7 +23,7 @@ def rawargs(argstring):
     parser = argparse.ArgumentParser()
     parser.add_argument("-a", "--align")
     parser.add_argument("-d", "--divider", action="store_true")
-    parser.add_argument("-ws","--whitespace",action="store_true")
+    parser.add_argument("-ws", "--whitespace", action="store_true")
     return parser.parse_known_args(argstring.split())
 
 
@@ -69,7 +69,8 @@ def print_rawmsg(msg, argstr, maxlens):
     if args.divider:
         print(
             ansi.style(
-                f"  {'─'*(len('$(HELP_SEP)')+sum(maxlens)+2)}", "$(DIVIDER_COLOR)"
+                f"  {'$(DIVIDER)'*(len('$(HELP_SEP)')+sum(maxlens)+2)}",
+                "$(DIVIDER_COLOR)",
             )
         )
     if args.whitespace:

@@ -1,7 +1,7 @@
 # }> [github.com/daylinmorgan/task.mk] <{ #
 # Copyright (c) 2022 Daylin Morgan
 # MIT License
-# version: v22.9.12-4-g037e474-dev
+# version: v22.9.12-6-gf9cb3f6-dev
 #
 # task.mk should be included at the bottom of your Makefile.
 # See below for the standard configuration options that should be set prior to including this file.
@@ -14,6 +14,7 @@ ACCENT_COLOR ?= b_yellow
 GOAL_COLOR ?= $(ACCENT_COLOR)
 MSG_COLOR ?= faint
 DIVIDER_COLOR ?= default
+DIVIDER ?= ─
 HELP_SEP ?= |
 
 # python f-string literals
@@ -117,7 +118,7 @@ def rawargs(argstring):
     parser = argparse.ArgumentParser()
     parser.add_argument("-a", "--align")
     parser.add_argument("-d", "--divider", action="store_true")
-    parser.add_argument("-ws","--whitespace",action="store_true")
+    parser.add_argument("-ws", "--whitespace", action="store_true")
     return parser.parse_known_args(argstring.split())
 
 
@@ -163,7 +164,8 @@ def print_rawmsg(msg, argstr, maxlens):
     if args.divider:
         print(
             ansi.style(
-                f"  {'─'*(len('$(HELP_SEP)')+sum(maxlens)+2)}", "$(DIVIDER_COLOR)"
+                f"  {'$(DIVIDER)'*(len('$(HELP_SEP)')+sum(maxlens)+2)}",
+                "$(DIVIDER_COLOR)",
             )
         )
     if args.whitespace:

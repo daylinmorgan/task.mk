@@ -5,6 +5,7 @@ ACCENT_COLOR ?= b_yellow
 GOAL_COLOR ?= $(ACCENT_COLOR)
 MSG_COLOR ?= faint
 DIVIDER_COLOR ?= default
+DIVIDER ?= ─
 HELP_SEP ?= |
 
 # python f-string literals
