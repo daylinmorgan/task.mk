@@ -57,7 +57,7 @@ list-%:
 .PHONY: version-check
 version-check:
 	@if [[ "${VERSION}" == *'-'* ]]; then\
-		$(call tprint-sh,{a.red}VERSION INVALID! Uncommited Work{a.end});\
+		$(call tprint-sh,{a.red}VERSION INVALID! Uncommited or untagged work{a.end});\
 		echo ">> version: $(VERSION)"; exit 1;\
 	elif [[ $(shell echo "${VERSION}" | awk -F. '{ print NF }') -lt 3 ]];then\
 		$(call tprint-sh,{a.red}VERSION INVALID! Expected CalVer string{a.end});\
@@ -68,13 +68,14 @@ version-check:
 
 
 define bash_script
+figlet task.mk 2>/dev/null || echo 'no figlet :('
 echo "This is from bash"
 cat /etc/hostname
 printf "%s\n" "$(2)"
 endef
 .PHONY: test-bash
 test-bash:
-	$(call tbash,bash_script,test bash multiline)
+	$(call tbash,bash_script,bash multiline is probably working)
 
 define mlmsg
 {a.b_yellow}
@@ -91,6 +92,11 @@ info:
 	$(call tprint,{a.black_on_cyan}This is task-print output:{a.end})
 	$(call tprint,$(mlmsg))
 	$(call tprint,{a.custom(fg=(148, 255, 15),bg=(103, 2, 15))}Custom Colors TOO!{a.end})
+
+.PHONY: check
+check:
+	$(call tconfirm,Would you like to proceed?)
+	@echo "you said yes!"
 
 ### | args: --divider
 
