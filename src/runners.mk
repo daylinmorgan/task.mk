@@ -13,16 +13,16 @@ create_string = $(subst $(\n),\n,$(call escape_shellstring,$(call escape_printf,
 ifdef DEBUG
 define _debug_runner
 @printf "$(1) Script:\n"
-@printf -- "<---------------->\n"
+@printf -- "<----------------------------------->\n"
 @printf "$(call create_string,$(3))\n"
-@printf -- "<---------------->\n"
+@printf -- "<----------------------------------->\n"
 @printf "$(call create_string,$(3))" | $(2)
 endef
 py = $(call _debug_runner,Python,python3,$($(1)))
 tbash = $(call _debug_runner,Bash,bash,$($(1)))
 else
-py = @printf "$(call create_string,$($(1)))" | python3
-tbash = @printf "$(call create_string,$($(1)))" | bash
+py = @python3 <(printf "$(call create_string,$($(1)))")
+tbash = @bash <(printf "$(call create_string,$($(1)))")
 endif
 
-pysh = printf "$(call create_string,$($(1)))" | python3
+pysh = python3 <(printf "$(call create_string,$($(1)))")

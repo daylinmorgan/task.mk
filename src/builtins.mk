@@ -1,6 +1,5 @@
 # ---- [buitlin recipes] ---- #
 
-
 ## h, help | show this help
 .PHONY: help h
 help h:
@@ -28,6 +27,8 @@ _print-ansi:
 # functions to take f-string literals and pass to python print
 tprint = $(call py,info_py,$(1))
 tprint-sh = $(call pysh,info_py,$(1))
+
+tconfirm = $(call py,confirm_py,$(1))
 
 _update-task.mk:
 	$(call tprint,Updating task.mk)

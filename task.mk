@@ -1,7 +1,7 @@
 # }> [github.com/daylinmorgan/task.mk] <{ #
 # Copyright (c) 2022 Daylin Morgan
 # MIT License
-# version: 22.9.14
+# version: v22.9.14-dev
 #
 # task.mk should be included at the bottom of your Makefile.
 # See below for the standard configuration options that should be set prior to including this file.
@@ -26,7 +26,6 @@ define USAGE ?=
 endef
 
 # ---- [buitlin recipes] ---- #
-
 
 ## h, help | show this help
 .PHONY: help h
@@ -56,6 +55,8 @@ _print-ansi:
 tprint = $(call py,info_py,$(1))
 tprint-sh = $(call pysh,info_py,$(1))
 
+tconfirm = $(call py,confirm_py,$(1))
+
 _update-task.mk:
 	$(call tprint,Updating task.mk)
 	curl https://raw.githubusercontent.com/daylinmorgan/task.mk/main/task.mk -o .task.mk
@@ -77,19 +78,19 @@ create_string = $(subst $(\n),\n,$(call escape_shellstring,$(call escape_printf,
 ifdef DEBUG
 define _debug_runner
 @printf "$(1) Script:\n"
-@printf -- "<---------------->\n"
+@printf -- "<----------------------------------->\n"
 @printf "$(call create_string,$(3))\n"
-@printf -- "<---------------->\n"
+@printf -- "<----------------------------------->\n"
 @printf "$(call create_string,$(3))" | $(2)
 endef
 py = $(call _debug_runner,Python,python3,$($(1)))
 tbash = $(call _debug_runner,Bash,bash,$($(1)))
 else
-py = @printf "$(call create_string,$($(1)))" | python3
-tbash = @printf "$(call create_string,$($(1)))" | bash
+py = @python3 <(printf "$(call create_string,$($(1)))")
+tbash = @bash <(printf "$(call create_string,$($(1)))")
 endif
 
-pysh = printf "$(call create_string,$($(1)))" | python3
+pysh = python3 <(printf "$(call create_string,$($(1)))")
 
 # ---- [python scripts] ---- #
 
@@ -322,6 +323,30 @@ for v in vars:
     print(f"  {ansi.b_magenta}{v:<{length}}{ansi.end} = {os.getenv(v)}")
 
 print()
+
+endef
+
+define  confirm_py
+
+
+import sys
+$(ansi_py)
+
+def confirm():
+    """
+    Ask user to enter Y or N (case-insensitive).
+    :return: True if the answer is Y.
+    :rtype: bool
+    """
+    answer = ""
+    while answer not in ["y", "n"]:
+        answer = input(f"""$(2) {a.b_red}[Y/n]{a.end} """).lower()
+    return answer == "y"
+
+if confirm():
+    sys.exit(0)
+else:
+    sys.exit(1)
 
 endef
 

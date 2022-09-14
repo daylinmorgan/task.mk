@@ -5,7 +5,7 @@ from pathlib import Path
 
 import jinja2
 
-py_script_names = ["help", "ansi", "info", "print-ansi", "vars"]
+py_script_names = ["help", "ansi", "info", "print-ansi", "vars","confirm"]
 
 
 def get_jinja_env():

@@ -17,6 +17,7 @@ Current Features:
   - ANSI escape code support (including NO_COLOR)
   - formatted help output
   - custom print function
+  - confirmation prompt
 
 Depends on `GNU Make`, obviously and `Python >=3.7`.
 
