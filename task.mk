@@ -1,7 +1,7 @@
 # }> [github.com/daylinmorgan/task.mk] <{ #
 # Copyright (c) 2022 Daylin Morgan
 # MIT License
-# version: v22.9.14-11-gfff5448-dev
+# version: v22.9.14-12-g5a95a14-dev
 #
 # task.mk should be included at the bottom of your Makefile with `-include .task.mk`
 # See below for the standard configuration options that should be set prior to including this file.
@@ -80,14 +80,15 @@ ansi: Any
 MaxLens = namedtuple("MaxLens", "goal msg")
 # double dollar signs to prevent make escaping them
 pattern = re.compile(
-    r"^## (?P<goal>.*) \| (?P<msg>.*)|^### (?P<rawmsg>.*?)?(?:\s?\| args: (?P<args>.*?))?$$"
+    r"^## (?P<goal>.*?) \| (?P<msg>.*?)(?:\s?\| args: (?P<msgargs>.*?))?$$|^### (?P<rawmsg>.*?)?(?:\s?\| args: (?P<rawargs>.*?))?$$"
 )
-def rawargs(argstring):
+def parseargs(argstring):
     parser = argparse.ArgumentParser()
     parser.add_argument("--align")
     parser.add_argument("-d", "--divider", action="store_true")
     parser.add_argument("-ws", "--whitespace", action="store_true")
     parser.add_argument("-ms", "--msg-style", type=str)
+    parser.add_argument("-gs", "--goal-style", type=str)
     parser.add_argument("--hidden", action="store_true")
     return parser.parse_args(argstring.split())
 def gen_makefile():
@@ -106,15 +107,18 @@ def parse_make(file):
                 pass
             else:
                 yield {k: v for k, v in match.groupdict().items() if v is not None}
-def print_goal(goal, msg, max_goal_len):
+def print_goal(goal, msg, max_goal_len, argstr):
+    args = parseargs(argstr)
+    goal_style = args.goal_style.strip() if args.goal_style else "$(GOAL_STYLE)"
+    msg_style = args.msg_style.strip() if args.msg_style else "$(MSG_STYLE)"
     print(
-        ansi.style(f"  {goal:>{max_goal_len}}", "$(GOAL_STYLE)")
+        ansi.style(f"  {goal:>{max_goal_len}}", goal_style)
         + " $(HELP_SEP) "
-        + ansi.style(msg, "$(MSG_STYLE)")
+        + ansi.style(msg, msg_style)
     )
 def print_rawmsg(msg, argstr, maxlens):
-    args = rawargs(argstr)
-    msg_style = args.msg_style if args.msg_style else "$(MSG_STYLE)"
+    args = parseargs(argstr)
+    msg_style = args.msg_style.strip() if args.msg_style else "$(MSG_STYLE)"
     if not os.getenv("SHOW_HIDDEN") and args.hidden:
         return
     if msg:
@@ -143,9 +147,9 @@ def print_help():
     )
     for item in items:
         if "goal" in item:
-            print_goal(item["goal"], item["msg"], maxlens.goal)
+            print_goal(item["goal"], item["msg"], maxlens.goal, item.get("msgargs", ""))
         if "rawmsg" in item:
-            print_rawmsg(item["rawmsg"], item.get("args", ""), maxlens)
+            print_rawmsg(item["rawmsg"], item.get("rawargs", ""), maxlens)
     print(f"""$(EPILOG)""")
 print_help()
 endef
@@ -178,7 +182,9 @@ class Ansi:
             self.setcode(f"b_{name}", f"\033[1;{addfg(byte)}m")
             self.setcode(f"d_{name}", f"\033[2;{addfg(byte)}m")
             for bgname, bgbyte in color2byte.items():
-                self.setcode(f"{name}_on_{bgname}", f"\033[{addbg(bgbyte)};{addfg(byte)}m")
+                self.setcode(
+                    f"{name}_on_{bgname}", f"\033[{addbg(bgbyte)};{addfg(byte)}m"
+                )
         for name, byte in state2byte.items():
             self.setcode(name, f"\033[{byte}m")
     def setcode(self, name, escape_code):
@@ -213,7 +219,7 @@ class Ansi:
         return code + end
     def style(self, text, style):
         if style not in self.__dict__:
-            print(f"unknown style {style}")
+            print(f"unknown style: {style}")
             sys.exit(1)
         else:
             return f"{self.__dict__[style]}{text}{self.__dict__['end']}"

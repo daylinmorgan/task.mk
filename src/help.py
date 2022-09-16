@@ -8,23 +8,24 @@ import re
 from typing import Any
 
 ##- '$(ansi_py)' -##
-
+###- TODO: seperate parsing from printing -###
 ansi: Any
 
 MaxLens = namedtuple("MaxLens", "goal msg")
 
 # double dollar signs to prevent make escaping them
 pattern = re.compile(
-    r"^## (?P<goal>.*) \| (?P<msg>.*)|^### (?P<rawmsg>.*?)?(?:\s?\| args: (?P<args>.*?))?$$"
+    r"^## (?P<goal>.*?) \| (?P<msg>.*?)(?:\s?\| args: (?P<msgargs>.*?))?$$|^### (?P<rawmsg>.*?)?(?:\s?\| args: (?P<rawargs>.*?))?$$"
 )
 
 
-def rawargs(argstring):
+def parseargs(argstring):
     parser = argparse.ArgumentParser()
     parser.add_argument("--align")
     parser.add_argument("-d", "--divider", action="store_true")
     parser.add_argument("-ws", "--whitespace", action="store_true")
     parser.add_argument("-ms", "--msg-style", type=str)
+    parser.add_argument("-gs", "--goal-style", type=str)
     parser.add_argument("--hidden", action="store_true")
     return parser.parse_args(argstring.split())
 
@@ -49,17 +50,20 @@ def parse_make(file):
                 yield {k: v for k, v in match.groupdict().items() if v is not None}
 
 
-def print_goal(goal, msg, max_goal_len):
+def print_goal(goal, msg, max_goal_len, argstr):
+    args = parseargs(argstr)
+    goal_style = args.goal_style.strip() if args.goal_style else "$(GOAL_STYLE)"
+    msg_style = args.msg_style.strip() if args.msg_style else "$(MSG_STYLE)"
     print(
-        ansi.style(f"  {goal:>{max_goal_len}}", "$(GOAL_STYLE)")
+        ansi.style(f"  {goal:>{max_goal_len}}", goal_style)
         + " $(HELP_SEP) "
-        + ansi.style(msg, "$(MSG_STYLE)")
+        + ansi.style(msg, msg_style)
     )
 
 
 def print_rawmsg(msg, argstr, maxlens):
-    args = rawargs(argstr)
-    msg_style = args.msg_style if args.msg_style else "$(MSG_STYLE)"
+    args = parseargs(argstr)
+    msg_style = args.msg_style.strip() if args.msg_style else "$(MSG_STYLE)"
     if not os.getenv("SHOW_HIDDEN") and args.hidden:
         return
     if msg:
@@ -92,9 +96,9 @@ def print_help():
 
     for item in items:
         if "goal" in item:
-            print_goal(item["goal"], item["msg"], maxlens.goal)
+            print_goal(item["goal"], item["msg"], maxlens.goal, item.get("msgargs", ""))
         if "rawmsg" in item:
-            print_rawmsg(item["rawmsg"], item.get("args", ""), maxlens)
+            print_rawmsg(item["rawmsg"], item.get("rawargs", ""), maxlens)
 
     print(f"""$(EPILOG)""")
 

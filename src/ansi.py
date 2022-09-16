@@ -22,6 +22,7 @@ state2byte = dict(
 addfg = lambda byte: byte + 30
 addbg = lambda byte: byte + 40
 
+
 class Ansi:
     """ANSI escape codes"""
 
@@ -34,7 +35,9 @@ class Ansi:
             self.setcode(f"b_{name}", f"\033[1;{addfg(byte)}m")
             self.setcode(f"d_{name}", f"\033[2;{addfg(byte)}m")
             for bgname, bgbyte in color2byte.items():
-                self.setcode(f"{name}_on_{bgname}", f"\033[{addbg(bgbyte)};{addfg(byte)}m")
+                self.setcode(
+                    f"{name}_on_{bgname}", f"\033[{addbg(bgbyte)};{addfg(byte)}m"
+                )
         for name, byte in state2byte.items():
             self.setcode(name, f"\033[{byte}m")
 
@@ -76,7 +79,7 @@ class Ansi:
 
     def style(self, text, style):
         if style not in self.__dict__:
-            print(f"unknown style {style}")
+            print(f"unknown style: {style}")
             sys.exit(1)
         else:
             return f"{self.__dict__[style]}{text}{self.__dict__['end']}"
