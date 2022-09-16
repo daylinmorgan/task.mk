@@ -1,7 +1,7 @@
 # }> [github.com/daylinmorgan/task.mk] <{ #
 # Copyright (c) 2022 Daylin Morgan
 # MIT License
-# version: v22.9.14-8-gc3fa7cd-dev
+# version: v22.9.14-10-g2e4a82a-dev
 #
 # task.mk should be included at the bottom of your Makefile with `-include .task.mk`
 # See below for the standard configuration options that should be set prior to including this file.
@@ -165,22 +165,20 @@ color2byte = dict(
 state2byte = dict(
     bold=1, faint=2, italic=3, underline=4, blink=5, fast_blink=6, crossed=9
 )
-def fg(byte):
-    return 30 + byte
-def bg(byte):
-    return 40 + byte
+addfg = lambda byte: byte + 30
+addbg = lambda byte: byte + 40
 class Ansi:
-    """ANSI color codes"""
+    """ANSI escape codes"""
     def __init__(self):
         self.setcode("end", "\033[0m")
         self.setcode("default", "\033[38m")
         self.setcode("bg_default", "\033[48m")
         for name, byte in color2byte.items():
-            self.setcode(name, f"\033[{fg(byte)}m")
-            self.setcode(f"b_{name}", f"\033[1;{fg(byte)}m")
-            self.setcode(f"d_{name}", f"\033[2;{fg(byte)}m")
+            self.setcode(name, f"\033[{addfg(byte)}m")
+            self.setcode(f"b_{name}", f"\033[1;{addfg(byte)}m")
+            self.setcode(f"d_{name}", f"\033[2;{addfg(byte)}m")
             for bgname, bgbyte in color2byte.items():
-                self.setcode(f"{name}_on_{bgname}", f"\033[{bg(bgbyte)};{fg(byte)}m")
+                self.setcode(f"{name}_on_{bgname}", f"\033[{addbg(bgbyte)};{addfg(byte)}m")
         for name, byte in state2byte.items():
             self.setcode(name, f"\033[{byte}m")
     def setcode(self, name, escape_code):
