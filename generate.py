@@ -5,7 +5,7 @@ from pathlib import Path
 
 import jinja2
 
-py_script_names = ["help", "ansi", "info", "print-ansi", "vars","confirm"]
+py_script_names = ["help", "ansi", "info", "print-ansi", "vars", "confirm"]
 
 
 def get_jinja_env():
@@ -16,12 +16,18 @@ def get_jinja_env():
         block_end_string="%#",
         variable_start_string="##-",
         variable_end_string="-##",
+        comment_start_string="###-",
+        comment_end_string="-###",
     )
 
 
 def render(env, template, **kwargs):
     template = env.get_template(template)
     return template.render(**kwargs)
+
+
+def dropnewlines(text):
+    return "\n".join([line for line in text.splitlines() if line])
 
 
 def main():
@@ -31,9 +37,7 @@ def main():
         version = "dev"
 
     env = get_jinja_env()
-
-    py_scripts = [render(env, f"{name}.py") for name in py_script_names]
-
+    py_scripts = [dropnewlines(render(env, f"{name}.py")) for name in py_script_names]
     print(render(env, "task.mk", py_scripts=py_scripts, version=version))
 
 
