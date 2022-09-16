@@ -101,19 +101,19 @@ You can quickly customize some of the default behavior of `task.mk` by overridin
 
 ```make
 # ---- CONFIG ---- #
-HEADER_COLOR ?= b_cyan
-PARAMS_COLOR ?= b_magenta
-ACCENT_COLOR ?= b_yellow
-GOAL_COLOR ?= $(ACCENT_COLOR)
-MSG_COLOR ?= faint
-DIVIDER_COLOR ?= default
+HEADER_STYLE ?= b_cyan
+PARAMS_STYLE ?= b_magenta
+ACCENT_STYLE ?= b_yellow
+GOAL_STYLE ?= $(ACCENT_STYLE)
+MSG_STYLE ?= faint
+DIVIDER_STYLE ?= default
 DIVIDER ?= ─
 HELP_SEP ?= │
 
 # python f-string literals
 EPILOG ?=
 define USAGE ?=
-{ansi.$(HEADER_COLOR)}usage{ansi.end}:
+{ansi.$(HEADER_STYLE)}usage{ansi.end}:
   make <recipe>
 
 endef
@@ -122,7 +122,7 @@ endef
 To use a custom color for one of the predefined configuration variables specify only the custom method.
 
 ```make
-HEADER_COLOR = custom(fg=171,bg=227)
+HEADER_STYLE = custom(fg=171,bg=227)
 ```
 
 **NOTE**: `HELP_SEP` does not change the argument definitions syntax only the format of `make help`.

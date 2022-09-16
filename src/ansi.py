@@ -23,7 +23,7 @@ addfg = lambda byte: byte + 30
 addbg = lambda byte: byte + 40
 
 class Ansi:
-    """ANSI color codes"""
+    """ANSI escape codes"""
 
     def __init__(self):
         self.setcode("end", "\033[0m")

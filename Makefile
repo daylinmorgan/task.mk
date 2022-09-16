@@ -105,7 +105,7 @@ task.mk: $(TEMPLATES) generate.py
 	./generate.py $(VERSION) > task.mk
 
 define USAGE
-{a.$(HEADER_COLOR)}usage:{a.end}
+{a.$(HEADER_STYLE)}usage:{a.end}
 	make <recipe>
 
   Turn your {a.style('`Makefile`','b_magenta')} into

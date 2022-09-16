@@ -1,23 +1,23 @@
 # }> [github.com/daylinmorgan/task.mk] <{ #
 # Copyright (c) 2022 Daylin Morgan
 # MIT License
-# version: v22.9.14-10-g2e4a82a-dev
+# version: v22.9.14-11-gfff5448-dev
 #
 # task.mk should be included at the bottom of your Makefile with `-include .task.mk`
 # See below for the standard configuration options that should be set prior to including this file.
 # You can update your .task.mk with `make _update-task.mk`
 # ---- [config] ---- #
-HEADER_COLOR ?= b_cyan
-PARAMS_COLOR ?= b_magenta
-ACCENT_COLOR ?= b_yellow
-GOAL_COLOR ?= $(ACCENT_COLOR)
-MSG_COLOR ?= faint
-DIVIDER_COLOR ?= default
+HEADER_STYLE ?= b_cyan
+ACCENT_STYLE ?= b_yellow
+PARAMS_STYLE ?= $(ACCENT_STYLE)
+GOAL_STYLE ?= $(ACCENT_STYLE)
+MSG_STYLE ?= faint
+DIVIDER_STYLE ?= default
 DIVIDER ?= ─
 HELP_SEP ?= │
 # python f-string literals
 EPILOG ?=
-USAGE ?={ansi.$(HEADER_COLOR)}usage{ansi.end}:\n  make <recipe>
+USAGE ?={ansi.$(HEADER_STYLE)}usage{ansi.end}:\n  make <recipe>
 # ---- [buitlin recipes] ---- #
 ## h, help | show this help
 .PHONY: help h
@@ -108,13 +108,13 @@ def parse_make(file):
                 yield {k: v for k, v in match.groupdict().items() if v is not None}
 def print_goal(goal, msg, max_goal_len):
     print(
-        ansi.style(f"  {goal:>{max_goal_len}}", "$(GOAL_COLOR)")
+        ansi.style(f"  {goal:>{max_goal_len}}", "$(GOAL_STYLE)")
         + " $(HELP_SEP) "
-        + ansi.style(msg, "$(MSG_COLOR)")
+        + ansi.style(msg, "$(MSG_STYLE)")
     )
 def print_rawmsg(msg, argstr, maxlens):
     args = rawargs(argstr)
-    msg_style = args.msg_style if args.msg_style else "$(MSG_COLOR)"
+    msg_style = args.msg_style if args.msg_style else "$(MSG_STYLE)"
     if not os.getenv("SHOW_HIDDEN") and args.hidden:
         return
     if msg:
@@ -130,7 +130,7 @@ def print_rawmsg(msg, argstr, maxlens):
         print(
             ansi.style(
                 f"  {'$(DIVIDER)'*(len('$(HELP_SEP)')+sum(maxlens)+2)}",
-                "$(DIVIDER_COLOR)",
+                "$(DIVIDER_STYLE)",
             )
         )
     if args.whitespace:
@@ -238,7 +238,7 @@ import os
 $(ansi_py)
 vars = "$2".split()
 length = max((len(v) for v in vars))
-print(f"{ansi.$(HEADER_COLOR)}vars:{ansi.end}\n")
+print(f"{ansi.$(HEADER_STYLE)}vars:{ansi.end}\n")
 for v in vars:
     print(f"  {ansi.b_magenta}{v:<{length}}{ansi.end} = {os.getenv(v)}")
 print()

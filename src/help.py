@@ -51,15 +51,15 @@ def parse_make(file):
 
 def print_goal(goal, msg, max_goal_len):
     print(
-        ansi.style(f"  {goal:>{max_goal_len}}", "$(GOAL_COLOR)")
+        ansi.style(f"  {goal:>{max_goal_len}}", "$(GOAL_STYLE)")
         + " $(HELP_SEP) "
-        + ansi.style(msg, "$(MSG_COLOR)")
+        + ansi.style(msg, "$(MSG_STYLE)")
     )
 
 
 def print_rawmsg(msg, argstr, maxlens):
     args = rawargs(argstr)
-    msg_style = args.msg_style if args.msg_style else "$(MSG_COLOR)"
+    msg_style = args.msg_style if args.msg_style else "$(MSG_STYLE)"
     if not os.getenv("SHOW_HIDDEN") and args.hidden:
         return
     if msg:
@@ -75,7 +75,7 @@ def print_rawmsg(msg, argstr, maxlens):
         print(
             ansi.style(
                 f"  {'$(DIVIDER)'*(len('$(HELP_SEP)')+sum(maxlens)+2)}",
-                "$(DIVIDER_COLOR)",
+                "$(DIVIDER_STYLE)",
             )
         )
     if args.whitespace:
