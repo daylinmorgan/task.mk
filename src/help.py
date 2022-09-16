@@ -25,7 +25,7 @@ def rawargs(argstring):
     parser.add_argument("-d", "--divider", action="store_true")
     parser.add_argument("-ws", "--whitespace", action="store_true")
     parser.add_argument("-ms", "--msg-style", type=str)
-    parser.add_argument("--hidden",action="store_true")
+    parser.add_argument("--hidden", action="store_true")
     return parser.parse_args(argstring.split())
 
 

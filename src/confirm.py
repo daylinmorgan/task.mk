@@ -3,7 +3,9 @@
 #% block script %#
 
 import sys
+
 ##- '$(ansi_py)' -##
+
 
 def confirm():
     """
@@ -15,6 +17,7 @@ def confirm():
     while answer not in ["y", "n"]:
         answer = input(f"""$(2) {a.b_red}[Y/n]{a.end} """).lower()
     return answer == "y"
+
 
 if confirm():
     sys.exit(0)
