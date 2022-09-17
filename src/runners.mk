@@ -10,7 +10,9 @@ create_string = $(subst $(\n),\n,$(call escape_shellstring,$(call escape_printf,
 printline = printf -- "<----------------------------------->\n"
 ifdef DEBUG
 define _debug_runner
-@printf "$(1) Script:\n";$(printline);printf "$(call create_string,$(3))\n";$(printline)
+@printf "$(1) Script:\n";$(printline);
+@printf "$(call create_string,$(3))\n" | cat -n
+@$(printline)
 @printf "$(call create_string,$(3))" | $(2)
 endef
 py = $(call _debug_runner,Python,python3,$($(1)))
