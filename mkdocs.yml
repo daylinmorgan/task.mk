@@ -1,4 +1,5 @@
 site_name: task.mk
+site_url: https://gh.dayl.in/task.mk
 repo_url: https://github.com/daylinmorgan/task.mk
 repo_name: daylinmorgan/task.mk
 theme:
@@ -10,8 +11,8 @@ theme:
 extra_css:
   - stylesheets/extra.css
   - stylesheets/asciinema-player.css
-extra_javascript:
-  - javascripts/asciinema-player.min.js
+# extra_javascript:
+  # - javascripts/asciinema-player.min.js
 plugins:
   - search
   - git-revision-date-localized:
