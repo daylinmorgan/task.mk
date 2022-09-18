@@ -41,19 +41,6 @@ release: version-check
 c clean:
 	@rm -f task.mk .task.mk
 
-### | args: --divider --whitespace
-### examples of task.mk features | args: --divider --align center --msg-style b_red
-define list_files_py
-from pathlib import Path
-print("files in $(2)")
-print([f.name for f in (Path("$(2)").iterdir())])
-endef
-
-## list-% | use pathlib.Path to list files
-### name the directory in rule (make list-src) | args: --align sep
-list-%:
-	$(call py,list_files_py,$*)
-
 .PHONY: version-check
 version-check:
 	@if [[ "${VERSION}" == *'-'* ]]; then\
@@ -67,24 +54,6 @@ version-check:
 	fi
 
 
-define bash_script
-figlet task.mk 2>/dev/null || echo 'no figlet :('
-echo "This is from bash"
-cat /etc/hostname
-printf "%s\n" "$(2)"
-endef
-.PHONY: test-bash
-test-bash:
-	$(call tbash,bash_script,bash multiline is probably working)
-
-define mlmsg
-{a.b_yellow}
-It can even be multiline!{a.end}
-{a.style('and styles can be defined','red')}
-as python {a.bold}f-string{a.end} literals
-{a.end}
-endef
-
 ## info | demonstrate usage of tprint
 .PHONY: task
 info:
@@ -93,13 +62,6 @@ info:
 	$(call tprint,$(mlmsg))
 	$(call tprint,{a.custom(fg=(148, 255, 15),bg=(103, 2, 15))}Custom Colors TOO!{a.end})
 
-## check | get user confirmation or exit
-.PHONY: check
-check:
-	$(call tconfirm,Would you like to proceed?)
-	@echo "you said yes!"
-
-### | args: --divider
 
 task.mk: $(TEMPLATES) generate.py
 	./generate.py $(VERSION) > task.mk
@@ -114,7 +76,7 @@ define USAGE
 
 endef
 
-EPILOG = \nfor more info: github.com/daylinmorgan/task.mk
+EPILOG = \nfor more info: gh.dayl.in/task.mk
 PRINT_VARS := VERSION
 
 -include .task.mk

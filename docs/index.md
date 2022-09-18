@@ -1,6 +1,6 @@
 <div align="center">
   <h1 align="center"> task.mk </h1>
-  <img src="./assets/help.svg" alt="help" width=400 >
+  <img src="https://raw.githubusercontent.com/daylinmorgan/task.mk/main/assets/help.svg" alt="help" width=400 >
   <p align="center">
   the task runner for GNU Make you've been missing
   </p>
@@ -14,10 +14,11 @@ So let's improve the UX to make it the best task runner it can be.
 to add some QOL improvements for your users and fellow maintainers.
 
 Current Features:
-  - ANSI escape code support (including NO_COLOR)
-  - formatted help output
-  - custom print function
-  - confirmation prompt
+
+- ANSI escape code support (including NO\_COLOR)
+- formatted help output
+- custom print function
+- confirmation prompt
 
 Depends on `GNU Make`, obviously and `Python >=3.7`.
 
@@ -42,7 +43,33 @@ You might also consider making it a consistently downloaded dependency if you pl
 $(if $(wildcard .task.mk),,.task.mk: ; curl -fsSL https://raw.githubusercontent.com/daylinmorgan/task.mk/v22.9.14/task.mk -o .task.mk)
 ```
 
-For more info see the [documentation](https://gh.dayl.in/task.mk).
+Alternatively, you can use the builtin rule `_update-task.mk` to update to the latest development version.
+
+See [Usage](./usage) to get started running all your tasks.
+See [Examples](./examples) for more use cases.
+
+## Zsh Completions for GNU Make
+
+If you use `GNU Make` with zsh you may want to add the following
+line to your rc file to allow `make` to handle the autocomplete.
+
+```zsh
+zstyle ':completion::complete:make:*:targets' call-command true
+```
+
+## Why Make?
+
+There are lot of `GNU Make` alternatives but none have near the same level of ubiquity.
+This project attaches to `make` some of the native features of [`just`](https://github.com/casey/just), a command runner.
+
+Just is a great task runner, but it suffers two problems, users probably don't have it installed already, and there is no way to define file specific recipes.
+Most of my `Makefile`'s are comprised primarily of handy `.PHONY` recipes, but I always end up with a few file specific recipes.
+
+Another interesting project I've evaluated for these purposes is [`go-task/task`](https://github.com/go-task/task).
+`Task` has many of the features of `GNU Make` and some novel features of it's own.
+But like `just` it's a tool people don't usually already have and it's configured using a `yaml` file.
+`Yaml` files can be finicky to work with and and it uses a golang based shell runtime, not your native shell, which might lead to unexpected behavior.
+
 
 ## Simpler Alternative
 
