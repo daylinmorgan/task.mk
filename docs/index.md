@@ -23,7 +23,7 @@ Current Features:
 Depends on `GNU Make`, obviously and `Python >=3.7`.
 
 Wait python?!?!, I'm not `pip` installing some package just to parse my makefile.
-I agree, all you need is one file [`.task.mk`](./task.mk).
+I agree, all you need is one file [`.task.mk`](https://github.com/daylinmorgan/task.mk/blob/main/task.mk).
 You can automagically include it with just two additional lines to your `Makefile` (and probably one to your `.gitignore`) and your good to go.
 
 ## Setup
