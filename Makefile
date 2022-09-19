@@ -54,7 +54,6 @@ version-check:
 		$(call tprint-sh,{a.green}VERSION LOOKS GOOD!{a.end});\
 	fi
 
-
 ## info | demonstrate usage of tprint
 .PHONY: task
 info:
@@ -63,18 +62,14 @@ info:
 	$(call tprint,$(mlmsg))
 	$(call tprint,{a.custom(fg=(148, 255, 15),bg=(103, 2, 15))}Custom Colors TOO!{a.end})
 
-
 task.mk: $(TEMPLATES) generate.py
 	./generate.py $(VERSION) > task.mk
 
 define USAGE
-{a.$(HEADER_STYLE)}usage:{a.end}
-	make <recipe>
-
+{a.$(HEADER_STYLE)}usage:{a.end}\n	make <recipe>\n
   Turn your {a.style('`Makefile`','b_magenta')} into
   the {a.italic}{a.underline}task runner{a.end} you always needed.
-  See the example output below.
-
+  See the example output below.\n
 endef
 
 EPILOG = \nfor more info: gh.dayl.in/task.mk
