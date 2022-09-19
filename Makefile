@@ -32,7 +32,8 @@ release: version-check
 	$(call msg,Release Project)
 	@./generate.py $(VERSION) > task.mk
 	@sed -i 's/task.mk\/.*\/task.mk/task.mk\/v$(VERSION)\/task.mk/g' README.md
-	@git add task.mk README.md
+	@sed -i 's/task.mk\/.*\/task.mk/task.mk\/v$(VERSION)\/task.mk/g' docs/index.md
+	@git add task.mk README.md docs/index.md
 	@git commit -m "release: v$(VERSION)" --no-verify
 	@git tag v$(VERSION)
 
@@ -78,7 +79,6 @@ endef
 
 EPILOG = \nfor more info: gh.dayl.in/task.mk
 PRINT_VARS := VERSION
-
 -include .task.mk
 .task.mk: $(TEMPLATES) generate.py
 	$(call tprint,{a.b_yellow}re-jinjaing the local .task.mk{a.end})
