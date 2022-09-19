@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block scripts %}
+
+  {{ super() }}
+
+  {% if page.meta %}
+  {% if page.meta.asciinema %}
+  <script async>
+  AsciinemaPlayer.create('./demo.cast', document.getElementById('demo-cast'),{loop: true});
+  </script>
+  {% endif %}
+  {% endif %}
+
+
+{% endblock %}

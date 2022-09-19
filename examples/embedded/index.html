@@ -420,18 +420,14 @@
                 
                   
 
-  <a href="https://github.com/daylinmorgan/task.mk/edit/master/docs/examples/embedded/index.md" title="Edit this page" class="md-content__button md-icon">
+  <a href="https://github.com/daylinmorgan/task.mk/edit/main/docs/examples/embedded/index.md" title="Edit this page" class="md-content__button md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
   </a>
 
 
 <h1 id="embedded">Embedded</h1>
-<div id="demo"></div>
-<script src="/javascripts/asciinema-player.min.js"></script>
-<script async>
-  AsciinemaPlayer.create('./demo.cast', document.getElementById('demo'),{loop: true});
-</script>
+<div id="demo-cast"></div>
 
 <div class="highlight"><span class="filename">embedded.mk</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nv">msgfmt</span> <span class="o">=</span> <span class="o">{</span>a.style<span class="o">(</span><span class="s1">&#39;==&gt;&#39;</span>,<span class="s1">&#39;bold&#39;</span><span class="o">)}</span> <span class="o">{</span>a.style<span class="o">(</span><span class="s1">&#39;$(1)&#39;</span>,<span class="s1">&#39;b_magenta&#39;</span><span class="o">)}</span> <span class="o">{</span>a.style<span class="o">(</span><span class="s1">&#39;&lt;==&#39;</span>,<span class="s1">&#39;bold&#39;</span><span class="o">)}</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nv">msg</span> <span class="o">=</span> <span class="k">$(</span>call tprint,<span class="k">$(</span>call msgfmt ,<span class="k">$(</span><span class="m">1</span><span class="k">)))</span>
@@ -493,7 +489,7 @@
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">September 18, 2022</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">September 19, 2022</span>
       
         <br>
         Created:
@@ -563,8 +559,23 @@
     <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.indexes"], "search": "../../assets/javascripts/workers/search.ecf98df9.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
     
     
+
+  
       <script src="../../assets/javascripts/bundle.39f04ddb.min.js"></script>
       
+        <script src="../../javascripts/asciinema-player.min.js"></script>
+      
     
+
+  
+  
+  <script async>
+  AsciinemaPlayer.create('./demo.cast', document.getElementById('demo-cast'),{loop: true});
+  </script>
+  
+  
+
+
+
   </body>
 </html>
