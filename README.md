@@ -4,7 +4,12 @@
   <p align="center">
   the task runner for GNU Make you've been missing
   </p>
+  <p align="center">
+  <a href="https://gh.dayl.in/task.mk">Documentation</a>
+  </p>
+
 </div>
+
 </br>
 
 GNU make is an excellent build tool and the task runner we love to hate, but can't escape.
@@ -52,6 +57,7 @@ But I just want a basic help output, surely I don't need python for this... you 
 
 ```make
 ## h, help | show this help
+### additional text printed with the help
 .PHONY: help h
 help h: Makefile
 	@awk -v fill=$(shell sed -n 's/^## \(.*\) | .*/\1/p' $< | wc -L)\
