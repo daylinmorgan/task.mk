@@ -1,6 +1,3 @@
-msgfmt = {a.style('==>','bold')} {a.style('$(1)','b_magenta')} {a.style('<==','bold')}
-msg = $(call tprint,$(call msgfmt ,$(1)))
-
 ### examples of task.mk features | args: --divider --align center --msg-style b_red
 define list_files_py
 from pathlib import Path
@@ -33,14 +30,6 @@ endef
 .PHONY: embedded-bash
 embedded-bash:
 	$(call tbash,bash_script,bash multiline is probably working)
-
-define mlmsg
-{a.b_yellow}
-It can even be multiline!{a.end}
-{a.style('and styles can be defined','red')}
-as python {a.bold}f-string{a.end} literals
-{a.end}
-endef
 
 define USAGE
 {a.$(HEADER_STYLE)}usage:{a.end}

@@ -1,7 +1,3 @@
-msgfmt = {a.style('==>','bold')} {a.style('$(1)','b_magenta')} {a.style('<==','bold')}
-msg = $(call tprint,$(call msgfmt ,$(1)))
-
-
 ## check | get user confirmation or exit
 .PHONY: check
 check:
