@@ -9,4 +9,4 @@ DIVIDER ?= ─
 HELP_SEP ?= │
 # python f-string literals
 EPILOG ?=
-USAGE ?={ansi.$(HEADER_STYLE)}usage{ansi.end}:\n  make <recipe>
+USAGE ?={ansi.$(HEADER_STYLE)}usage{ansi.end}:\n  make <recipe>\n

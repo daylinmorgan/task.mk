@@ -1,7 +1,7 @@
 # }> [github.com/daylinmorgan/task.mk] <{ #
 # Copyright (c) 2022 Daylin Morgan
 # MIT License
-# version: v22.9.14-19-g8f875a1-dev
+# version: v22.9.14-24-ge205787-dev
 #
 # task.mk should be included at the bottom of your Makefile with `-include .task.mk`
 # See below for the standard configuration options that should be set prior to including this file.
@@ -17,7 +17,7 @@ DIVIDER ?= ─
 HELP_SEP ?= │
 # python f-string literals
 EPILOG ?=
-USAGE ?={ansi.$(HEADER_STYLE)}usage{ansi.end}:\n  make <recipe>
+USAGE ?={ansi.$(HEADER_STYLE)}usage{ansi.end}:\n  make <recipe>\n
 # ---- [buitlin recipes] ---- #
 ## h, help | show this help
 .PHONY: help h
