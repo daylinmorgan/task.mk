@@ -1,7 +1,7 @@
 # }> [github.com/daylinmorgan/task.mk] <{ #
 # Copyright (c) 2022 Daylin Morgan
 # MIT License
-# version: v22.9.14-18-g1a018e2-dev
+# version: v22.9.14-19-g8f875a1-dev
 #
 # task.mk should be included at the bottom of your Makefile with `-include .task.mk`
 # See below for the standard configuration options that should be set prior to including this file.
@@ -112,7 +112,7 @@ def fmt_goal(goal, msg, max_goal_len, argstr):
     msg_style = args.msg_style.strip() if args.msg_style else "$(MSG_STYLE)"
     return (
         ansi.style(f"  {goal:>{max_goal_len}}", goal_style)
-        + " $(HELP_SEP) "
+        + f" $(HELP_SEP) "
         + ansi.style(msg, msg_style)
     )
 def fmt_rawmsg(msg, argstr, maxlens):
@@ -237,13 +237,10 @@ print(f"""$(2)""")
 endef
 define  print_ansi_py
 $(ansi_py)
+sep = f"$(HELP_SEP)"
 codes_names = {getattr(ansi, attr): attr for attr in ansi.__dict__}
 for code in sorted(codes_names.keys(), key=lambda item: (len(item), item)):
-    print(
-        "{:>20} $(HELP_SEP) {} $(HELP_SEP) {}".format(
-            codes_names[code], code + "******" + ansi.end, repr(code)
-        )
-    )
+    print(f"{codes_names[code]:>20} {sep} {code+'*****'+ansi.end} {sep} {repr(code)}")
 endef
 define  vars_py
 import os

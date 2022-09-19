@@ -53,7 +53,7 @@ def fmt_goal(goal, msg, max_goal_len, argstr):
     msg_style = args.msg_style.strip() if args.msg_style else "$(MSG_STYLE)"
     return (
         ansi.style(f"  {goal:>{max_goal_len}}", goal_style)
-        + " $(HELP_SEP) "
+        + f" $(HELP_SEP) "
         + ansi.style(msg, msg_style)
     )
 
