@@ -7,6 +7,7 @@ import os
 import re
 
 ##- '$(ansi_py)' -##
+##- '$(quit_make_py)' -##
 
 MaxLens = namedtuple("MaxLens", "goal msg")
 
@@ -14,6 +15,7 @@ MaxLens = namedtuple("MaxLens", "goal msg")
 pattern = re.compile(
     r"^## (?P<goal>.*?) \| (?P<msg>.*?)(?:\s?\| args: (?P<msgargs>.*?))?$$|^### (?P<rawmsg>.*?)?(?:\s?\| args: (?P<rawargs>.*?))?$$"
 )
+goal_pattern = re.compile(r"""^(?!#|\t)(.*):.*\n\t""", re.MULTILINE)
 
 
 def parseargs(argstring):
@@ -35,16 +37,53 @@ def gen_makefile():
     return makefile
 
 
-def parse_make(file):
+def parse_help(file,hidden=False):
     for line in file.splitlines():
         match = pattern.search(line)
         if match:
-            if not os.getenv("SHOW_HIDDEN") and str(
+            if not hidden and not os.getenv("SHOW_HIDDEN") and str(
                 match.groupdict().get("goal")
             ).startswith("_"):
                 pass
             else:
                 yield {k: v for k, v in match.groupdict().items() if v is not None}
+
+
+def recipe_help_header(goal):
+    item = [
+        i for i in list(parse_help(gen_makefile(),hidden=True)) if "goal" in i and goal == i["goal"]
+    ]
+    if item:
+        return fmt_goal(
+            item[0]["goal"],
+            item[0]["msg"],
+            len(item[0]["goal"]),
+            item[0].get("msgargs", ""),
+        )
+    else:
+        return f"  {ansi.style(goal,'$(GOAL_STYLE)')}:"
+
+
+def parse_goal(file, goal):
+    goals = goal_pattern.findall(file)
+    matched_goal = [i for i in goals if goal in i.split()]
+    output = []
+
+    if matched_goal:
+        output.append(recipe_help_header(matched_goal[0]))
+        lines = file.splitlines()
+        loc = [n for n, l in enumerate(lines) if l.startswith(f"{matched_goal[0]}:")][0]
+        recipe = []
+        for line in lines[loc + 1 :]:
+            if not line.startswith("\t"):
+                break
+            recipe.append(line)
+        output.append(divider(max((len(l) for l in recipe)) + 5))
+        output.append("\n".join(recipe) + "\n")
+    else:
+        output.append(f"{ansi.b_red}ERROR{ansi.end} Failed to find goal: {goal}")
+
+    return output
 
 
 def fmt_goal(goal, msg, max_goal_len, argstr):
@@ -56,6 +95,10 @@ def fmt_goal(goal, msg, max_goal_len, argstr):
         + f" $(HELP_SEP) "
         + ansi.style(msg, msg_style)
     )
+
+
+def divider(len):
+    return ansi.style(f"  {'$(DIVIDER)'*len}", "$(DIVIDER_STYLE)")
 
 
 def fmt_rawmsg(msg, argstr, maxlens):
@@ -74,12 +117,7 @@ def fmt_rawmsg(msg, argstr, maxlens):
         else:
             lines.append(f"  {ansi.style(msg,msg_style)}")
     if args.divider:
-        lines.append(
-            ansi.style(
-                f"  {'$(DIVIDER)'*(len('$(HELP_SEP)')+sum(maxlens)+2)}",
-                "$(DIVIDER_STYLE)",
-            )
-        )
+        lines.append(divider(len("$(HELP_SEP)") + sum(maxlens) + 2))
     if args.whitespace:
         lines.append("\n")
 
@@ -89,7 +127,7 @@ def fmt_rawmsg(msg, argstr, maxlens):
 def print_help():
     lines = [f"""$(USAGE)"""]
 
-    items = list(parse_make(gen_makefile()))
+    items = list(parse_help(gen_makefile()))
     maxlens = MaxLens(
         *(max((len(item[x]) for item in items if x in item)) for x in ["goal", "msg"])
     )
@@ -106,5 +144,21 @@ def print_help():
     print("\n".join(lines))
 
 
-print_help()
+def print_arg_help(help_args):
+    for arg in help_args.split():
+        print(f"{ansi.style('task.mk recipe help','$(HEADER_STYLE)')}\n")
+        print("\n".join(parse_goal(gen_makefile(), arg)))
+
+
+def main():
+    help_args = os.getenv("HELP_ARGS")
+    if help_args:
+        quit_make()
+        print_arg_help(help_args)
+    else:
+        print_help()
+
+
+if __name__ == "__main__":
+    main()
 #% endblock %#

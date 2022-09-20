@@ -1,4 +1,8 @@
 # ---- [builtin recipes] ---- #
+ifeq (help,$(firstword $(MAKECMDGOALS)))
+  HELP_ARGS := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
+	export HELP_ARGS
+endif
 ## h, help | show this help
 .PHONY: help h
 help h:

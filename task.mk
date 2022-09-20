@@ -1,7 +1,7 @@
 # }> [github.com/daylinmorgan/task.mk] <{ #
 # Copyright (c) 2022 Daylin Morgan
 # MIT License
-# version: v22.9.19-1-g031e38a-dev
+# version: v22.9.19-3-g81a0031-dev
 #
 # task.mk should be included at the bottom of your Makefile with `-include .task.mk`
 # See below for the standard configuration options that should be set prior to including this file.
@@ -78,7 +78,8 @@ pysh = python3 <(printf "$(call _create_string,$($(1)))")
 define  help_py
 import argparse
 from collections import namedtuple
-import os, re, signal, sys
+import os
+import re
 $(ansi_py)
 $(quit_make_py)
 MaxLens = namedtuple("MaxLens", "goal msg")
@@ -101,11 +102,11 @@ def gen_makefile():
         with open(file, "r") as f:
             makefile += f.read() + "\n\n"
     return makefile
-def parse_help(file):
+def parse_help(file,hidden=False):
     for line in file.splitlines():
         match = pattern.search(line)
         if match:
-            if not os.getenv("SHOW_HIDDEN") and str(
+            if not hidden and not os.getenv("SHOW_HIDDEN") and str(
                 match.groupdict().get("goal")
             ).startswith("_"):
                 pass
@@ -113,7 +114,7 @@ def parse_help(file):
                 yield {k: v for k, v in match.groupdict().items() if v is not None}
 def recipe_help_header(goal):
     item = [
-        i for i in list(parse_help(gen_makefile())) if "goal" in i and goal == i["goal"]
+        i for i in list(parse_help(gen_makefile(),hidden=True)) if "goal" in i and goal == i["goal"]
     ]
     if item:
         return fmt_goal(
@@ -123,12 +124,13 @@ def recipe_help_header(goal):
             item[0].get("msgargs", ""),
         )
     else:
-        return f"  {ansi.style(matched_goal[0],'$(GOAL_STYLE)')}:"
+        return f"  {ansi.style(goal,'$(GOAL_STYLE)')}:"
 def parse_goal(file, goal):
     goals = goal_pattern.findall(file)
     matched_goal = [i for i in goals if goal in i.split()]
+    output = []
     if matched_goal:
-        output = [recipe_help_header(matched_goal[0])]
+        output.append(recipe_help_header(matched_goal[0]))
         lines = file.splitlines()
         loc = [n for n, l in enumerate(lines) if l.startswith(f"{matched_goal[0]}:")][0]
         recipe = []
@@ -194,9 +196,9 @@ def print_arg_help(help_args):
         print(f"{ansi.style('task.mk recipe help','$(HEADER_STYLE)')}\n")
         print("\n".join(parse_goal(gen_makefile(), arg)))
 def main():
-    quit_make()
     help_args = os.getenv("HELP_ARGS")
     if help_args:
+        quit_make()
         print_arg_help(help_args)
     else:
         print_help()

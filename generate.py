@@ -2,10 +2,9 @@
 
 import sys
 from pathlib import Path
-
 import jinja2
 
-py_script_names = ["help", "ansi", "info", "print-ansi", "vars", "confirm"]
+py_script_names = ["help", "ansi", "info", "print-ansi", "vars", "confirm", "quit_make"]
 
 
 def get_jinja_env():
