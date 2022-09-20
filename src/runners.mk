@@ -13,7 +13,7 @@ define _debug_runner
 @printf "$(1) Script:\n";$(_printline);
 @printf "$(call _create_string,$(3))\n" | cat -n
 @$(_printline)
-@printf "$(call _create_string,$(3))" | $(2)
+@$(2) <(printf "$(call _create_string,$(3))")
 endef
 py = $(call _debug_runner,Python,python3,$($(1)))
 tbash = $(call _debug_runner,Bash,bash,$($(1)))
