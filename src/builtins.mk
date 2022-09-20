@@ -1,4 +1,4 @@
-# ---- [buitlin recipes] ---- #
+# ---- [builtin recipes] ---- #
 ## h, help | show this help
 .PHONY: help h
 help h:

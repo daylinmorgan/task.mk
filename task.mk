@@ -1,7 +1,7 @@
 # }> [github.com/daylinmorgan/task.mk] <{ #
 # Copyright (c) 2022 Daylin Morgan
 # MIT License
-# version: 22.9.19
+# version: v22.9.19-1-g584879b-dev
 #
 # task.mk should be included at the bottom of your Makefile with `-include .task.mk`
 # See below for the standard configuration options that should be set prior to including this file.
@@ -18,7 +18,7 @@ HELP_SEP ?= │
 # python f-string literals
 EPILOG ?=
 USAGE ?={ansi.$(HEADER_STYLE)}usage{ansi.end}:\n  make <recipe>\n
-# ---- [buitlin recipes] ---- #
+# ---- [builtin recipes] ---- #
 ## h, help | show this help
 .PHONY: help h
 help h:
@@ -48,28 +48,28 @@ _update-task.mk:
 	curl https://raw.githubusercontent.com/daylinmorgan/task.mk/main/task.mk -o .task.mk
 export MAKEFILE_LIST
 # ---- [python/bash script runner] ---- #
-define \n
+define _newline
 
 
 endef
-escape_shellstring = $(subst `,\`,$(subst ",\",$(subst $$,\$$,$(subst \,\\,$1))))
-escape_printf = $(subst \,\\,$(subst %,%%,$1))
-create_string = $(subst $(\n),\n,$(call escape_shellstring,$(call escape_printf,$1)))
-printline = printf -- "<----------------------------------->\n"
+_escape_shellstring = $(subst `,\`,$(subst ",\",$(subst $$,\$$,$(subst \,\\,$1))))
+_escape_printf = $(subst \,\\,$(subst %,%%,$1))
+_create_string = $(subst $(_newline),\n,$(call _escape_shellstring,$(call _escape_printf,$1)))
+_printline = printf -- "<----------------------------------->\n"
 ifdef DEBUG
 define _debug_runner
-@printf "$(1) Script:\n";$(printline);
-@printf "$(call create_string,$(3))\n" | cat -n
-@$(printline)
-@printf "$(call create_string,$(3))" | $(2)
+@printf "$(1) Script:\n";$(_printline);
+@printf "$(call _create_string,$(3))\n" | cat -n
+@$(_printline)
+@printf "$(call _create_string,$(3))" | $(2)
 endef
 py = $(call _debug_runner,Python,python3,$($(1)))
 tbash = $(call _debug_runner,Bash,bash,$($(1)))
 else
-py = @python3 <(printf "$(call create_string,$($(1)))")
-tbash = @bash <(printf "$(call create_string,$($(1)))")
+py = @python3 <(printf "$(call _create_string,$($(1)))")
+tbash = @bash <(printf "$(call _create_string,$($(1)))")
 endif
-pysh = python3 <(printf "$(call create_string,$($(1)))")
+pysh = python3 <(printf "$(call _create_string,$($(1)))")
 # ---- [python scripts] ---- #
 define  help_py
 import argparse
