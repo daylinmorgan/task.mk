@@ -24,7 +24,7 @@ Current Features:
   - custom print function
   - confirmation prompt
 
-Depends on `GNU Make`, obviously and `Python >=3.7`.
+Depends on `GNU Make`, obviously and `Python >=3.7`, and `bash` (or `zsh`).
 
 Wait python?!?!, I'm not `pip` installing some package just to parse my makefile.
 I agree, all you need is one file [`.task.mk`](./task.mk).

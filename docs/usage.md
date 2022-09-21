@@ -56,23 +56,19 @@ See this project's `make info` for an example.
 You can quickly customize some of the default behavior of `task.mk` by overriding the below variables prior to the `-include .task.mk`.
 
 ```make
-# ---- CONFIG ---- #
+# ---- [config] ---- #
 HEADER_STYLE ?= b_cyan
-PARAMS_STYLE ?= b_magenta
 ACCENT_STYLE ?= b_yellow
+PARAMS_STYLE ?= $(ACCENT_STYLE)
 GOAL_STYLE ?= $(ACCENT_STYLE)
 MSG_STYLE ?= faint
 DIVIDER_STYLE ?= default
 DIVIDER ?= ─
 HELP_SEP ?= │
-
 # python f-string literals
 EPILOG ?=
-define USAGE ?=
-{ansi.$(HEADER_STYLE)}usage{ansi.end}:
-  make <recipe>
-
-endef
+USAGE ?={ansi.$(HEADER_STYLE)}usage{ansi.end}:\n  make <recipe>\n
+INHERIT_SHELL ?=
 ```
 
 To use a custom color for one of the predefined configuration variables specify only the custom method.
