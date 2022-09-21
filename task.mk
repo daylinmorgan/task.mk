@@ -1,7 +1,7 @@
 # }> [github.com/daylinmorgan/task.mk] <{ #
 # Copyright (c) 2022 Daylin Morgan
 # MIT License
-# version: v22.9.19-3-g81a0031-dev
+# version: v22.9.19-4-g071f7fc-dev
 #
 # task.mk should be included at the bottom of your Makefile with `-include .task.mk`
 # See below for the standard configuration options that should be set prior to including this file.
@@ -102,19 +102,23 @@ def gen_makefile():
         with open(file, "r") as f:
             makefile += f.read() + "\n\n"
     return makefile
-def parse_help(file,hidden=False):
+def parse_help(file, hidden=False):
     for line in file.splitlines():
         match = pattern.search(line)
         if match:
-            if not hidden and not os.getenv("SHOW_HIDDEN") and str(
-                match.groupdict().get("goal")
-            ).startswith("_"):
+            if (
+                not hidden
+                and not os.getenv("SHOW_HIDDEN")
+                and str(match.groupdict().get("goal")).startswith("_")
+            ):
                 pass
             else:
                 yield {k: v for k, v in match.groupdict().items() if v is not None}
 def recipe_help_header(goal):
     item = [
-        i for i in list(parse_help(gen_makefile(),hidden=True)) if "goal" in i and goal == i["goal"]
+        i
+        for i in list(parse_help(gen_makefile(), hidden=True))
+        if "goal" in i and goal == i["goal"]
     ]
     if item:
         return fmt_goal(

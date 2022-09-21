@@ -37,13 +37,15 @@ def gen_makefile():
     return makefile
 
 
-def parse_help(file,hidden=False):
+def parse_help(file, hidden=False):
     for line in file.splitlines():
         match = pattern.search(line)
         if match:
-            if not hidden and not os.getenv("SHOW_HIDDEN") and str(
-                match.groupdict().get("goal")
-            ).startswith("_"):
+            if (
+                not hidden
+                and not os.getenv("SHOW_HIDDEN")
+                and str(match.groupdict().get("goal")).startswith("_")
+            ):
                 pass
             else:
                 yield {k: v for k, v in match.groupdict().items() if v is not None}
@@ -51,7 +53,9 @@ def parse_help(file,hidden=False):
 
 def recipe_help_header(goal):
     item = [
-        i for i in list(parse_help(gen_makefile(),hidden=True)) if "goal" in i and goal == i["goal"]
+        i
+        for i in list(parse_help(gen_makefile(), hidden=True))
+        if "goal" in i and goal == i["goal"]
     ]
     if item:
         return fmt_goal(
