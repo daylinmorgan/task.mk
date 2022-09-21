@@ -31,3 +31,6 @@ _update-task.mk:
 	$(call tprint,{a.b_cyan}Updating task.mk{a.end})
 	curl https://raw.githubusercontent.com/daylinmorgan/task.mk/main/task.mk -o .task.mk
 export MAKEFILE_LIST
+ifndef INHERIT_SHELL
+SHELL := /bin/bash
+endif

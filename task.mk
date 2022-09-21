@@ -1,7 +1,7 @@
 # }> [github.com/daylinmorgan/task.mk] <{ #
 # Copyright (c) 2022 Daylin Morgan
 # MIT License
-# version: v22.9.19-4-g071f7fc-dev
+# version: v22.9.19-5-g5f593e3-dev
 #
 # task.mk should be included at the bottom of your Makefile with `-include .task.mk`
 # See below for the standard configuration options that should be set prior to including this file.
@@ -18,6 +18,7 @@ HELP_SEP ?= │
 # python f-string literals
 EPILOG ?=
 USAGE ?={ansi.$(HEADER_STYLE)}usage{ansi.end}:\n  make <recipe>\n
+INHERIT_SHELL ?=
 # ---- [builtin recipes] ---- #
 ifeq (help,$(firstword $(MAKECMDGOALS)))
   HELP_ARGS := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
@@ -51,6 +52,9 @@ _update-task.mk:
 	$(call tprint,{a.b_cyan}Updating task.mk{a.end})
 	curl https://raw.githubusercontent.com/daylinmorgan/task.mk/main/task.mk -o .task.mk
 export MAKEFILE_LIST
+ifndef INHERIT_SHELL
+SHELL := /bin/bash
+endif
 # ---- [python/bash script runner] ---- #
 define _newline
 
@@ -322,11 +326,7 @@ else:
     quit_make()
 endef
 define  quit_make_py
-import os, signal, sys
+import os, signal
 def quit_make():
-    old_stdout = sys.stdout
-    with open(os.devnull, "w") as f:
-        sys.stdout = f
-        os.kill(os.getppid(), signal.SIGQUIT)
-    sys.stdout = old_stdout
+    os.kill(os.getppid(), signal.SIGQUIT)
 endef
