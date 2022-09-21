@@ -38,6 +38,6 @@ define USAGE
 	examples of embedded scripts in `{a.magenta}Makefile{a.end}`
 
 endef
-.DEFUALT_GOAL = help
+.DEFAULT_GOAL = help
 include $(shell git rev-parse --show-toplevel)/task.mk
 

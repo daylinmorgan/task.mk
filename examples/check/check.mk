@@ -11,6 +11,6 @@ define USAGE
 	interactivity w/ task.mk\n
 endef
 
-.DEFUALT_GOAL = help
+.DEFAULT_GOAL = help
 include $(shell git rev-parse --show-toplevel)/task.mk
 
