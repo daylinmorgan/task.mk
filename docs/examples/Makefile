@@ -9,7 +9,7 @@ all: $(CASTS)
 %/demo.cast: %/record.sh
 	asciinema rec --cols $(COLS) --rows $(ROWS) --overwrite -c $< $@
 
-check/demo.cast: COLS = 45
+check/demo.cast: COLS = 48
 check/demo.cast: ROWS = 12
 
 clean:
