@@ -531,23 +531,19 @@ Or a tuple/list to define an RBG 24-bit color, for instance <code>a.custom(fg=(5
 See this project's <code>make info</code> for an example.</p>
 <h2 id="configuration">Configuration</h2>
 <p>You can quickly customize some of the default behavior of <code>task.mk</code> by overriding the below variables prior to the <code>-include .task.mk</code>.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c"># ---- CONFIG ---- #</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c"># ---- [config] ---- #</span>
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nv">HEADER_STYLE</span> <span class="o">?=</span> b_cyan
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="nv">PARAMS_STYLE</span> <span class="o">?=</span> b_magenta
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="nv">ACCENT_STYLE</span> <span class="o">?=</span> b_yellow
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="nv">ACCENT_STYLE</span> <span class="o">?=</span> b_yellow
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="nv">PARAMS_STYLE</span> <span class="o">?=</span> <span class="k">$(</span>ACCENT_STYLE<span class="k">)</span>
 <a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="nv">GOAL_STYLE</span> <span class="o">?=</span> <span class="k">$(</span>ACCENT_STYLE<span class="k">)</span>
 <a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="nv">MSG_STYLE</span> <span class="o">?=</span> faint
 <a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="nv">DIVIDER_STYLE</span> <span class="o">?=</span> default
 <a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="nv">DIVIDER</span> <span class="o">?=</span> ─
 <a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="nv">HELP_SEP</span> <span class="o">?=</span> │
-<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>
-<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="c"># python f-string literals</span>
-<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="nv">EPILOG</span> <span class="o">?=</span>
-<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="cp">define USAGE ?=</span>
-<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="nf">{ansi.$(HEADER_STYLE)}usage{ansi.end}</span><span class="o">:</span>
-<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>  make &lt;recipe&gt;
-<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>
-<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="cp">endef</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="c"># python f-string literals</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="nv">EPILOG</span> <span class="o">?=</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="nv">USAGE</span> <span class="o">?={</span>ansi.<span class="k">$(</span>HEADER_STYLE<span class="k">)</span><span class="o">}</span>usage<span class="o">{</span>ansi.end<span class="o">}</span>:<span class="se">\n</span>  make &lt;recipe&gt;<span class="se">\n</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="nv">INHERIT_SHELL</span> <span class="o">?=</span>
 </code></pre></div>
 <p>To use a custom color for one of the predefined configuration variables specify only the custom method.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nv">HEADER_STYLE</span> <span class="o">=</span> custom<span class="o">(</span><span class="nv">fg</span><span class="o">=</span><span class="m">171</span>,bg<span class="o">=</span><span class="m">227</span><span class="o">)</span>
@@ -587,7 +583,7 @@ If you need to debug your python script, use <code>DEBUG=1</code> when you run <
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">September 18, 2022</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">September 21, 2022</span>
       
         <br>
         Created:
