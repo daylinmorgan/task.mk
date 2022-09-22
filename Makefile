@@ -1,18 +1,19 @@
 VERSION ?= $(shell git describe --tags --always --dirty | sed s'/dirty/dev/')
 TEMPLATES := $(shell find src/ -type f)
 .DEFAULT_GOAL := help
-SHELL := /bin/zsh
-INHERIT_SHELL = true
+
 msg = $(if $(tprint),$(call tprint,{a.bold}==> {a.magenta}$(1){a.end}),@echo '==> $(1)')
 
 
 ### task.mk development | args: -d -ms b_green --align center
 ## bootstrap | generate local dev environment
-.PHONY: bootstrap
-bootstrap:
-	$(call msg,Bootstrap Environment)
+.PHONY: bootstrap env hooks
+bootstrap: env hooks
+env: 
+	$(call msg,Bootstrapping Environment)
 	@mamba create -p ./env python jinja2 black -y
 	@mamba run -p ./env pip install yartsu
+hooks:
 	@git config core.hooksPath .githooks
 
 ## l, lint | lint the python
