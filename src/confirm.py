@@ -5,7 +5,6 @@
 import sys
 
 ##- '$(ansi_py)' -##
-##- '$(quit_make_py)' -##
 
 
 def confirm():
@@ -23,5 +22,5 @@ def confirm():
 if confirm():
     sys.exit()
 else:
-    quit_make()
+    sys.exit(1)
 #% endblock %#

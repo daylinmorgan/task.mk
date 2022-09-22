@@ -7,7 +7,6 @@ import os
 import re
 
 ##- '$(ansi_py)' -##
-##- '$(quit_make_py)' -##
 
 MaxLens = namedtuple("MaxLens", "goal msg")
 
@@ -157,8 +156,8 @@ def print_arg_help(help_args):
 def main():
     help_args = os.getenv("HELP_ARGS")
     if help_args:
-        quit_make()
         print_arg_help(help_args)
+        print(a.faint)
     else:
         print_help()
 

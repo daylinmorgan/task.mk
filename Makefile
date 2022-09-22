@@ -1,9 +1,10 @@
 VERSION ?= $(shell git describe --tags --always --dirty | sed s'/dirty/dev/')
 TEMPLATES := $(shell find src/ -type f)
 .DEFAULT_GOAL := help
+SHELL := /bin/zsh
+INHERIT_SHELL = true
+msg = $(if $(tprint),$(call tprint,{a.bold}==> {a.magenta}$(1){a.end}),@echo '==> $(1)')
 
-msgfmt = {a.style('==>','bold')} {a.style('$(1)','b_magenta')} {a.style('<==','bold')}
-msg = $(call tprint,$(call msgfmt ,$(1)))
 
 ### task.mk development | args: -d -ms b_green --align center
 ## bootstrap | generate local dev environment
@@ -73,8 +74,8 @@ define USAGE
 endef
 
 EPILOG = \nfor more info: gh.dayl.in/task.mk
-PRINT_VARS := VERSION
+PRINT_VARS := VERSION SHELL
 -include .task.mk
 .task.mk: $(TEMPLATES) generate.py
-	$(call tprint,{a.b_yellow}re-jinjaing the local .task.mk{a.end})
+	$(call msg,re-jinjaing the local .task.mk)
 	@./generate.py $(VERSION) > .task.mk || (echo "generator failed!!" && rm .task.mk)
