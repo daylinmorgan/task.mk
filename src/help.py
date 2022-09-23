@@ -80,8 +80,8 @@ def parse_goal(file, goal):
         for line in lines[loc + 1 :]:
             if not line.startswith("\t"):
                 break
-            recipe.append(line)
-        output.append(divider(max((len(l) for l in recipe)) + 5))
+            recipe.append(f"  {line.strip()}")
+        output.append(divider(max((len(l.strip()) for l in recipe))))
         output.append("\n".join(recipe) + "\n")
     else:
         output.append(f"{ansi.b_red}ERROR{ansi.end} Failed to find goal: {goal}")
