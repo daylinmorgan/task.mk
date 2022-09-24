@@ -12,6 +12,7 @@ class Config:
     sep: str
     epilog: str
     usage: str
+    wrap: int
 
 
 color2byte = dict(
@@ -110,5 +111,6 @@ class Ansi:
 
 a = ansi = Ansi()
 
-cfg = Config("$(DIVIDER)", "$(HELP_SEP)", f"""$(EPILOG)""", f"""$(USAGE)""")
+cfg = Config(
+    "$(DIVIDER)", "$(HELP_SEP)", f"""$(EPILOG)""", f"""$(USAGE)""",int('$(WRAP)'))
 #% endblock %#

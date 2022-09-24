@@ -13,7 +13,6 @@ from textwrap import wrap
 ###-
 # this is just to trick the LSP during development
 from utils import ansi, cfg
-
 # -###
 
 
@@ -92,6 +91,7 @@ def get_goal_deps(goal="task.mk"):
         if match and match.groups()[0]:
             return wrap(
                 f"{ansi.style('deps','default')}: {ansi.style(match.groups()[0].strip(),'msg')}",
+                width=cfg.wrap,
                 initial_indent="  ",
                 subsequent_indent="  ",
             )

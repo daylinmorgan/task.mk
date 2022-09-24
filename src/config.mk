@@ -7,6 +7,7 @@ MSG_STYLE ?= faint
 DIVIDER ?= ─
 DIVIDER_STYLE ?= default
 HELP_SEP ?= │
+WRAP ?= 100
 # python f-string literals
 EPILOG ?=
 USAGE ?={ansi.header}usage{ansi.end}:\n  make <recipe>\n
