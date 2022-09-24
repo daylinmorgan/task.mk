@@ -98,7 +98,6 @@ def parse_goal(file, goal):
     goals = goal_pattern.findall(file)
     matched_goal = [i for i in goals if goal in i.split()]
     output = []
-
     if matched_goal:
         output.append(recipe_help_header(matched_goal[0]))
         deps = get_goal_deps(matched_goal[0])
@@ -115,8 +114,13 @@ def parse_goal(file, goal):
         output.append(divider(max((len(l.strip()) for l in recipe))))
         output.append("\n".join(recipe))
     else:
-        output.append(f"{ansi.b_red}ERROR{ansi.end} Failed to find goal: {goal}")
+        deps = get_goal_deps(goal)
+        if deps:
+            output.append(recipe_help_header(goal))
+            output.extend(deps)
 
+    if not output:
+        output.append(f"{ansi.style('ERROR','b_red')}: Failed to find goal: {goal}")
     return output
 
 
@@ -184,7 +188,7 @@ def main():
     help_args = os.getenv("HELP_ARGS")
     if help_args:
         print_arg_help(help_args)
-        print(a.faint)
+        print(ansi.faint)
         sys.exit(1)
     else:
         print_help()
