@@ -4,17 +4,8 @@ ifeq (help,$(firstword $(MAKECMDGOALS)))
 	export HELP_ARGS
 endif
 ## h, help | show this help
-ifdef HELP_ARGS
-help: help-args
-	$(error exiting early)
-.PHONY: help-args
-help-args:
-	$(call py,help_py)
-else
-.PHONY: help h
 h help:
-	$(call py,help_py)
-endif
+	$(call py,help_py) || { echo "exiting early!"; exit 1; }
 .PHONY: _help
 _help: export SHOW_HIDDEN=true
 _help: help
@@ -38,7 +29,7 @@ tconfirm = $(call py,confirm_py,$(1))
 _update-task.mk:
 	$(call tprint,{a.b_cyan}Updating task.mk{a.end})
 	curl https://raw.githubusercontent.com/daylinmorgan/task.mk/main/task.mk -o .task.mk
-export MAKEFILE_LIST
+export MAKEFILE_LIST MAKE
 ifndef INHERIT_SHELL
 SHELL := $(shell which bash)
 endif

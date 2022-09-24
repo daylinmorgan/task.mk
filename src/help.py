@@ -5,6 +5,9 @@ import argparse
 from collections import namedtuple
 import os
 import re
+import subprocess
+import sys
+from textwrap import wrap
 
 ##- '$(ansi_py)' -##
 
@@ -26,6 +29,10 @@ def parseargs(argstring):
     parser.add_argument("-gs", "--goal-style", type=str)
     parser.add_argument("--hidden", action="store_true")
     return parser.parse_args(argstring.split())
+
+
+def divider(len):
+    return ansi.style(f"  {'$(DIVIDER)'*len}", "$(DIVIDER_STYLE)")
 
 
 def gen_makefile():
@@ -64,7 +71,21 @@ def recipe_help_header(goal):
             item[0].get("msgargs", ""),
         )
     else:
-        return f"  {ansi.style(goal,'$(GOAL_STYLE)')}:"
+        return f"  {ansi.style(goal,'$(GOAL_STYLE)')}"
+
+
+def get_goal_deps(goal="task.mk"):
+    make = os.getenv("MAKE", "make")
+    database = subprocess.check_output([make, "-p", "-n"], universal_newlines=True)
+    dep_pattern = re.compile(r"^" + goal + ":(.*)?")
+    for line in database.splitlines():
+        match = dep_pattern.search(line)
+        if match and match.groups()[0]:
+            return wrap(
+                f"{ansi.style('deps','default')}: {ansi.style(match.groups()[0].strip(),'$(MSG_STYLE)')}",
+                initial_indent="  ",
+                subsequent_indent="  ",
+            )
 
 
 def parse_goal(file, goal):
@@ -74,15 +95,19 @@ def parse_goal(file, goal):
 
     if matched_goal:
         output.append(recipe_help_header(matched_goal[0]))
+        deps = get_goal_deps(matched_goal[0])
+        if deps:
+            output.extend(deps)
         lines = file.splitlines()
         loc = [n for n, l in enumerate(lines) if l.startswith(f"{matched_goal[0]}:")][0]
         recipe = []
+
         for line in lines[loc + 1 :]:
             if not line.startswith("\t"):
                 break
             recipe.append(f"  {line.strip()}")
         output.append(divider(max((len(l.strip()) for l in recipe))))
-        output.append("\n".join(recipe) + "\n")
+        output.append("\n".join(recipe))
     else:
         output.append(f"{ansi.b_red}ERROR{ansi.end} Failed to find goal: {goal}")
 
@@ -98,10 +123,6 @@ def fmt_goal(goal, msg, max_goal_len, argstr):
         + f" $(HELP_SEP) "
         + ansi.style(msg, msg_style)
     )
-
-
-def divider(len):
-    return ansi.style(f"  {'$(DIVIDER)'*len}", "$(DIVIDER_STYLE)")
 
 
 def fmt_rawmsg(msg, argstr, maxlens):
@@ -148,8 +169,8 @@ def print_help():
 
 
 def print_arg_help(help_args):
+    print(f"{ansi.style('task.mk recipe help','$(HEADER_STYLE)')}\n")
     for arg in help_args.split():
-        print(f"{ansi.style('task.mk recipe help','$(HEADER_STYLE)')}\n")
         print("\n".join(parse_goal(gen_makefile(), arg)))
 
 
@@ -158,6 +179,7 @@ def main():
     if help_args:
         print_arg_help(help_args)
         print(a.faint)
+        sys.exit(1)
     else:
         print_help()
 
