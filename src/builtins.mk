@@ -29,7 +29,8 @@ tconfirm = $(call py,confirm_py,$(1))
 _update-task.mk:
 	$(call tprint,{a.b_cyan}Updating task.mk{a.end})
 	curl https://raw.githubusercontent.com/daylinmorgan/task.mk/main/task.mk -o .task.mk
-export MAKEFILE_LIST MAKE
+TASK_MAKEFILE_LIST := $(filter-out $(word $(words $(MAKEFILE_LIST)),$(MAKEFILE_LIST)),$(MAKEFILE_LIST))
+export MAKEFILE_LIST MAKE TASK_MAKEFILE_LIST
 ifndef INHERIT_SHELL
 SHELL := $(shell which bash)
 endif

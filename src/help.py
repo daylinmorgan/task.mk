@@ -82,7 +82,10 @@ def recipe_help_header(goal):
 
 def get_goal_deps(goal="task.mk"):
     make = os.getenv("MAKE", "make")
-    database = subprocess.check_output([make, "-p", "-n"], universal_newlines=True)
+    cmd = [make, "-p", "-n", "-i"]
+    for file in os.getenv("TASK_MAKEFILE_LIST", "").split():
+        cmd.extend(["-f", file])
+    database = subprocess.check_output(cmd, universal_newlines=True)
     dep_pattern = re.compile(r"^" + goal + ":(.*)?")
     for line in database.splitlines():
         match = dep_pattern.search(line)
@@ -196,4 +199,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 #% endblock %#
