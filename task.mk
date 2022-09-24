@@ -1,7 +1,7 @@
 # }> [github.com/daylinmorgan/task.mk] <{ #
 # Copyright (c) 2022 Daylin Morgan
 # MIT License
-# version: v22.9.19-13-g63eb8ac-dev
+# version: v22.9.19-17-gd6bd8a0-dev
 #
 # task.mk should be included at the bottom of your Makefile with `-include .task.mk`
 # See below for the standard configuration options that should be set prior to including this file.
@@ -15,6 +15,7 @@ MSG_STYLE ?= faint
 DIVIDER ?= ─
 DIVIDER_STYLE ?= default
 HELP_SEP ?= │
+WRAP ?= 100
 # python f-string literals
 EPILOG ?=
 USAGE ?={ansi.header}usage{ansi.end}:\n  make <recipe>\n
@@ -50,7 +51,8 @@ tconfirm = $(call py,confirm_py,$(1))
 _update-task.mk:
 	$(call tprint,{a.b_cyan}Updating task.mk{a.end})
 	curl https://raw.githubusercontent.com/daylinmorgan/task.mk/main/task.mk -o .task.mk
-export MAKEFILE_LIST MAKE
+TASK_MAKEFILE_LIST := $(filter-out $(word $(words $(MAKEFILE_LIST)),$(MAKEFILE_LIST)),$(MAKEFILE_LIST))
+export MAKEFILE_LIST MAKE TASK_MAKEFILE_LIST
 ifndef INHERIT_SHELL
 SHELL := $(shell which bash)
 endif
@@ -138,13 +140,17 @@ def recipe_help_header(goal):
         return f"  {ansi.style(goal,'goal')}"
 def get_goal_deps(goal="task.mk"):
     make = os.getenv("MAKE", "make")
-    database = subprocess.check_output([make, "-p", "-n"], universal_newlines=True)
+    cmd = [make, "-p", "-n", "-i"]
+    for file in os.getenv("TASK_MAKEFILE_LIST", "").split():
+        cmd.extend(["-f", file])
+    database = subprocess.check_output(cmd, universal_newlines=True)
     dep_pattern = re.compile(r"^" + goal + ":(.*)?")
     for line in database.splitlines():
         match = dep_pattern.search(line)
         if match and match.groups()[0]:
             return wrap(
                 f"{ansi.style('deps','default')}: {ansi.style(match.groups()[0].strip(),'msg')}",
+                width=cfg.wrap,
                 initial_indent="  ",
                 subsequent_indent="  ",
             )
@@ -224,11 +230,11 @@ def print_arg_help(help_args):
     print(f"{ansi.style('task.mk recipe help','header')}\n")
     for arg in help_args.split():
         print("\n".join(parse_goal(gen_makefile(), arg)))
+    print()
 def main():
     help_args = os.getenv("HELP_ARGS")
     if help_args:
         print_arg_help(help_args)
-        print(ansi.faint)
         sys.exit(1)
     else:
         print_help()
@@ -284,6 +290,7 @@ class Config:
     sep: str
     epilog: str
     usage: str
+    wrap: int
 color2byte = dict(
     black=0,
     red=1,
@@ -364,5 +371,6 @@ class Ansi:
         else:
             return f"{self.__dict__[style]}{text}{self.__dict__['end']}"
 a = ansi = Ansi()
-cfg = Config("$(DIVIDER)", "$(HELP_SEP)", f"""$(EPILOG)""", f"""$(USAGE)""")
+cfg = Config(
+    "$(DIVIDER)", "$(HELP_SEP)", f"""$(EPILOG)""", f"""$(USAGE)""",int('$(WRAP)'))
 endef
