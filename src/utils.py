@@ -1,8 +1,24 @@
 #% extends "py-script.mk" %#
-#% block name %#ansi#% endblock %#
+#% block name %#utils#% endblock %#
 #% block script %#
 import os
 import sys
+from dataclasses import dataclass
+
+
+@dataclass
+class Config:
+    header: str
+    accent: str
+    params: str
+    goal: str
+    msg: str
+    div: str
+    div_style: str
+    sep: str
+    epilog: str
+    usage: str
+
 
 color2byte = dict(
     black=0,
@@ -77,6 +93,15 @@ class Ansi:
 
         return code + end
 
+    def add_cfg(self, cfg):
+        cfg_attrs = {
+            attr: getattr(cfg, attr)
+            for attr in cfg.__dict__
+            if attr not in ["div", "sep", "epilog", "usage"]
+        }
+        for name, cfg_attr in cfg_attrs.items():
+            self.setcode(name, getattr(ansi, cfg_attr))
+
     def style(self, text, style):
         if style not in self.__dict__:
             print(f"unknown style: {style}")
@@ -86,4 +111,18 @@ class Ansi:
 
 
 a = ansi = Ansi()
+
+cfg = Config(
+    "$(HEADER_STYLE)",
+    "$(ACCENT_STYLE)",
+    "$(PARAMS_STYLE)",
+    "$(GOAL_STYLE)",
+    "$(MSG_STYLE)",
+    "$(DIVIDER)",
+    "$(DIVIDER_STYLE)",
+    "$(HELP_SEP)",
+    f"""$(EPILOG)""",
+    f"""$(USAGE)""",
+)
+ansi.add_cfg(cfg)
 #% endblock %#

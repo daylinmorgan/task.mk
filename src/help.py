@@ -9,7 +9,13 @@ import subprocess
 import sys
 from textwrap import wrap
 
-##- '$(ansi_py)' -##
+##- '$(utils_py)' -##
+###-
+# this is just to trick the LSP during development
+from utils import ansi, cfg
+
+# -###
+
 
 MaxLens = namedtuple("MaxLens", "goal msg")
 
@@ -32,12 +38,12 @@ def parseargs(argstring):
 
 
 def divider(len):
-    return ansi.style(f"  {'$(DIVIDER)'*len}", "$(DIVIDER_STYLE)")
+    return ansi.style(f"  {cfg.div*len}", "div_style")
 
 
 def gen_makefile():
     makefile = ""
-    for file in os.getenv("MAKEFILE_LIST").split():
+    for file in os.getenv("MAKEFILE_LIST", "").split():
         with open(file, "r") as f:
             makefile += f.read() + "\n\n"
     return makefile
@@ -71,7 +77,7 @@ def recipe_help_header(goal):
             item[0].get("msgargs", ""),
         )
     else:
-        return f"  {ansi.style(goal,'$(GOAL_STYLE)')}"
+        return f"  {ansi.style(goal,'goal')}"
 
 
 def get_goal_deps(goal="task.mk"):
@@ -82,7 +88,7 @@ def get_goal_deps(goal="task.mk"):
         match = dep_pattern.search(line)
         if match and match.groups()[0]:
             return wrap(
-                f"{ansi.style('deps','default')}: {ansi.style(match.groups()[0].strip(),'$(MSG_STYLE)')}",
+                f"{ansi.style('deps','default')}: {ansi.style(match.groups()[0].strip(),'msg')}",
                 initial_indent="  ",
                 subsequent_indent="  ",
             )
@@ -116,8 +122,8 @@ def parse_goal(file, goal):
 
 def fmt_goal(goal, msg, max_goal_len, argstr):
     args = parseargs(argstr)
-    goal_style = args.goal_style.strip() if args.goal_style else "$(GOAL_STYLE)"
-    msg_style = args.msg_style.strip() if args.msg_style else "$(MSG_STYLE)"
+    goal_style = args.goal_style.strip() if args.goal_style else "goal"
+    msg_style = args.msg_style.strip() if args.msg_style else "msg"
     return (
         ansi.style(f"  {goal:>{max_goal_len}}", goal_style)
         + f" $(HELP_SEP) "
@@ -128,20 +134,20 @@ def fmt_goal(goal, msg, max_goal_len, argstr):
 def fmt_rawmsg(msg, argstr, maxlens):
     args = parseargs(argstr)
     lines = []
-    msg_style = args.msg_style.strip() if args.msg_style else "$(MSG_STYLE)"
+    msg_style = args.msg_style.strip() if args.msg_style else "msg"
     if not os.getenv("SHOW_HIDDEN") and args.hidden:
         return []
     if msg:
         if args.align == "sep":
             lines.append(
-                f"{' '*(maxlens.goal+len('$(HELP_SEP)')+4)}{ansi.style(msg,msg_style)}"
+                f"{' '*(maxlens.goal+len(cfg.sep)+4)}{ansi.style(msg,msg_style)}"
             )
         elif args.align == "center":
             lines.append(f"  {ansi.style(msg.center(sum(maxlens)),msg_style)}")
         else:
             lines.append(f"  {ansi.style(msg,msg_style)}")
     if args.divider:
-        lines.append(divider(len("$(HELP_SEP)") + sum(maxlens) + 2))
+        lines.append(divider(len(cfg.sep) + sum(maxlens) + 2))
     if args.whitespace:
         lines.append("\n")
 
@@ -149,7 +155,7 @@ def fmt_rawmsg(msg, argstr, maxlens):
 
 
 def print_help():
-    lines = [f"""$(USAGE)"""]
+    lines = [cfg.usage]
 
     items = list(parse_help(gen_makefile()))
     maxlens = MaxLens(
@@ -164,12 +170,12 @@ def print_help():
             )
         if "rawmsg" in item:
             lines.extend(fmt_rawmsg(item["rawmsg"], item.get("rawargs", ""), maxlens))
-    lines.append(f"""$(EPILOG)""")
+    lines.append(cfg.epilog)
     print("\n".join(lines))
 
 
 def print_arg_help(help_args):
-    print(f"{ansi.style('task.mk recipe help','$(HEADER_STYLE)')}\n")
+    print(f"{ansi.style('task.mk recipe help','header')}\n")
     for arg in help_args.split():
         print("\n".join(parse_goal(gen_makefile(), arg)))
 

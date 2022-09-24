@@ -3,15 +3,15 @@
 #% block script %#
 import os
 
-##- '$(ansi_py)' -##
+##- '$(utils_py)' -##
 
 vars = "$2".split()
 length = max((len(v) for v in vars))
 
-print(f"{ansi.$(HEADER_STYLE)}vars:{ansi.end}\n")
+print(f"{ansi.header}vars{ansi.end}:\n")
 
 for v in vars:
-    print(f"  {ansi.b_magenta}{v:<{length}}{ansi.end} = {os.getenv(v)}")
+    print(f"  {ansi.params}{v:<{length}}{ansi.end} = {os.getenv(v)}")
 
 print()
 #% endblock %#

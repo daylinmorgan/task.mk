@@ -4,10 +4,10 @@ ACCENT_STYLE ?= b_yellow
 PARAMS_STYLE ?= $(ACCENT_STYLE)
 GOAL_STYLE ?= $(ACCENT_STYLE)
 MSG_STYLE ?= faint
-DIVIDER_STYLE ?= default
 DIVIDER ?= ─
+DIVIDER_STYLE ?= default
 HELP_SEP ?= │
 # python f-string literals
 EPILOG ?=
-USAGE ?={ansi.$(HEADER_STYLE)}usage{ansi.end}:\n  make <recipe>\n
+USAGE ?={ansi.header}usage{ansi.end}:\n  make <recipe>\n
 INHERIT_SHELL ?=
