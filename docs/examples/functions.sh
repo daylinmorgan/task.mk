@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 msg() {
-  printf '%s\n' "$1" | pv -qL 12
+  printf '%s\n' "$1" | pv -qL 20
   sleep 1
 }
 
