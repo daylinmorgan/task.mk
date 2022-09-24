@@ -1,7 +1,7 @@
 MAKEFLAGS += --no-print-directory
 COLS ?= 60
 ROWS ?= 20
-EXAMPLES := check embedded
+EXAMPLES := check embedded recipe-help
 CASTS := $(addsuffix /demo.cast, $(EXAMPLES))
 
 all: $(CASTS)
