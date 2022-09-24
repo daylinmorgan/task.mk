@@ -15,7 +15,8 @@ env:
 	@mamba run -p ./env pip install yartsu
 hooks:
 	@git config core.hooksPath .githooks
-
+docs-env:
+	@mamba run -p ./env pip install mkdocs-material mkdocs-git-revision-date-localized-plugin
 ## l, lint | lint the python
 .PHONY: l lint
 l lint:
