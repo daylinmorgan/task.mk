@@ -1,7 +1,7 @@
 # }> [github.com/daylinmorgan/task.mk] <{ #
 # Copyright (c) 2022 Daylin Morgan
 # MIT License
-# version: v22.9.19-12-gbc4c95a-dev
+# version: v22.9.19-13-g63eb8ac-dev
 #
 # task.mk should be included at the bottom of your Makefile with `-include .task.mk`
 # See below for the standard configuration options that should be set prior to including this file.
@@ -280,13 +280,7 @@ import sys
 from dataclasses import dataclass
 @dataclass
 class Config:
-    header: str
-    accent: str
-    params: str
-    goal: str
-    msg: str
     div: str
-    div_style: str
     sep: str
     epilog: str
     usage: str
@@ -321,6 +315,7 @@ class Ansi:
                 )
         for name, byte in state2byte.items():
             self.setcode(name, f"\033[{byte}m")
+        self.add_cfg()
     def setcode(self, name, escape_code):
         """create attr for style and escape code"""
         if not sys.stdout.isatty() or os.getenv("NO_COLOR", False):
@@ -351,14 +346,17 @@ class Ansi:
                 print("Expected one or three values for bg as a list")
                 sys.exit(1)
         return code + end
-    def add_cfg(self, cfg):
-        cfg_attrs = {
-            attr: getattr(cfg, attr)
-            for attr in cfg.__dict__
-            if attr not in ["div", "sep", "epilog", "usage"]
+    def add_cfg(self):
+        cfg_styles = {
+            "header": "$(HEADER_STYLE)",
+            "accent": "$(ACCENT_STYLE)",
+            "params": "$(PARAMS_STYLE)",
+            "goal": "$(GOAL_STYLE)",
+            "msg": "$(MSG_STYLE)",
+            "div_style": "$(DIVIDER_STYLE)",
         }
-        for name, cfg_attr in cfg_attrs.items():
-            self.setcode(name, getattr(ansi, cfg_attr))
+        for name, style in cfg_styles.items():
+            self.setcode(name, getattr(self, style))
     def style(self, text, style):
         if style not in self.__dict__:
             print(f"unknown style: {style}")
@@ -366,17 +364,5 @@ class Ansi:
         else:
             return f"{self.__dict__[style]}{text}{self.__dict__['end']}"
 a = ansi = Ansi()
-cfg = Config(
-    "$(HEADER_STYLE)",
-    "$(ACCENT_STYLE)",
-    "$(PARAMS_STYLE)",
-    "$(GOAL_STYLE)",
-    "$(MSG_STYLE)",
-    "$(DIVIDER)",
-    "$(DIVIDER_STYLE)",
-    "$(HELP_SEP)",
-    f"""$(EPILOG)""",
-    f"""$(USAGE)""",
-)
-ansi.add_cfg(cfg)
+cfg = Config("$(DIVIDER)", "$(HELP_SEP)", f"""$(EPILOG)""", f"""$(USAGE)""")
 endef

@@ -8,13 +8,7 @@ from dataclasses import dataclass
 
 @dataclass
 class Config:
-    header: str
-    accent: str
-    params: str
-    goal: str
-    msg: str
     div: str
-    div_style: str
     sep: str
     epilog: str
     usage: str
@@ -56,6 +50,7 @@ class Ansi:
                 )
         for name, byte in state2byte.items():
             self.setcode(name, f"\033[{byte}m")
+        self.add_cfg()
 
     def setcode(self, name, escape_code):
         """create attr for style and escape code"""
@@ -93,14 +88,17 @@ class Ansi:
 
         return code + end
 
-    def add_cfg(self, cfg):
-        cfg_attrs = {
-            attr: getattr(cfg, attr)
-            for attr in cfg.__dict__
-            if attr not in ["div", "sep", "epilog", "usage"]
+    def add_cfg(self):
+        cfg_styles = {
+            "header": "$(HEADER_STYLE)",
+            "accent": "$(ACCENT_STYLE)",
+            "params": "$(PARAMS_STYLE)",
+            "goal": "$(GOAL_STYLE)",
+            "msg": "$(MSG_STYLE)",
+            "div_style": "$(DIVIDER_STYLE)",
         }
-        for name, cfg_attr in cfg_attrs.items():
-            self.setcode(name, getattr(ansi, cfg_attr))
+        for name, style in cfg_styles.items():
+            self.setcode(name, getattr(self, style))
 
     def style(self, text, style):
         if style not in self.__dict__:
@@ -112,17 +110,5 @@ class Ansi:
 
 a = ansi = Ansi()
 
-cfg = Config(
-    "$(HEADER_STYLE)",
-    "$(ACCENT_STYLE)",
-    "$(PARAMS_STYLE)",
-    "$(GOAL_STYLE)",
-    "$(MSG_STYLE)",
-    "$(DIVIDER)",
-    "$(DIVIDER_STYLE)",
-    "$(HELP_SEP)",
-    f"""$(EPILOG)""",
-    f"""$(USAGE)""",
-)
-ansi.add_cfg(cfg)
+cfg = Config("$(DIVIDER)", "$(HELP_SEP)", f"""$(EPILOG)""", f"""$(USAGE)""")
 #% endblock %#
