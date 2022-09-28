@@ -23,7 +23,7 @@ Current Features:
 Depends on `GNU Make`, obviously and `Python >=3.7`, and `bash` (or `zsh`).
 
 Wait python?!?!, I'm not `pip` installing some package just to parse my makefile.
-I agree, all you need is one file [`.task.mk`](https://github.com/daylinmorgan/task.mk/v22.9.19/task.mk).
+I agree, all you need is one file [`.task.mk`](https://github.com/daylinmorgan/task.mk/v22.9.28/task.mk).
 You can automagically include it with just two additional lines to your `Makefile` (and probably one to your `.gitignore`) and your good to go.
 
 ## Setup
@@ -33,14 +33,14 @@ If someone tries to invoke `make help` it will download `.task.mk` for them.
 
 ```make
 -include .task.mk
-$(if $(filter help,$(MAKECMDGOALS)),$(if $(wildcard .task.mk),,.task.mk: ; curl -fsSL https://raw.githubusercontent.com/daylinmorgan/task.mk/v22.9.19/task.mk -o .task.mk))
+$(if $(filter help,$(MAKECMDGOALS)),$(if $(wildcard .task.mk),,.task.mk: ; curl -fsSL https://raw.githubusercontent.com/daylinmorgan/task.mk/v22.9.28/task.mk -o .task.mk))
 ```
 
 You might also consider making it a consistently downloaded dependency if you plan to use any of it's advanced feature set, by dropping the `$(MAKECMDGOALS)` check.
 
 ```make
 -include .task.mk
-$(if $(wildcard .task.mk),,.task.mk: ; curl -fsSL https://raw.githubusercontent.com/daylinmorgan/task.mk/v22.9.19/task.mk -o .task.mk)
+$(if $(wildcard .task.mk),,.task.mk: ; curl -fsSL https://raw.githubusercontent.com/daylinmorgan/task.mk/v22.9.28/task.mk -o .task.mk)
 ```
 
 Alternatively, you can use the builtin rule `_update-task.mk` to update to the latest development version.
