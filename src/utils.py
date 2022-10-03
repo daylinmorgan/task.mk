@@ -65,29 +65,32 @@ class Ansi:
         """use custom color"""
 
         code, end = "\033[", "m"
-        if fg:
-            if isinstance(fg, int):
-                code += f"38;5;{fg}"
-            elif (isinstance(fg, list) or isinstance(fg, tuple)) and len(fg) == 1:
-                code += f"38;5;{fg[0]}"
-            elif (isinstance(fg, list) or isinstance(fg, tuple)) and len(fg) == 3:
-                code += f"38;2;{';'.join((str(i) for i in fg))}"
-            else:
-                print("Expected one or three values for fg as a list")
-                sys.exit(1)
+        if not sys.stdout.isatty() or os.getenv("NO_COLOR", False):
+            return ""
+        else:
+            if fg:
+                if isinstance(fg, int):
+                    code += f"38;5;{fg}"
+                elif (isinstance(fg, list) or isinstance(fg, tuple)) and len(fg) == 1:
+                    code += f"38;5;{fg[0]}"
+                elif (isinstance(fg, list) or isinstance(fg, tuple)) and len(fg) == 3:
+                    code += f"38;2;{';'.join((str(i) for i in fg))}"
+                else:
+                    print("Expected one or three values for fg as a list")
+                    sys.exit(1)
 
-        if bg:
-            if isinstance(bg, int):
-                code += f"{';' if fg else ''}48;5;{bg}"
-            elif (isinstance(bg, list) or isinstance(bg, tuple)) and len(bg) == 1:
-                code += f"{';' if fg else ''}48;5;{bg[0]}"
-            elif (isinstance(bg, list) or isinstance(bg, tuple)) and len(bg) == 3:
-                code += f"{';' if fg else ''}48;2;{';'.join((str(i) for i in bg))}"
-            else:
-                print("Expected one or three values for bg as a list")
-                sys.exit(1)
+            if bg:
+                if isinstance(bg, int):
+                    code += f"{';' if fg else ''}48;5;{bg}"
+                elif (isinstance(bg, list) or isinstance(bg, tuple)) and len(bg) == 1:
+                    code += f"{';' if fg else ''}48;5;{bg[0]}"
+                elif (isinstance(bg, list) or isinstance(bg, tuple)) and len(bg) == 3:
+                    code += f"{';' if fg else ''}48;2;{';'.join((str(i) for i in bg))}"
+                else:
+                    print("Expected one or three values for bg as a list")
+                    sys.exit(1)
 
-        return code + end
+            return code + end
 
     def add_cfg(self):
         cfg_styles = {
@@ -112,5 +115,6 @@ class Ansi:
 a = ansi = Ansi()
 
 cfg = Config(
-    "$(DIVIDER)", "$(HELP_SEP)", f"""$(EPILOG)""", f"""$(USAGE)""",int('$(WRAP)'))
+    "$(DIVIDER)", "$(HELP_SEP)", f"""$(EPILOG)""", f"""$(USAGE)""", int("$(WRAP)")
+)
 #% endblock %#
