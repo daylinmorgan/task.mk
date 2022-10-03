@@ -6,7 +6,7 @@ import jinja2
 
 py_script_names = [
     "help",
-    "info",
+    "print",
     "print-ansi",
     "vars",
     "confirm",
