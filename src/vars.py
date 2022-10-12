@@ -3,8 +3,15 @@
 #% block script %#
 import os
 
+###-
+# this is just to trick the LSP during development
+from utils import Ansi
+
+# -###
 ##- '$(utils_py)' -##
 
+
+ansi = Ansi(target="stdout")
 vars = "$2".split()
 length = max((len(v) for v in vars))
 

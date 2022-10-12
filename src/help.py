@@ -9,14 +9,14 @@ import subprocess
 import sys
 from textwrap import wrap
 
-##- '$(utils_py)' -##
 ###-
 # this is just to trick the LSP during development
-from utils import ansi, cfg
+from utils import Ansi, cfg
 
 # -###
+##- '$(utils_py)' -##
 
-
+a = ansi = Ansi(target="stdout")
 MaxLens = namedtuple("MaxLens", "goal msg")
 
 ###- double dollar signs to prevent make escaping them -###

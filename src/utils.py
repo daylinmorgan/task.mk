@@ -37,7 +37,8 @@ addbg = lambda byte: byte + 40
 class Ansi:
     """ANSI escape codes"""
 
-    def __init__(self):
+    def __init__(self, target="stdout"):
+        self.target = target
         self.setcode("end", "\033[0m")
         self.setcode("default", "\033[38m")
         self.setcode("bg_default", "\033[48m")
@@ -56,7 +57,11 @@ class Ansi:
     def setcode(self, name, escape_code):
         """create attr for style and escape code"""
 
-        if not sys.stdout.isatty() or os.getenv("NO_COLOR", False):
+        if os.getenv("NO_COLOR", False):
+            setattr(self, name, "")
+        elif (self.target == "stderr" and not sys.stderr.isatty()) or (
+            self.target == "stdout" and not sys.stdout.isatty()
+        ):
             setattr(self, name, "")
         else:
             setattr(self, name, escape_code)
@@ -113,7 +118,6 @@ class Ansi:
 
 
 a = ansi = Ansi()
-
 cfg = Config(
     "$(DIVIDER)", "$(HELP_SEP)", f"""$(EPILOG)""", f"""$(USAGE)""", int("$(WRAP)")
 )

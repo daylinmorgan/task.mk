@@ -4,6 +4,11 @@
 
 import sys
 
+###-
+# this is just to trick the LSP during development
+from utils import a
+
+# -###
 ##- '$(utils_py)' -##
 
 
@@ -15,7 +20,8 @@ def confirm():
     """
     answer = ""
     while answer not in ["y", "n"]:
-        answer = input(f"""$(2) {a.b_red}[Y/n]{a.end} """).lower()
+        sys.stderr.write(f"""$(2) {a.b_red}[Y/n]{a.end} \n""")
+        answer = input().lower()
     return answer == "y"
 
 

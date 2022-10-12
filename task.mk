@@ -1,7 +1,7 @@
 # }> [github.com/daylinmorgan/task.mk] <{ #
 # Copyright (c) 2022 Daylin Morgan
 # MIT License
-# version: v22.9.28-dev
+# version: v22.9.28-2-g6dad870-dev
 #
 # task.mk should be included at the bottom of your Makefile with `-include .task.mk`
 # See below for the standard configuration options that should be set prior to including this file.
@@ -88,6 +88,7 @@ import subprocess
 import sys
 from textwrap import wrap
 $(utils_py)
+a = ansi = Ansi(target="stdout")
 MaxLens = namedtuple("MaxLens", "goal msg")
 pattern = re.compile(
     r"^## (?P<goal>.*?) \| (?P<msg>.*?)(?:\s?\| args: (?P<msgargs>.*?))?$$|^### (?P<rawmsg>.*?)?(?:\s?\| args: (?P<rawargs>.*?))?$$"
@@ -246,14 +247,17 @@ sys.stderr.write(f"""$(2)\n""")
 endef
 define  print_ansi_py
 $(utils_py)
-sep = f"$(HELP_SEP)"
+import sys
 codes_names = {getattr(ansi, attr): attr for attr in ansi.__dict__}
 for code in sorted(codes_names.keys(), key=lambda item: (len(item), item)):
-    print(f"{codes_names[code]:>20} {sep} {code+'*****'+ansi.end} {sep} {repr(code)}")
+    sys.stderr.write(
+        f"{codes_names[code]:>20} {cfg.sep} {code+'*****'+ansi.end} {sep} {repr(code)}\n"
+    )
 endef
 define  vars_py
 import os
 $(utils_py)
+ansi = Ansi(target="stdout")
 vars = "$2".split()
 length = max((len(v) for v in vars))
 print(f"{ansi.header}vars{ansi.end}:\n")
@@ -272,7 +276,8 @@ def confirm():
     """
     answer = ""
     while answer not in ["y", "n"]:
-        answer = input(f"""$(2) {a.b_red}[Y/n]{a.end} """).lower()
+        sys.stderr.write(f"""$(2) {a.b_red}[Y/n]{a.end} \n""")
+        answer = input().lower()
     return answer == "y"
 if confirm():
     sys.exit()
@@ -307,7 +312,8 @@ addfg = lambda byte: byte + 30
 addbg = lambda byte: byte + 40
 class Ansi:
     """ANSI escape codes"""
-    def __init__(self):
+    def __init__(self, target="stdout"):
+        self.target = target
         self.setcode("end", "\033[0m")
         self.setcode("default", "\033[38m")
         self.setcode("bg_default", "\033[48m")
@@ -324,7 +330,11 @@ class Ansi:
         self.add_cfg()
     def setcode(self, name, escape_code):
         """create attr for style and escape code"""
-        if not sys.stdout.isatty() or os.getenv("NO_COLOR", False):
+        if os.getenv("NO_COLOR", False):
+            setattr(self, name, "")
+        elif (self.target == "stderr" and not sys.stderr.isatty()) or (
+            self.target == "stdout" and not sys.stdout.isatty()
+        ):
             setattr(self, name, "")
         else:
             setattr(self, name, escape_code)
