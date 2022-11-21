@@ -1,7 +1,7 @@
 # }> [github.com/daylinmorgan/task.mk] <{ #
 # Copyright (c) 2022 Daylin Morgan
 # MIT License
-# version: v22.9.28-2-g6dad870-dev
+# version: v22.9.28-3-g76e9ece-dev
 #
 # task.mk should be included at the bottom of your Makefile with `-include .task.mk`
 # See below for the standard configuration options that should be set prior to including this file.
@@ -248,10 +248,23 @@ endef
 define  print_ansi_py
 $(utils_py)
 import sys
-codes_names = {getattr(ansi, attr): attr for attr in ansi.__dict__}
+codes_names = {
+    getattr(ansi, attr): attr
+    for attr in ansi.__dict__
+    if attr
+    not in [
+        "target",
+        "header",
+        "accent",
+        "params",
+        "goal",
+        "msg",
+        "div_style",
+    ]
+}
 for code in sorted(codes_names.keys(), key=lambda item: (len(item), item)):
     sys.stderr.write(
-        f"{codes_names[code]:>20} {cfg.sep} {code+'*****'+ansi.end} {sep} {repr(code)}\n"
+        f"{codes_names[code]:>20} {cfg.sep} {code+'*****'+ansi.end} {cfg.sep} {repr(code)}\n"
     )
 endef
 define  vars_py
