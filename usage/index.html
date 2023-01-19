@@ -607,7 +607,7 @@ This is a simple example but a few lines of python in your <code>Makefile</code>
 may be easier than balancing sub-shells and strung together awk commands.</p>
 <p>When <code>make</code> expands the function it will take the parameters passed to <code>py</code> and expand them.
 <code>$(1)</code> is the variable name and <code>$(2)</code> in this case is the implicit pattern from the rule. Pay attention to quotes.
-If you need to debug your python script, use <code>DEBUG=1</code> when you run <code>make</code> and it will first print the script that will be piped to <code>python</code>.</p>
+If you need to debug your python script, use <code>TASKMK_DEBUG=1</code> when you run <code>make</code> and it will first print the script that will be piped to <code>python</code>.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="cp">define list_files_py</span>
 <a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="err">from</span><span class="w"> </span><span class="err">pathlib</span><span class="w"> </span><span class="err">import</span><span class="w"> </span><span class="err">Path</span>
 <a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="err">print(</span><span class="s2">&quot;files in $(2)&quot;</span><span class="err">)</span>
@@ -635,7 +635,7 @@ If you need to debug your python script, use <code>DEBUG=1</code> when you run <
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">September 21, 2022</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">January 19, 2023</span>
       
         <br>
         Created:
