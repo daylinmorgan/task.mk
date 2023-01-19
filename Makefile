@@ -3,7 +3,6 @@ TEMPLATES := $(shell find src/ -type f)
 .DEFAULT_GOAL := help
 msg = $(if $(tprint),$(call tprint,{a.bold}==> {a.magenta}$(1){a.end}),@echo '==> $(1)')
 
-
 ### task.mk development |> -d -ms b_green --align center
 ## bootstrap | generate local dev environment |> -ms b_magenta -gs b_cyan
 .PHONY: bootstrap env hooks
@@ -29,16 +28,19 @@ l lint:
 assets:
 	@yartsu -o assets/help.svg -t "make help" -- make --no-print-directory help
 
+define release_sh
+./generate.py $(subst v,,$(VERSION)) > task.mk
+sed -i 's/task.mk\/.*\/task.mk/task.mk\/$(VERSION)\/task.mk/g' README.md docs/index.md
+git add task.mk README.md docs/index.md
+git commit -m "release: $(VERSION)" --no-verify
+git tag $(VERSION)
+endef
+
 ## release | release new version of task.mk
 .PHONY: release
 release: version-check
 	$(call msg,Release Project)
-	@./generate.py $(subst v,,$(VERSION)) > task.mk
-	@sed -i 's/task.mk\/.*\/task.mk/task.mk\/$(VERSION)\/task.mk/g' README.md
-	@sed -i 's/task.mk\/.*\/task.mk/task.mk\/$(VERSION)\/task.mk/g' docs/index.md
-	@git add task.mk README.md docs/index.md
-	@git commit -m "release: $(VERSION)" --no-verify
-	@git tag v$(VERSION)
+	$(call tbash,release_sh)
 
 ## c, clean | remove the generated files
 .PHONY: clean
@@ -50,7 +52,6 @@ if [[ "${VERSION}" == *'-'* ]]; then
 	$(call tprint-sh,{a.red}VERSION INVALID! Uncommited or untagged work{a.end})
 	exit 1
 elif [[ $(shell echo "${VERSION}" | awk -F. '{ print NF }') -lt 3 ]];then\
-	$(call tprint-sh,{a.red}VERSION INVALID! Uncommited or untagged work{a.end})
 	$(call tprint-sh,{a.red}VERSION INVALID! Expected CalVer string{a.end})
 	exit 1
 fi
