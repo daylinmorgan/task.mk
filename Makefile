@@ -1,7 +1,6 @@
-VERSION ?= $(shell git describe --tags --always --dirty | sed s'/dirty/dev/')
+VERSION ?= $(shell git describe --tags --always --dirty=dev)
 TEMPLATES := $(shell find src/ -type f)
 .DEFAULT_GOAL := help
-
 msg = $(if $(tprint),$(call tprint,{a.bold}==> {a.magenta}$(1){a.end}),@echo '==> $(1)')
 
 
@@ -34,11 +33,11 @@ assets:
 .PHONY: release
 release: version-check
 	$(call msg,Release Project)
-	@./generate.py $(VERSION) > task.mk
-	@sed -i 's/task.mk\/.*\/task.mk/task.mk\/v$(VERSION)\/task.mk/g' README.md
-	@sed -i 's/task.mk\/.*\/task.mk/task.mk\/v$(VERSION)\/task.mk/g' docs/index.md
+	@./generate.py $(subst v,,$(VERSION)) > task.mk
+	@sed -i 's/task.mk\/.*\/task.mk/task.mk\/$(VERSION)\/task.mk/g' README.md
+	@sed -i 's/task.mk\/.*\/task.mk/task.mk\/$(VERSION)\/task.mk/g' docs/index.md
 	@git add task.mk README.md docs/index.md
-	@git commit -m "release: v$(VERSION)" --no-verify
+	@git commit -m "release: $(VERSION)" --no-verify
 	@git tag v$(VERSION)
 
 ## c, clean | remove the generated files
@@ -46,17 +45,22 @@ release: version-check
 c clean:
 	@rm -f task.mk .task.mk
 
+define version_check_sh
+if [[ "${VERSION}" == *'-'* ]]; then 
+	$(call tprint-sh,{a.red}VERSION INVALID! Uncommited or untagged work{a.end})
+	exit 1
+elif [[ $(shell echo "${VERSION}" | awk -F. '{ print NF }') -lt 3 ]];then\
+	$(call tprint-sh,{a.red}VERSION INVALID! Uncommited or untagged work{a.end})
+	$(call tprint-sh,{a.red}VERSION INVALID! Expected CalVer string{a.end})
+	exit 1
+fi
+endef
+
 .PHONY: version-check
 version-check:
-	@if [[ "${VERSION}" == *'-'* ]]; then\
-		$(call tprint-sh,{a.red}VERSION INVALID! Uncommited or untagged work{a.end});\
-		echo ">> version: $(VERSION)"; exit 1;\
-	elif [[ $(shell echo "${VERSION}" | awk -F. '{ print NF }') -lt 3 ]];then\
-		$(call tprint-sh,{a.red}VERSION INVALID! Expected CalVer string{a.end});\
-		echo ">> version: $(VERSION)"; exit 1;\
-	else \
-		$(call tprint-sh,{a.green}VERSION LOOKS GOOD!{a.end});\
-	fi
+	@$(call tprint,>> version: {a.green}$(VERSION){a.end})
+	@$(call tbash,version_check_sh)
+	@$(call tprint,>> {a.green}VERSION LOOKS GOOD!{a.end})
 
 ## info | demonstrate usage of tprint
 .PHONY: task
