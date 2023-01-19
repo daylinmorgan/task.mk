@@ -54,6 +54,7 @@ See this project's `make info` for an example.
 ## Configuration
 
 You can quickly customize some of the default behavior of `task.mk` by overriding the below variables prior to the `-include .task.mk`.
+These can also be included in a seperate file `.task.cfg.mk`.
 
 ```make
 # ---- [config] ---- #
