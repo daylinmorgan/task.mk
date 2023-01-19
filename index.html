@@ -587,17 +587,17 @@ to add some QOL improvements for your users and fellow maintainers.</p>
 </ul>
 <p>Depends on <code>GNU Make</code>, obviously and <code>Python &gt;=3.7</code>, and <code>bash</code> (or <code>zsh</code>).</p>
 <p>Wait python?!?!, I'm not <code>pip</code> installing some package just to parse my makefile.
-I agree, all you need is one file <a href="https://github.com/daylinmorgan/task.mk/v23.1.1/task.mk"><code>.task.mk</code></a>.
+I agree, all you need is one file <a href="https://github.com/daylinmorgan/task.mk/v22.9.28/task.mk"><code>.task.mk</code></a>.
 You can automagically include it with just two additional lines to your <code>Makefile</code> (and probably one to your <code>.gitignore</code>) and your good to go.</p>
 <h2 id="setup">Setup</h2>
 <p>You can include this as an optional dependency on your project by adding the below lines to the end of your <code>Makefile</code>.
 If someone tries to invoke <code>make help</code> it will download <code>.task.mk</code> for them.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="cp">-include .task.mk</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nf">$(if $(filter help,$(MAKECMDGOALS)),$(if $(wildcard .task.mk),,.task.mk</span><span class="o">:</span><span class="w"> </span>; <span class="n">curl</span> -<span class="n">fsSL</span> <span class="n">https</span>://<span class="n">raw</span>.<span class="n">githubusercontent</span>.<span class="n">com</span>/<span class="n">daylinmorgan</span>/<span class="n">task</span>.<span class="n">mk</span>/<span class="n">v</span>23.1.1/<span class="n">task</span>.<span class="n">mk</span> -<span class="n">o</span> .<span class="n">task</span>.<span class="n">mk</span>))
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nf">$(if $(filter help,$(MAKECMDGOALS)),$(if $(wildcard .task.mk),,.task.mk</span><span class="o">:</span><span class="w"> </span>; <span class="n">curl</span> -<span class="n">fsSL</span> <span class="n">https</span>://<span class="n">raw</span>.<span class="n">githubusercontent</span>.<span class="n">com</span>/<span class="n">daylinmorgan</span>/<span class="n">task</span>.<span class="n">mk</span>/<span class="n">v</span>22.9.28/<span class="n">task</span>.<span class="n">mk</span> -<span class="n">o</span> .<span class="n">task</span>.<span class="n">mk</span>))
 </code></pre></div>
 <p>You might also consider making it a consistently downloaded dependency if you plan to use any of it's advanced feature set, by dropping the <code>$(MAKECMDGOALS)</code> check.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="cp">-include .task.mk</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nf">$(if $(wildcard .task.mk),,.task.mk</span><span class="o">:</span><span class="w"> </span>; <span class="n">curl</span> -<span class="n">fsSL</span> <span class="n">https</span>://<span class="n">raw</span>.<span class="n">githubusercontent</span>.<span class="n">com</span>/<span class="n">daylinmorgan</span>/<span class="n">task</span>.<span class="n">mk</span>/<span class="n">v</span>23.1.1/<span class="n">task</span>.<span class="n">mk</span> -<span class="n">o</span> .<span class="n">task</span>.<span class="n">mk</span>)
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nf">$(if $(wildcard .task.mk),,.task.mk</span><span class="o">:</span><span class="w"> </span>; <span class="n">curl</span> -<span class="n">fsSL</span> <span class="n">https</span>://<span class="n">raw</span>.<span class="n">githubusercontent</span>.<span class="n">com</span>/<span class="n">daylinmorgan</span>/<span class="n">task</span>.<span class="n">mk</span>/<span class="n">v</span>22.9.28/<span class="n">task</span>.<span class="n">mk</span> -<span class="n">o</span> .<span class="n">task</span>.<span class="n">mk</span>)
 </code></pre></div>
 <p>Alternatively, you can use the builtin rule <code>_update-task.mk</code> to update to the latest development version.</p>
 <p>See <a href="./usage">Usage</a> to get started running all your tasks.
@@ -634,7 +634,7 @@ But like <code>just</code> it's a tool people don't usually already have and it'
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">January 19, 2023</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">September 28, 2022</span>
       
         <br>
         Created:
