@@ -20,8 +20,31 @@ a = ansi = Ansi(target="stdout")
 MaxLens = namedtuple("MaxLens", "goal msg")
 
 ###- double dollar signs to prevent make escaping them -###
+###- re.X requires all important whitespace is escaped -###
 pattern = re.compile(
-    r"^## (?P<goal>.*?) \| (?P<msg>.*?)(?:\s?\| args: (?P<msgargs>.*?))?$$|^### (?P<rawmsg>.*?)?(?:\s?\| args: (?P<rawargs>.*?))?$$"
+   r"""
+    ^\#\#\ 
+    (?P<goal>.*?)\s?\|\s?(?P<msg>.*?)
+    \s?
+    (?:
+      (?:\|\s?args:\s?|\|>)
+      \s?
+      (?P<msgargs>.*?)
+    )?
+    $$
+    |
+    ^\#\#\#\ 
+    (?P<rawmsg>.*?)
+    \s?
+    (?:
+      (?:\|\s?args:|\|\>)
+      \s?
+      (?P<rawargs>.*?)
+    )?
+    $$
+    """
+    ,re.X
+
 )
 goal_pattern = re.compile(r"""^(?!#|\t)(.*):.*\n\t""", re.MULTILINE)
 

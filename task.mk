@@ -1,7 +1,7 @@
 # }> [github.com/daylinmorgan/task.mk] <{ #
 # Copyright (c) 2022 Daylin Morgan
 # MIT License
-# version: v22.9.28-5-g83fe41d-dev
+# version: v22.9.28-7-gfa977c4-dev
 #
 # task.mk should be included at the bottom of your Makefile with `-include .task.mk`
 # See below for the standard configuration options that should be set prior to including this file.
@@ -91,10 +91,27 @@ $(utils_py)
 a = ansi = Ansi(target="stdout")
 MaxLens = namedtuple("MaxLens", "goal msg")
 pattern = re.compile(
-    r"""
-    ^\#\#\ (?P<goal>.*?)\ \|\ (?P<msg>.*?)(?:\s?\|\ args:\ (?P<msgargs>.*?))?$$
+   r"""
+    ^\#\#\ 
+    (?P<goal>.*?)\s?\|\s?(?P<msg>.*?)
+    \s?
+    (?:
+      (?:\|\s?args:\s?|\|>)
+      \s?
+      (?P<msgargs>.*?)
+    )?
+    $$
     |
-    ^\#\#\#\ (?P<rawmsg>.*?)?(?:\s?\|\ args:\ (?P<rawargs>.*?))?$$"""
+    ^\#\#\#\ 
+    (?P<rawmsg>.*?)
+    \s?
+    (?:
+      (?:\|\s?args:|\|\>)
+      \s?
+      (?P<rawargs>.*?)
+    )?
+    $$
+    """
     ,re.X
 )
 goal_pattern = re.compile(r"""^(?!#|\t)(.*):.*\n\t""", re.MULTILINE)

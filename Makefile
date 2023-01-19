@@ -5,8 +5,8 @@ TEMPLATES := $(shell find src/ -type f)
 msg = $(if $(tprint),$(call tprint,{a.bold}==> {a.magenta}$(1){a.end}),@echo '==> $(1)')
 
 
-### task.mk development | args: -d -ms b_green --align center
-## bootstrap | generate local dev environment
+### task.mk development |> -d -ms b_green --align center
+## bootstrap | generate local dev environment |> -ms b_magenta -gs b_cyan
 .PHONY: bootstrap env hooks
 bootstrap: env hooks
 env: 
@@ -17,6 +17,7 @@ hooks:
 	@git config core.hooksPath .githooks
 docs-env:
 	@mamba run -p ./env pip install mkdocs-material mkdocs-git-revision-date-localized-plugin
+
 ## l, lint | lint the python
 .PHONY: l lint
 l lint:
