@@ -1,7 +1,7 @@
 # }> [github.com/daylinmorgan/task.mk] <{ #
 # Copyright (c) 2022 Daylin Morgan
 # MIT License
-# version: v22.9.28-3-g76e9ece-dev
+# version: v22.9.28-4-gbf0394c-dev
 #
 # task.mk should be included at the bottom of your Makefile with `-include .task.mk`
 # See below for the standard configuration options that should be set prior to including this file.
@@ -27,7 +27,7 @@ ifeq (help,$(firstword $(MAKECMDGOALS)))
 endif
 ## h, help | show this help
 h help:
-	$(call py,help_py) || { echo "exiting early!"; exit 1; }
+	$(call py,help_py)
 _help: export SHOW_HIDDEN=true
 _help: help
 ifdef PRINT_VARS
@@ -91,7 +91,11 @@ $(utils_py)
 a = ansi = Ansi(target="stdout")
 MaxLens = namedtuple("MaxLens", "goal msg")
 pattern = re.compile(
-    r"^## (?P<goal>.*?) \| (?P<msg>.*?)(?:\s?\| args: (?P<msgargs>.*?))?$$|^### (?P<rawmsg>.*?)?(?:\s?\| args: (?P<rawargs>.*?))?$$"
+    r"""
+    ^\#\#\ (?P<goal>.*?)\ \|\ (?P<msg>.*?)(?:\s?\|\ args:\ (?P<msgargs>.*?))?$$
+    |
+    ^\#\#\#\ (?P<rawmsg>.*?)?(?:\s?\|\ args:\ (?P<rawargs>.*?))?$$"""
+    ,re.X
 )
 goal_pattern = re.compile(r"""^(?!#|\t)(.*):.*\n\t""", re.MULTILINE)
 def parseargs(argstring):
@@ -229,12 +233,12 @@ def print_help():
 def print_arg_help(help_args):
     print(f"{ansi.style('task.mk recipe help','header')}\n")
     for arg in help_args.split():
-        print("\n".join(parse_goal(gen_makefile(), arg)))
-    print()
+        print("\n".join((*parse_goal(gen_makefile(), arg),'\n')))
 def main():
     help_args = os.getenv("HELP_ARGS")
     if help_args:
         print_arg_help(help_args)
+        print(f"{ansi.faint}exiting task.mk{ansi.end}")
         sys.exit(1)
     else:
         print_help()

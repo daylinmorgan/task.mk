@@ -185,14 +185,14 @@ def print_help():
 def print_arg_help(help_args):
     print(f"{ansi.style('task.mk recipe help','header')}\n")
     for arg in help_args.split():
-        print("\n".join(parse_goal(gen_makefile(), arg)))
-    print()
+        print("\n".join((*parse_goal(gen_makefile(), arg),'\n')))
 
 
 def main():
     help_args = os.getenv("HELP_ARGS")
     if help_args:
         print_arg_help(help_args)
+        print(f"{ansi.faint}exiting task.mk{ansi.end}")
         sys.exit(1)
     else:
         print_help()

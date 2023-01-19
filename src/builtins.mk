@@ -5,7 +5,7 @@ ifeq (help,$(firstword $(MAKECMDGOALS)))
 endif
 ## h, help | show this help
 h help:
-	$(call py,help_py) || { echo "exiting early!"; exit 1; }
+	$(call py,help_py)
 _help: export SHOW_HIDDEN=true
 _help: help
 ifdef PRINT_VARS
