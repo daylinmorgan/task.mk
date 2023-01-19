@@ -22,7 +22,7 @@ MaxLens = namedtuple("MaxLens", "goal msg")
 ###- double dollar signs to prevent make escaping them -###
 ###- re.X requires all important whitespace is escaped -###
 pattern = re.compile(
-   r"""
+    r"""
     ^\#\#\ 
     (?P<goal>.*?)\s?\|\s?(?P<msg>.*?)
     \s?
@@ -42,9 +42,8 @@ pattern = re.compile(
       (?P<rawargs>.*?)
     )?
     $$
-    """
-    ,re.X
-
+    """,
+    re.X,
 )
 goal_pattern = re.compile(r"""^(?!#|\t)(.*):.*\n\t""", re.MULTILINE)
 
@@ -208,7 +207,7 @@ def print_help():
 def print_arg_help(help_args):
     print(f"{ansi.style('task.mk recipe help','header')}\n")
     for arg in help_args.split():
-        print("\n".join((*parse_goal(gen_makefile(), arg),'\n')))
+        print("\n".join((*parse_goal(gen_makefile(), arg), "\n")))
 
 
 def main():

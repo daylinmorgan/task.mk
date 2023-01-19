@@ -1,7 +1,7 @@
 # }> [github.com/daylinmorgan/task.mk] <{ #
 # Copyright (c) 2022 Daylin Morgan
 # MIT License
-# version: v22.9.28-7-gfa977c4-dev
+# version: v22.9.28-8-g4fcab2adev
 #
 # task.mk should be included at the bottom of your Makefile with `-include .task.mk`
 # See below for the standard configuration options that should be set prior to including this file.
@@ -91,7 +91,7 @@ $(utils_py)
 a = ansi = Ansi(target="stdout")
 MaxLens = namedtuple("MaxLens", "goal msg")
 pattern = re.compile(
-   r"""
+    r"""
     ^\#\#\ 
     (?P<goal>.*?)\s?\|\s?(?P<msg>.*?)
     \s?
@@ -111,8 +111,8 @@ pattern = re.compile(
       (?P<rawargs>.*?)
     )?
     $$
-    """
-    ,re.X
+    """,
+    re.X,
 )
 goal_pattern = re.compile(r"""^(?!#|\t)(.*):.*\n\t""", re.MULTILINE)
 def parseargs(argstring):
@@ -250,7 +250,7 @@ def print_help():
 def print_arg_help(help_args):
     print(f"{ansi.style('task.mk recipe help','header')}\n")
     for arg in help_args.split():
-        print("\n".join((*parse_goal(gen_makefile(), arg),'\n')))
+        print("\n".join((*parse_goal(gen_makefile(), arg), "\n")))
 def main():
     help_args = os.getenv("HELP_ARGS")
     if help_args:
