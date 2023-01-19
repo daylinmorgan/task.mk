@@ -1,7 +1,7 @@
 # }> [github.com/daylinmorgan/task.mk] <{ #
 # Copyright (c) 2022 Daylin Morgan
 # MIT License
-# version: v22.9.28-4-gbf0394c-dev
+# version: v22.9.28-5-g83fe41d-dev
 #
 # task.mk should be included at the bottom of your Makefile with `-include .task.mk`
 # See below for the standard configuration options that should be set prior to including this file.
@@ -64,7 +64,7 @@ _escape_shellstring = $(subst `,\`,$(subst ",\",$(subst $$,\$$,$(subst \,\\,$1))
 _escape_printf = $(subst \,\\,$(subst %,%%,$1))
 _create_string = $(subst $(_newline),\n,$(call _escape_shellstring,$(call _escape_printf,$1)))
 _printline = printf -- "<----------------------------------->\n"
-ifdef DEBUG
+ifdef TASKMK_DEBUG
 define _debug_runner
 @printf "$(1) Script:\n";$(_printline);
 @printf "$(call _create_string,$(3))\n" | cat -n

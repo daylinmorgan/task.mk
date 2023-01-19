@@ -87,7 +87,7 @@ may be easier than balancing sub-shells and strung together awk commands.
 
 When `make` expands the function it will take the parameters passed to `py` and expand them.
 `$(1)` is the variable name and `$(2)` in this case is the implicit pattern from the rule. Pay attention to quotes.
-If you need to debug your python script, use `DEBUG=1` when you run `make` and it will first print the script that will be piped to `python`.
+If you need to debug your python script, use `TASKMK_DEBUG=1` when you run `make` and it will first print the script that will be piped to `python`.
 
 ```make
 define list_files_py
