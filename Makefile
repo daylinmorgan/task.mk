@@ -45,10 +45,10 @@ c clean: ## remove the generated files
 
 define version_check_sh
 if [[ "${VERSION}" == *'-'* ]]; then 
-	$(call tprint-sh,{a.red}VERSION INVALID!{a.end} Uncommited or untagged work)
+	$(call tprint-verbose,{a.red}VERSION INVALID!{a.end} Uncommited or untagged work)
 	exit 1
 elif [[ $(shell echo "${VERSION}" | awk -F. '{ print NF }') -lt 3 ]];then\
-	$(call tprint-sh,{a.red}VERSION INVALID!{a.end} Expected CalVer string)
+	$(call tprint-verbose,{a.red}VERSION INVALID!{a.end} Expected CalVer string)
 	exit 1
 fi
 endef

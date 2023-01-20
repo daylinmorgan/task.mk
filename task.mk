@@ -1,7 +1,7 @@
 # }> [github.com/daylinmorgan/task.mk] <{ #
 # Copyright (c) 2022 Daylin Morgan
 # MIT License
-TASKMK_VERSION ?= v22.9.28-18-g3873df0-dev
+TASKMK_VERSION ?= v22.9.28-19-g13ea081-dev
 # task.mk should be included at the bottom of your Makefile with `-include .task.mk`
 # See below for the standard configuration options that should be set prior to including this file.
 # You can update your .task.mk with `make _update-task.mk`
@@ -73,7 +73,7 @@ else
 py = @python3 <(printf "$(call _create_string,$($(1)))")
 tbash = @bash <(printf "$(call _create_string,$($(1)))")
 endif
-pysh = python3 <(printf "$(call _create_string,$($(1)))")
+py-verbose = python3 <(printf "$(call _create_string,$($(1)))")
 # ---- [python scripts] ---- #
 define  help_py
 import argparse

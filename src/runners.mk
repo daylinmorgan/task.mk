@@ -21,4 +21,4 @@ else
 py = @python3 <(printf "$(call _create_string,$($(1)))")
 tbash = @bash <(printf "$(call _create_string,$($(1)))")
 endif
-pysh = python3 <(printf "$(call _create_string,$($(1)))")
+py-verbose = python3 <(printf "$(call _create_string,$($(1)))")

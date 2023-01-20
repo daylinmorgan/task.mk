@@ -19,7 +19,7 @@ _print-ansi: ## show all possible ansi color code combinations
 	$(call py,print_ansi_py)
 # functions to take f-string literals and pass to python print
 tprint = $(call py,print_py,$(1))
-tprint-sh = $(call pysh,print_py,$(1))
+tprint-verbose= $(call py-verbose,print_py,$(1))
 tconfirm = $(call py,confirm_py,$(1))
 _update-task.mk: ## downloads version of task.mk (TASKMK_VERSION=)
 	$(call tprint,{a.b_cyan}Updating task.mk{a.end})
