@@ -21,9 +21,9 @@ _print-ansi: ## show all possible ansi color code combinations
 tprint = $(call py,print_py,$(1))
 tprint-sh = $(call pysh,print_py,$(1))
 tconfirm = $(call py,confirm_py,$(1))
-_update-task.mk: ## downloads latest development version of task.mk
+_update-task.mk: ## downloads version of task.mk (TASKMK_VERSION=)
 	$(call tprint,{a.b_cyan}Updating task.mk{a.end})
-	curl https://raw.githubusercontent.com/daylinmorgan/task.mk/main/task.mk -o .task.mk
+	curl https://raw.githubusercontent.com/daylinmorgan/task.mk/$(TASKMK_VERSION)/task.mk -o .task.mk
 .PHONY: h help _help _print-ansi _update-task.mk
 TASK_MAKEFILE_LIST := $(filter-out $(word $(words $(MAKEFILE_LIST)),$(MAKEFILE_LIST)),$(MAKEFILE_LIST))
 export MAKEFILE_LIST MAKE TASK_MAKEFILE_LIST

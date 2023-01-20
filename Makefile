@@ -1,4 +1,4 @@
-VERSION ?= $(shell git describe --tags --always --dirty=dev)
+VERSION ?= $(shell git describe --tags --always --dirty=-dev)
 TEMPLATES := $(shell find src/ -type f)
 .DEFAULT_GOAL := help
 msg = $(if $(tprint),$(call tprint,{a.bold}==> {a.magenta}$(1){a.end}),@echo '==> $(1)')

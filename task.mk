@@ -1,8 +1,7 @@
 # }> [github.com/daylinmorgan/task.mk] <{ #
 # Copyright (c) 2022 Daylin Morgan
 # MIT License
-# version: v22.9.28-17-g365e0e1dev
-#
+TASKMK_VERSION ?= v22.9.28-18-g3873df0-dev
 # task.mk should be included at the bottom of your Makefile with `-include .task.mk`
 # See below for the standard configuration options that should be set prior to including this file.
 # You can update your .task.mk with `make _update-task.mk`
@@ -41,11 +40,11 @@ _print-ansi: ## show all possible ansi color code combinations
 	$(call py,print_ansi_py)
 # functions to take f-string literals and pass to python print
 tprint = $(call py,print_py,$(1))
-tprint-sh = $(call pysh,print_py,$(1))
+tprint-verbose= $(call py-verbose,print_py,$(1))
 tconfirm = $(call py,confirm_py,$(1))
-_update-task.mk: ## downloads latest development version of task.mk
+_update-task.mk: ## downloads version of task.mk (TASKMK_VERSION=)
 	$(call tprint,{a.b_cyan}Updating task.mk{a.end})
-	curl https://raw.githubusercontent.com/daylinmorgan/task.mk/main/task.mk -o .task.mk
+	curl https://raw.githubusercontent.com/daylinmorgan/task.mk/$(TASKMK_VERSION)/task.mk -o .task.mk
 .PHONY: h help _help _print-ansi _update-task.mk
 TASK_MAKEFILE_LIST := $(filter-out $(word $(words $(MAKEFILE_LIST)),$(MAKEFILE_LIST)),$(MAKEFILE_LIST))
 export MAKEFILE_LIST MAKE TASK_MAKEFILE_LIST
