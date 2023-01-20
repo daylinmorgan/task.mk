@@ -8,10 +8,10 @@ h help: ## show this help
 _help: export SHOW_HIDDEN=true
 _help: help
 ifdef PRINT_VARS
-$(foreach v,$(PRINT_VARS),$(eval export $(v)))
+TASKMK_VARS=$(subst $(eval ) ,<|>,$(foreach v,$(PRINT_VARS),$(v)=$($(v))))
 .PHONY: vars v
-vars v:
-	$(call py,vars_py,$(PRINT_VARS))
+v vars:
+	$(call py,vars_py,$(TASKMK_VARS))
 endif
 ### |> -ws --hidden
 ### task.mk builtins: |> -d --hidden

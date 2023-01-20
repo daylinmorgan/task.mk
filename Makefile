@@ -69,7 +69,7 @@ info: ## demonstrate usage of tprint
 task.mk: $(TEMPLATES) generate.py
 	./generate.py $(VERSION) > task.mk
 
--include .task.mk .task.cfg.mk
+-include .task.cfg.mk .task.mk 
 .task.mk: $(TEMPLATES) generate.py
 	$(call msg,re-jinjaing the local .task.mk)
 	@./generate.py $(VERSION) > .task.mk || (echo "generator failed!!" && rm .task.mk)

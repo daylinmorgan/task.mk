@@ -10,15 +10,10 @@ from utils import Ansi
 # -###
 ##- '$(utils_py)' -##
 
-
 ansi = Ansi(target="stdout")
-vars = "$2".split()
-length = max((len(v) for v in vars))
-
-print(f"{ansi.header}vars{ansi.end}:\n")
-
-for v in vars:
-    print(f"  {ansi.params}{v:<{length}}{ansi.end} = {os.getenv(v)}")
-
-print()
+###- $2 is a list of variables set by task.mk delimited with '<|>' -###
+task_vars = tuple(v.split('=') for v in "$2".split('<|>'))
+length = max((len(v[0]) for v in task_vars))
+rows = (f"  {ansi.params}{v[0]:<{length}}{ansi.end} = {v[1]}" for v in task_vars)
+print('\n'.join((f"{ansi.header}vars{ansi.end}:\n", *rows,'')))
 #% endblock %#

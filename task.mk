@@ -1,7 +1,7 @@
 # }> [github.com/daylinmorgan/task.mk] <{ #
 # Copyright (c) 2022 Daylin Morgan
 # MIT License
-# version: v22.9.28-13-gfd96a45dev
+# version: v22.9.28-16-g920c7c2dev
 #
 # task.mk should be included at the bottom of your Makefile with `-include .task.mk`
 # See below for the standard configuration options that should be set prior to including this file.
@@ -30,10 +30,10 @@ h help: ## show this help
 _help: export SHOW_HIDDEN=true
 _help: help
 ifdef PRINT_VARS
-$(foreach v,$(PRINT_VARS),$(eval export $(v)))
+TASKMK_VARS=$(subst $(eval ) ,<|>,$(foreach v,$(PRINT_VARS),$(v)=$($(v))))
 .PHONY: vars v
-vars v:
-	$(call py,vars_py,$(PRINT_VARS))
+v vars:
+	$(call py,vars_py,$(TASKMK_VARS))
 endif
 ### |> -ws --hidden
 ### task.mk builtins: |> -d --hidden
@@ -286,12 +286,10 @@ define  vars_py
 import os
 $(utils_py)
 ansi = Ansi(target="stdout")
-vars = "$2".split()
-length = max((len(v) for v in vars))
-print(f"{ansi.header}vars{ansi.end}:\n")
-for v in vars:
-    print(f"  {ansi.params}{v:<{length}}{ansi.end} = {os.getenv(v)}")
-print()
+task_vars = tuple(v.split('=') for v in "$2".split('<|>'))
+length = max((len(v[0]) for v in task_vars))
+rows = (f"  {ansi.params}{v[0]:<{length}}{ansi.end} = {v[1]}" for v in task_vars)
+print('\n'.join((f"{ansi.header}vars{ansi.end}:\n", *rows,'')))
 endef
 define  confirm_py
 import sys
