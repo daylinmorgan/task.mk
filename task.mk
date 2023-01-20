@@ -1,12 +1,13 @@
 # }> [github.com/daylinmorgan/task.mk] <{ #
 # Copyright (c) 2022 Daylin Morgan
 # MIT License
-# version: v22.9.28-8-g4fcab2adev
+# version: v22.9.28-12-g3244dbadev
 #
 # task.mk should be included at the bottom of your Makefile with `-include .task.mk`
 # See below for the standard configuration options that should be set prior to including this file.
 # You can update your .task.mk with `make _update-task.mk`
 # ---- [config] ---- #
+-include .task.cfg.mk
 HEADER_STYLE ?= b_cyan
 ACCENT_STYLE ?= b_yellow
 PARAMS_STYLE ?= $(ACCENT_STYLE)
@@ -25,8 +26,7 @@ ifeq (help,$(firstword $(MAKECMDGOALS)))
   HELP_ARGS := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
 	export HELP_ARGS
 endif
-## h, help | show this help
-h help:
+h help: ## show this help
 	$(call py,help_py)
 _help: export SHOW_HIDDEN=true
 _help: help
@@ -36,17 +36,15 @@ $(foreach v,$(PRINT_VARS),$(eval export $(v)))
 vars v:
 	$(call py,vars_py,$(PRINT_VARS))
 endif
-### | args: -ws --hidden
-### task.mk builtins: | args: -d --hidden
-## _print-ansi | show all possible ansi color code combinations
-_print-ansi:
+### |> -ws --hidden
+### task.mk builtins: |> -d --hidden
+_print-ansi: ## show all possible ansi color code combinations
 	$(call py,print_ansi_py)
 # functions to take f-string literals and pass to python print
 tprint = $(call py,print_py,$(1))
 tprint-sh = $(call pysh,print_py,$(1))
 tconfirm = $(call py,confirm_py,$(1))
-## _update-task.mk | downloads latest development version of task.mk
-_update-task.mk:
+_update-task.mk: ## downloads latest development version of task.mk
 	$(call tprint,{a.b_cyan}Updating task.mk{a.end})
 	curl https://raw.githubusercontent.com/daylinmorgan/task.mk/main/task.mk -o .task.mk
 .PHONY: h help _help _print-ansi _update-task.mk
@@ -92,26 +90,20 @@ a = ansi = Ansi(target="stdout")
 MaxLens = namedtuple("MaxLens", "goal msg")
 pattern = re.compile(
     r"""
-    ^\#\#\ 
-    (?P<goal>.*?)\s?\|\s?(?P<msg>.*?)
-    \s?
-    (?:
-      (?:\|\s?args:\s?|\|>)
-      \s?
-      (?P<msgargs>.*?)
-    )?
-    $$
-    |
-    ^\#\#\#\ 
-    (?P<rawmsg>.*?)
-    \s?
-    (?:
-      (?:\|\s?args:|\|\>)
-      \s?
-      (?P<rawargs>.*?)
-    )?
-    $$
-    """,
+(?:
+  ^\#\#\#\s+
+  |
+  ^(?:
+    (?:\#\#\s+)?
+    (?P<goal>.*?)(?:\s+\|>|:.*?\#\#)\s+
+  )
+)
+(?P<msg>.*?)?\s?
+(?:\|>\s+
+  (?P<msgargs>.*?)
+)?
+$$
+""",
     re.X,
 )
 goal_pattern = re.compile(r"""^(?!#|\t)(.*):.*\n\t""", re.MULTILINE)
@@ -234,7 +226,10 @@ def print_help():
     lines = [cfg.usage]
     items = list(parse_help(gen_makefile()))
     maxlens = MaxLens(
-        *(max((len(item[x]) for item in items if x in item)) for x in ["goal", "msg"])
+        *(
+            max((*(len(item[x]) for item in items if x in item), 0))
+            for x in ["goal", "msg"]
+        )
     )
     for item in items:
         if "goal" in item:
@@ -243,8 +238,8 @@ def print_help():
                     item["goal"], item["msg"], maxlens.goal, item.get("msgargs", "")
                 )
             )
-        if "rawmsg" in item:
-            lines.extend(fmt_rawmsg(item["rawmsg"], item.get("rawargs", ""), maxlens))
+        else:
+            lines.extend(fmt_rawmsg(item["msg"], item.get("msgargs", ""), maxlens))
     lines.append(cfg.epilog)
     print("\n".join(lines))
 def print_arg_help(help_args):

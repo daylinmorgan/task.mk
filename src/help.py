@@ -10,8 +10,7 @@ import sys
 from textwrap import wrap
 
 ###-
-# this is just to trick the LSP during development
-from utils import Ansi, cfg
+from utils import Ansi, cfg  # this is just to trick the LSP during development
 
 # -###
 ##- '$(utils_py)' -##
@@ -20,29 +19,23 @@ a = ansi = Ansi(target="stdout")
 MaxLens = namedtuple("MaxLens", "goal msg")
 
 ###- double dollar signs to prevent make escaping them -###
-###- re.X requires all important whitespace is escaped -###
+###- bets on how long until I break this regex? -###
 pattern = re.compile(
     r"""
-    ^\#\#\ 
-    (?P<goal>.*?)\s?\|\s?(?P<msg>.*?)
-    \s?
-    (?:
-      (?:\|\s?args:\s?|\|>)
-      \s?
-      (?P<msgargs>.*?)
-    )?
-    $$
-    |
-    ^\#\#\#\ 
-    (?P<rawmsg>.*?)
-    \s?
-    (?:
-      (?:\|\s?args:|\|\>)
-      \s?
-      (?P<rawargs>.*?)
-    )?
-    $$
-    """,
+(?:
+  ^\#\#\#\s+
+  |
+  ^(?:
+    (?:\#\#\s+)?
+    (?P<goal>.*?)(?:\s+\|>|:.*?\#\#)\s+
+  )
+)
+(?P<msg>.*?)?\s?
+(?:\|>\s+
+  (?P<msgargs>.*?)
+)?
+$$
+""",
     re.X,
 )
 goal_pattern = re.compile(r"""^(?!#|\t)(.*):.*\n\t""", re.MULTILINE)
@@ -189,7 +182,10 @@ def print_help():
 
     items = list(parse_help(gen_makefile()))
     maxlens = MaxLens(
-        *(max((len(item[x]) for item in items if x in item)) for x in ["goal", "msg"])
+        *(
+            max((*(len(item[x]) for item in items if x in item), 0))
+            for x in ["goal", "msg"]
+        )
     )
     for item in items:
         if "goal" in item:
@@ -198,8 +194,8 @@ def print_help():
                     item["goal"], item["msg"], maxlens.goal, item.get("msgargs", "")
                 )
             )
-        if "rawmsg" in item:
-            lines.extend(fmt_rawmsg(item["rawmsg"], item.get("rawargs", ""), maxlens))
+        else:
+            lines.extend(fmt_rawmsg(item["msg"], item.get("msgargs", ""), maxlens))
     lines.append(cfg.epilog)
     print("\n".join(lines))
 

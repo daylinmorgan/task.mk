@@ -3,8 +3,7 @@ ifeq (help,$(firstword $(MAKECMDGOALS)))
   HELP_ARGS := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
 	export HELP_ARGS
 endif
-## h, help | show this help
-h help:
+h help: ## show this help
 	$(call py,help_py)
 _help: export SHOW_HIDDEN=true
 _help: help
@@ -14,17 +13,15 @@ $(foreach v,$(PRINT_VARS),$(eval export $(v)))
 vars v:
 	$(call py,vars_py,$(PRINT_VARS))
 endif
-### | args: -ws --hidden
-### task.mk builtins: | args: -d --hidden
-## _print-ansi | show all possible ansi color code combinations
-_print-ansi:
+### |> -ws --hidden
+### task.mk builtins: |> -d --hidden
+_print-ansi: ## show all possible ansi color code combinations
 	$(call py,print_ansi_py)
 # functions to take f-string literals and pass to python print
 tprint = $(call py,print_py,$(1))
 tprint-sh = $(call pysh,print_py,$(1))
 tconfirm = $(call py,confirm_py,$(1))
-## _update-task.mk | downloads latest development version of task.mk
-_update-task.mk:
+_update-task.mk: ## downloads latest development version of task.mk
 	$(call tprint,{a.b_cyan}Updating task.mk{a.end})
 	curl https://raw.githubusercontent.com/daylinmorgan/task.mk/main/task.mk -o .task.mk
 .PHONY: h help _help _print-ansi _update-task.mk

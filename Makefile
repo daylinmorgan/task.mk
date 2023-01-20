@@ -4,9 +4,8 @@ TEMPLATES := $(shell find src/ -type f)
 msg = $(if $(tprint),$(call tprint,{a.bold}==> {a.magenta}$(1){a.end}),@echo '==> $(1)')
 
 ### task.mk development |> -d -ms b_green --align center
-## bootstrap | generate local dev environment |> -ms b_magenta -gs b_cyan
 .PHONY: bootstrap env hooks
-bootstrap: env hooks
+bootstrap: env hooks ## generate local dev environment |> -ms b_magenta -gs b_cyan
 env: 
 	$(call msg,Bootstrapping Environment)
 	@mamba create -p ./env python jinja2 black -y
@@ -16,16 +15,15 @@ hooks:
 docs-env:
 	@mamba run -p ./env pip install mkdocs-material mkdocs-git-revision-date-localized-plugin
 
-## l, lint | lint the python
 .PHONY: l lint
-l lint:
+l lint: ## lint the python
 	$(call msg,Linting)
 	@black generate.py
 	@black src/*.py --fast
 
-## assets | generate assets
+
 .PHONY: assets
-assets:
+assets: ## generate assets
 	@yartsu -o assets/help.svg -t "make help" -- make --no-print-directory help
 
 define release_sh
@@ -36,15 +34,13 @@ git commit -m "release: $(VERSION)" --no-verify
 git tag $(VERSION)
 endef
 
-## release | release new version of task.mk
 .PHONY: release
-release: version-check
+release: version-check ## release new version of task.mk
 	$(call msg,Release Project)
 	$(call tbash,release_sh)
 
-## c, clean | remove the generated files
 .PHONY: clean
-c clean:
+c clean: ## remove the generated files
 	@rm -f task.mk .task.mk
 
 define version_check_sh
@@ -63,9 +59,8 @@ version-check:
 	@$(call tbash,version_check_sh)
 	@$(call tprint,>> {a.green}VERSION LOOKS GOOD!{a.end})
 
-## info | demonstrate usage of tprint
 .PHONY: task
-info:
+info: ## demonstrate usage of tprint
 	$(call msg,Info Message)
 	$(call tprint,{a.black_on_cyan}This is task-print output:{a.end})
 	$(call tprint,$(mlmsg))
