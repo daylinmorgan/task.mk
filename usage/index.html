@@ -17,7 +17,7 @@
         <link rel="next" href="../examples/">
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.5">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.6">
     
     
       
@@ -582,7 +582,8 @@ It has two optional arguments <code>fg</code> and <code>bg</code>. Which can be 
 Or a tuple/list to define an RBG 24-bit color, for instance <code>a.custom(fg=(5,10,255))</code>.
 See this project's <code>make info</code> for an example.</p>
 <h2 id="configuration">Configuration</h2>
-<p>You can quickly customize some of the default behavior of <code>task.mk</code> by overriding the below variables prior to the <code>-include .task.mk</code>.</p>
+<p>You can quickly customize some of the default behavior of <code>task.mk</code> by overriding the below variables prior to the <code>-include .task.mk</code>.
+These can also be included in a seperate file <code>.task.cfg.mk</code>.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c"># ---- [config] ---- #</span>
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nv">HEADER_STYLE</span><span class="w"> </span><span class="o">?=</span><span class="w"> </span>b_cyan
 <a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="nv">ACCENT_STYLE</span><span class="w"> </span><span class="o">?=</span><span class="w"> </span>b_yellow
