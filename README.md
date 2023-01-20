@@ -32,6 +32,11 @@ You can automagically include it with just two additional lines to your `Makefil
 
 ## Setup
 
+One line setup:
+```bash
+bash <(curl -fsSL gh.dayl.in/task.mk/init) # or w/ TASKMK_VERSION=
+```
+
 You can include this as an optional dependency on your project by adding the below lines to the end of your `Makefile`.
 If someone tries to invoke `make help` it will download `.task.mk` for them.
 
