@@ -96,7 +96,7 @@ class Ansi:
                     sys.exit(1)
 
             return code + end
-
+    ###- the below $() variables are injected by make -###
     def add_cfg(self):
         cfg_styles = {
             "header": "$(HEADER_STYLE)",
@@ -118,6 +118,7 @@ class Ansi:
 
 
 a = ansi = Ansi()
+###- the below $() variables are injected by make -###
 cfg = Config(
     "$(DIVIDER)", "$(HELP_SEP)", f"""$(EPILOG)""", f"""$(USAGE)""", int("$(WRAP)")
 )

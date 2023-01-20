@@ -1,7 +1,7 @@
 # }> [github.com/daylinmorgan/task.mk] <{ #
 # Copyright (c) 2022 Daylin Morgan
 # MIT License
-# version: v22.9.28-16-g920c7c2dev
+# version: v22.9.28-17-g365e0e1dev
 #
 # task.mk should be included at the bottom of your Makefile with `-include .task.mk`
 # See below for the standard configuration options that should be set prior to including this file.
@@ -90,17 +90,17 @@ MaxLens = namedtuple("MaxLens", "goal msg")
 pattern = re.compile(
     r"""
 (?:
-  ^\#\#\#\s+
+  ^\#\#\#\s+ # <- raw message
   |
   ^(?:
     (?:\#\#\s+)?
     (?P<goal>.*?)(?:\s+\|>|:.*?\#\#)\s+
-  )
+  ) # <- a custom goal or actual recipe
 )
-(?P<msg>.*?)?\s?
+(?P<msg>.*?)?\s? # <- help text (optional)
 (?:\|>\s+
   (?P<msgargs>.*?)
-)?
+)? # <- style args (optional)
 $$
 """,
     re.X,
@@ -391,6 +391,7 @@ class Ansi:
                     print("Expected one or three values for bg as a list")
                     sys.exit(1)
             return code + end
+    
     def add_cfg(self):
         cfg_styles = {
             "header": "$(HEADER_STYLE)",

@@ -23,17 +23,17 @@ MaxLens = namedtuple("MaxLens", "goal msg")
 pattern = re.compile(
     r"""
 (?:
-  ^\#\#\#\s+
+  ^\#\#\#\s+ # <- raw message
   |
   ^(?:
     (?:\#\#\s+)?
     (?P<goal>.*?)(?:\s+\|>|:.*?\#\#)\s+
-  )
+  ) # <- a custom goal or actual recipe
 )
-(?P<msg>.*?)?\s?
+(?P<msg>.*?)?\s? # <- help text (optional)
 (?:\|>\s+
   (?P<msgargs>.*?)
-)?
+)? # <- style args (optional)
 $$
 """,
     re.X,
