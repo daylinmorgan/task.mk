@@ -44,8 +44,10 @@ c clean: ## remove the generated files
 	@rm -f task.mk .task.mk
 
 define version_check_sh
-if [[ "${VERSION}" == *'-'* ]]; then 
-	$(call tprint-verbose,{a.red}VERSION INVALID!{a.end} Uncommited or untagged work)
+if git rev-parse -q --verify "refs/tags/${VERSION}" >/dev/null; then
+	$(call tprint-verbose,{a.red}VERSION INVALID!{a.end} tag already exists); exit 1;
+elif [[ "${VERSION}" == *'-'* ]]; then 
+	$(call tprint-verbose,{a.red}VERSION INVALID!{a.end} Uncommited or untagged work); exit 1;
 	exit 1
 elif [[ $(shell echo "${VERSION}" | awk -F. '{ print NF }') -lt 3 ]];then\
 	$(call tprint-verbose,{a.red}VERSION INVALID!{a.end} Expected CalVer string)
