@@ -1,5 +1,4 @@
 # ---- [config] ---- #
--include .task.cfg.mk
 HEADER_STYLE ?= b_cyan
 ACCENT_STYLE ?= b_yellow
 PARAMS_STYLE ?= $(ACCENT_STYLE)

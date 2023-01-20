@@ -1,13 +1,12 @@
 # }> [github.com/daylinmorgan/task.mk] <{ #
 # Copyright (c) 2022 Daylin Morgan
 # MIT License
-# version: v22.9.28-12-g3244dbadev
+# version: v22.9.28-13-gfd96a45dev
 #
 # task.mk should be included at the bottom of your Makefile with `-include .task.mk`
 # See below for the standard configuration options that should be set prior to including this file.
 # You can update your .task.mk with `make _update-task.mk`
 # ---- [config] ---- #
--include .task.cfg.mk
 HEADER_STYLE ?= b_cyan
 ACCENT_STYLE ?= b_yellow
 PARAMS_STYLE ?= $(ACCENT_STYLE)
