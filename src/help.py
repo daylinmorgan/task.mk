@@ -3,42 +3,21 @@
 #% block script %#
 import argparse
 from collections import namedtuple
-import os
-import re
 import subprocess
-import sys
 from textwrap import wrap
 
-###-
-from utils import Ansi, cfg  # this is just to trick the LSP during development
+###- LSP TRICK ONLY
+import sys, os
+from utils import Ansi, cfg
+from parsers import pattern, goal_pattern, gen_makefile, parse_help
 
 # -###
+
 ##- '$(utils_py)' -##
+##- '$(parsers_py)' -##
 
 a = ansi = Ansi(target="stdout")
 MaxLens = namedtuple("MaxLens", "goal msg")
-
-###- double dollar signs to prevent make escaping them -###
-###- bets on how long until I break this regex? -###
-pattern = re.compile(
-    r"""
-(?:
-  ^\#\#\#\s+ # <- raw message
-  |
-  ^(?:
-    (?:\#\#\s+)?
-    (?P<goal>.*?)(?:\s+\|>|:.*?\#\#)\s+
-  ) # <- a custom goal or actual recipe
-)
-(?P<msg>.*?)?\s? # <- help text (optional)
-(?:\|>\s+
-  (?P<msgargs>.*?)
-)? # <- style args (optional)
-$$
-""",
-    re.X,
-)
-goal_pattern = re.compile(r"""^(?!#|\t)(.*):.*\n\t""", re.MULTILINE)
 
 
 def parseargs(argstring):
@@ -54,28 +33,6 @@ def parseargs(argstring):
 
 def divider(len):
     return ansi.style(f"  {cfg.div*len}", "div_style")
-
-
-def gen_makefile():
-    makefile = ""
-    for file in os.getenv("MAKEFILE_LIST", "").split():
-        with open(file, "r") as f:
-            makefile += f.read() + "\n\n"
-    return makefile
-
-
-def parse_help(file, hidden=False):
-    for line in file.splitlines():
-        match = pattern.search(line)
-        if match:
-            if (
-                not hidden
-                and not os.getenv("SHOW_HIDDEN")
-                and str(match.groupdict().get("goal")).startswith("_")
-            ):
-                pass
-            else:
-                yield {k: v for k, v in match.groupdict().items() if v is not None}
 
 
 def recipe_help_header(goal):
@@ -147,6 +104,10 @@ def fmt_goal(goal, msg, max_goal_len, argstr):
     args = parseargs(argstr)
     goal_style = args.goal_style.strip() if args.goal_style else "goal"
     msg_style = args.msg_style.strip() if args.msg_style else "msg"
+    # TODO: refactor this to be closer to parse_goal?
+    if not msg or (not os.getenv("SHOW_HIDDEN") and args.hidden):
+        return
+
     return (
         ansi.style(f"  {goal:>{max_goal_len}}", goal_style)
         + f" $(HELP_SEP) "
@@ -189,11 +150,11 @@ def print_help():
     )
     for item in items:
         if "goal" in item:
-            lines.append(
-                fmt_goal(
-                    item["goal"], item["msg"], maxlens.goal, item.get("msgargs", "")
-                )
+            newgoal = fmt_goal(
+                item["goal"], item["msg"], maxlens.goal, item.get("msgargs", "")
             )
+            if newgoal:
+                lines.append(newgoal)
         else:
             lines.extend(fmt_rawmsg(item["msg"], item.get("msgargs", ""), maxlens))
     lines.append(cfg.epilog)

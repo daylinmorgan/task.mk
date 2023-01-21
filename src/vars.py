@@ -12,8 +12,8 @@ from utils import Ansi
 
 ansi = Ansi(target="stdout")
 ###- $2 is a list of variables set by task.mk delimited with '<|>' -###
-task_vars = tuple(v.split('=') for v in "$2".split('<|>'))
+task_vars = tuple(v.split("=") for v in "$2".split("<|>"))
 length = max((len(v[0]) for v in task_vars))
 rows = (f"  {ansi.params}{v[0]:<{length}}{ansi.end} = {v[1]}" for v in task_vars)
-print('\n'.join((f"{ansi.header}vars{ansi.end}:\n", *rows,'')))
+print("\n".join((f"{ansi.header}vars{ansi.end}:\n", *rows, "")))
 #% endblock %#

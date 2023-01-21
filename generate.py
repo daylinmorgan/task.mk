@@ -11,6 +11,8 @@ py_script_names = [
     "vars",
     "confirm",
     "utils",
+    "phonify",
+    "parsers",
 ]
 
 

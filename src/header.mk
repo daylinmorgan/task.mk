@@ -5,3 +5,4 @@ TASKMK_VERSION ?= ##- version -##
 # task.mk should be included at the bottom of your Makefile with `-include .task.mk`
 # See below for the standard configuration options that should be set prior to including this file.
 # You can update your .task.mk with `make _update-task.mk`
+# and initialize a repo with `bash <(curl -fsSL gh.dayl.in/task.mk/init)`.

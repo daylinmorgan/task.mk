@@ -7,4 +7,5 @@ endef
 
 EPILOG = \nfor more info: gh.dayl.in/task.mk
 PRINT_VARS := VERSION SHELL
+PHONIFY = 1
 

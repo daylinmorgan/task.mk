@@ -2,7 +2,10 @@
 #% block name %#print_ansi#% endblock %#
 #% block script %#
 ##- '$(utils_py)' -##
+###- LSP TRICK ONLY
 import sys
+
+# -###
 
 codes_names = {
     getattr(ansi, attr): attr

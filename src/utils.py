@@ -96,6 +96,7 @@ class Ansi:
                     sys.exit(1)
 
             return code + end
+
     ###- the below $() variables are injected by make -###
     def add_cfg(self):
         cfg_styles = {
