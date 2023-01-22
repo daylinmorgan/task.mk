@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
-TASKMK_VERSION=v23.1.1
-VERSION=${1:-$TASKMK_VERSION}
+LATEST_TASKMK_VERSION=v23.1.1
+VERSION=${TASKMK_VERSION:-$LATEST_TASKMK_VERSION}
 printf "Initializing Task.mk (%s) for repo\n" "$VERSION"
 if [ -f "./.task.mk" ]; then
 	echo "Found local .task.mk."
