@@ -1,7 +1,7 @@
 # }> [github.com/daylinmorgan/task.mk] <{ #
 # Copyright (c) 2022 Daylin Morgan
 # MIT License
-TASKMK_VERSION ?= v23.1.1-5-g9ee6d34-dev
+TASKMK_VERSION ?= v23.1.1-6-ga980d51-dev
 # task.mk should be included at the bottom of your Makefile with `-include .task.mk`
 # See below for the standard configuration options that should be set prior to including this file.
 # You can update your .task.mk with `make _update-task.mk`
@@ -219,8 +219,8 @@ def strip_ansi(txt):
     Removes ANSI escape codes, as defined by ECMA-048 in
     http://www.ecma-international.org/publications/files/ECMA-ST/Ecma-048.pdf
     """
-    pattern = re.compile(r'\x1B\[\d+(;\d+){0,2}m')
-    return pattern.sub('', txt)
+    pattern = re.compile(r"\x1B\[\d+(;\d+){0,2}m")
+    return pattern.sub("", txt)
 @dataclass
 class Config:
     div: str
@@ -373,12 +373,12 @@ def parse_help(file, hidden=False):
                 and str(match.groupdict().get("goal")).startswith("_")
             ):
                 pass
-            elif not any(match.groupdict().get(k) for k in ('msg','msgargs')):
+            elif not any(match.groupdict().get(k) for k in ("msg", "msgargs")):
                 pass
             else:
                 yield {k: v for k, v in match.groupdict().items() if v is not None}
 def parseargs(argstring):
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(add_help=False)
     parser.add_argument("--align")
     parser.add_argument("-d", "--divider", action="store_true")
     parser.add_argument("-ws", "--whitespace", action="store_true")

@@ -52,14 +52,14 @@ def parse_help(file, hidden=False):
                 and str(match.groupdict().get("goal")).startswith("_")
             ):
                 pass
-            elif not any(match.groupdict().get(k) for k in ('msg','msgargs')):
+            elif not any(match.groupdict().get(k) for k in ("msg", "msgargs")):
                 pass
             else:
                 yield {k: v for k, v in match.groupdict().items() if v is not None}
 
 
 def parseargs(argstring):
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(add_help=False)
     parser.add_argument("--align")
     parser.add_argument("-d", "--divider", action="store_true")
     parser.add_argument("-ws", "--whitespace", action="store_true")
