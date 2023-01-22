@@ -1,7 +1,6 @@
 #% extends "py-script.mk" %#
 #% block name %#help#% endblock %#
 #% block script %#
-import argparse
 from collections import namedtuple
 import subprocess
 from textwrap import wrap
@@ -9,7 +8,7 @@ from textwrap import wrap
 ###- LSP TRICK ONLY
 import sys, os
 from utils import Ansi, cfg
-from parsers import pattern, goal_pattern, gen_makefile, parse_help
+from parsers import pattern, goal_pattern, gen_makefile, parse_help, parserargs
 
 # -###
 
@@ -18,17 +17,6 @@ from parsers import pattern, goal_pattern, gen_makefile, parse_help
 
 a = ansi = Ansi(target="stdout")
 MaxLens = namedtuple("MaxLens", "goal msg")
-
-
-def parseargs(argstring):
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--align")
-    parser.add_argument("-d", "--divider", action="store_true")
-    parser.add_argument("-ws", "--whitespace", action="store_true")
-    parser.add_argument("-ms", "--msg-style", type=str)
-    parser.add_argument("-gs", "--goal-style", type=str)
-    parser.add_argument("--hidden", action="store_true")
-    return parser.parse_args(argstring.split())
 
 
 def divider(len):

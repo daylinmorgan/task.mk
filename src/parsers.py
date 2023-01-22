@@ -2,6 +2,7 @@
 #% block name %#parsers#% endblock %#
 #% block script %#
 import re
+import argparse
 
 ###- LSP TRICK ONLY
 import os, sys
@@ -54,6 +55,18 @@ def parse_help(file, hidden=False):
                 pass
             else:
                 yield {k: v for k, v in match.groupdict().items() if v is not None}
+
+
+def parseargs(argstring):
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--align")
+    parser.add_argument("-d", "--divider", action="store_true")
+    parser.add_argument("-ws", "--whitespace", action="store_true")
+    parser.add_argument("-ms", "--msg-style", type=str)
+    parser.add_argument("-gs", "--goal-style", type=str)
+    parser.add_argument("--hidden", action="store_true")
+    parser.add_argument("--not-phony", action="store_true")
+    return parser.parse_args(argstring.split())
 
 
 #% endblock %#

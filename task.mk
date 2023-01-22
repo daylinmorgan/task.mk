@@ -1,10 +1,11 @@
 # }> [github.com/daylinmorgan/task.mk] <{ #
 # Copyright (c) 2022 Daylin Morgan
 # MIT License
-TASKMK_VERSION ?= 23.1.1
+TASKMK_VERSION ?= v23.1.1-2-g25666e8-dev
 # task.mk should be included at the bottom of your Makefile with `-include .task.mk`
 # See below for the standard configuration options that should be set prior to including this file.
 # You can update your .task.mk with `make _update-task.mk`
+# and initialize a repo with `bash <(curl -fsSL gh.dayl.in/task.mk/init)`.
 # ---- [config] ---- #
 HEADER_STYLE ?= b_cyan
 ACCENT_STYLE ?= b_yellow
@@ -19,121 +20,17 @@ WRAP ?= 100
 EPILOG ?=
 USAGE ?={ansi.header}usage{ansi.end}:\n  make <recipe>\n
 INHERIT_SHELL ?=
-# ---- [builtin recipes] ---- #
-ifeq (help,$(firstword $(MAKECMDGOALS)))
-  HELP_ARGS := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
-	export HELP_ARGS
-endif
-h help: ## show this help
-	$(call py,help_py)
-_help: export SHOW_HIDDEN=true
-_help: help
-ifdef PRINT_VARS
-TASKMK_VARS=$(subst $(eval ) ,<|>,$(foreach v,$(PRINT_VARS),$(v)=$($(v))))
-.PHONY: vars v
-v vars:
-	$(call py,vars_py,$(TASKMK_VARS))
-endif
-### |> -ws --hidden
-### task.mk builtins: |> -d --hidden
-_print-ansi: ## show all possible ansi color code combinations
-	$(call py,print_ansi_py)
-# functions to take f-string literals and pass to python print
-tprint = $(call py,print_py,$(1))
-tprint-verbose= $(call py-verbose,print_py,$(1))
-tconfirm = $(call py,confirm_py,$(1))
-_update-task.mk: ## downloads version of task.mk (TASKMK_VERSION=)
-	$(call tprint,{a.b_cyan}Updating task.mk{a.end})
-	curl https://raw.githubusercontent.com/daylinmorgan/task.mk/$(TASKMK_VERSION)/task.mk -o .task.mk
-.PHONY: h help _help _print-ansi _update-task.mk
-TASK_MAKEFILE_LIST := $(filter-out $(word $(words $(MAKEFILE_LIST)),$(MAKEFILE_LIST)),$(MAKEFILE_LIST))
-export MAKEFILE_LIST MAKE TASK_MAKEFILE_LIST
-ifndef INHERIT_SHELL
-SHELL := $(shell which bash)
-endif
-# ---- [python/bash script runner] ---- #
-define _newline
-
-
-endef
-_escape_shellstring = $(subst `,\`,$(subst ",\",$(subst $$,\$$,$(subst \,\\,$1))))
-_escape_printf = $(subst \,\\,$(subst %,%%,$1))
-_create_string = $(subst $(_newline),\n,$(call _escape_shellstring,$(call _escape_printf,$1)))
-_printline = printf -- "<----------------------------------->\n"
-ifdef TASKMK_DEBUG
-define _debug_runner
-@printf "$(1) Script:\n";$(_printline);
-@printf "$(call _create_string,$(3))\n" | cat -n
-@$(_printline)
-@$(2) <(printf "$(call _create_string,$(3))")
-endef
-py = $(call _debug_runner,Python,python3,$($(1)))
-tbash = $(call _debug_runner,Bash,bash,$($(1)))
-else
-py = @python3 <(printf "$(call _create_string,$($(1)))")
-tbash = @bash <(printf "$(call _create_string,$($(1)))")
-endif
-py-verbose = python3 <(printf "$(call _create_string,$($(1)))")
 # ---- [python scripts] ---- #
 define  help_py
-import argparse
 from collections import namedtuple
-import os
-import re
 import subprocess
-import sys
 from textwrap import wrap
 $(utils_py)
+$(parsers_py)
 a = ansi = Ansi(target="stdout")
 MaxLens = namedtuple("MaxLens", "goal msg")
-pattern = re.compile(
-    r"""
-(?:
-  ^\#\#\#\s+ # <- raw message
-  |
-  ^(?:
-    (?:\#\#\s+)?
-    (?P<goal>.*?)(?:\s+\|>|:.*?\#\#)\s+
-  ) # <- a custom goal or actual recipe
-)
-(?P<msg>.*?)?\s? # <- help text (optional)
-(?:\|>\s+
-  (?P<msgargs>.*?)
-)? # <- style args (optional)
-$$
-""",
-    re.X,
-)
-goal_pattern = re.compile(r"""^(?!#|\t)(.*):.*\n\t""", re.MULTILINE)
-def parseargs(argstring):
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--align")
-    parser.add_argument("-d", "--divider", action="store_true")
-    parser.add_argument("-ws", "--whitespace", action="store_true")
-    parser.add_argument("-ms", "--msg-style", type=str)
-    parser.add_argument("-gs", "--goal-style", type=str)
-    parser.add_argument("--hidden", action="store_true")
-    return parser.parse_args(argstring.split())
 def divider(len):
     return ansi.style(f"  {cfg.div*len}", "div_style")
-def gen_makefile():
-    makefile = ""
-    for file in os.getenv("MAKEFILE_LIST", "").split():
-        with open(file, "r") as f:
-            makefile += f.read() + "\n\n"
-    return makefile
-def parse_help(file, hidden=False):
-    for line in file.splitlines():
-        match = pattern.search(line)
-        if match:
-            if (
-                not hidden
-                and not os.getenv("SHOW_HIDDEN")
-                and str(match.groupdict().get("goal")).startswith("_")
-            ):
-                pass
-            else:
-                yield {k: v for k, v in match.groupdict().items() if v is not None}
 def recipe_help_header(goal):
     item = [
         i
@@ -195,6 +92,9 @@ def fmt_goal(goal, msg, max_goal_len, argstr):
     args = parseargs(argstr)
     goal_style = args.goal_style.strip() if args.goal_style else "goal"
     msg_style = args.msg_style.strip() if args.msg_style else "msg"
+    # TODO: refactor this to be closer to parse_goal?
+    if not msg or (not os.getenv("SHOW_HIDDEN") and args.hidden):
+        return
     return (
         ansi.style(f"  {goal:>{max_goal_len}}", goal_style)
         + f" $(HELP_SEP) "
@@ -231,11 +131,11 @@ def print_help():
     )
     for item in items:
         if "goal" in item:
-            lines.append(
-                fmt_goal(
-                    item["goal"], item["msg"], maxlens.goal, item.get("msgargs", "")
-                )
+            newgoal = fmt_goal(
+                item["goal"], item["msg"], maxlens.goal, item.get("msgargs", "")
             )
+            if newgoal:
+                lines.append(newgoal)
         else:
             lines.extend(fmt_rawmsg(item["msg"], item.get("msgargs", ""), maxlens))
     lines.append(cfg.epilog)
@@ -261,7 +161,6 @@ sys.stderr.write(f"""$(2)\n""")
 endef
 define  print_ansi_py
 $(utils_py)
-import sys
 codes_names = {
     getattr(ansi, attr): attr
     for attr in ansi.__dict__
@@ -285,10 +184,10 @@ define  vars_py
 import os
 $(utils_py)
 ansi = Ansi(target="stdout")
-task_vars = tuple(v.split('=') for v in "$2".split('<|>'))
+task_vars = tuple(v.split("=") for v in "$2".split("<|>"))
 length = max((len(v[0]) for v in task_vars))
 rows = (f"  {ansi.params}{v[0]:<{length}}{ansi.end} = {v[1]}" for v in task_vars)
-print('\n'.join((f"{ansi.header}vars{ansi.end}:\n", *rows,'')))
+print("\n".join((f"{ansi.header}vars{ansi.end}:\n", *rows, "")))
 endef
 define  confirm_py
 import sys
@@ -413,3 +312,127 @@ cfg = Config(
     "$(DIVIDER)", "$(HELP_SEP)", f"""$(EPILOG)""", f"""$(USAGE)""", int("$(WRAP)")
 )
 endef
+define  phonify_py
+$(utils_py)
+$(parsers_py)
+def check_item(item):
+    if not "goal" in item:
+        return False
+    args = parseargs(item.get("msgargs", ""))
+    return not args.not_phony
+def main():
+    items = " ".join((i["goal"] for i in parse_help(gen_makefile()) if check_item(i)))
+    sys.stdout.write(".PHONY: " + items)
+if __name__ == "__main__":
+    main()
+endef
+define  parsers_py
+import re
+import argparse
+$(utils_py)
+pattern = re.compile(
+    r"""
+(?:
+  ^\#\#\#\s+ # <- raw message
+  |
+  ^(?:
+    (?:\#\#\s+)?
+    (?P<goal>.*?)(?:\s+\|>|:.*?\#\#)\s?
+  ) # <- a custom goal or actual recipe
+)
+(?P<msg>.*?)?\s? # <- help text (optional)
+(?:\|>\s+
+  (?P<msgargs>.*?)
+)? # <- style args (optional)
+$$
+""",
+    re.X,
+)
+goal_pattern = re.compile(r"""^(?!#|\t)(.*):.*\n\t""", re.MULTILINE)
+def gen_makefile():
+    makefile = ""
+    for file in os.getenv("MAKEFILE_LIST", "").split():
+        with open(file, "r") as f:
+            makefile += f.read() + "\n\n"
+    return makefile
+def parse_help(file, hidden=False):
+    for line in file.splitlines():
+        match = pattern.search(line)
+        if match:
+            if (
+                not hidden
+                and not os.getenv("SHOW_HIDDEN")
+                and str(match.groupdict().get("goal")).startswith("_")
+            ):
+                pass
+            else:
+                yield {k: v for k, v in match.groupdict().items() if v is not None}
+def parseargs(argstring):
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--align")
+    parser.add_argument("-d", "--divider", action="store_true")
+    parser.add_argument("-ws", "--whitespace", action="store_true")
+    parser.add_argument("-ms", "--msg-style", type=str)
+    parser.add_argument("-gs", "--goal-style", type=str)
+    parser.add_argument("--hidden", action="store_true")
+    parser.add_argument("--not-phony", action="store_true")
+    return parser.parse_args(argstring.split())
+endef
+# ---- [python/bash script runner] ---- #
+define _newline
+
+
+endef
+_escape_shellstring = $(subst `,\`,$(subst ",\",$(subst $$,\$$,$(subst \,\\,$1))))
+_escape_printf = $(subst \,\\,$(subst %,%%,$1))
+_create_string = $(subst $(_newline),\n,$(call _escape_shellstring,$(call _escape_printf,$1)))
+_printline = printf -- "<----------------------------------->\n"
+ifdef TASKMK_DEBUG
+define _debug_runner
+@printf "$(1) Script:\n";$(_printline);
+@printf "$(call _create_string,$(3))\n" | cat -n
+@$(_printline)
+@$(2) <(printf "$(call _create_string,$(3))")
+endef
+py = $(call _debug_runner,Python,python3,$($(1)))
+tbash = $(call _debug_runner,Bash,bash,$($(1)))
+else
+py = @python3 <(printf "$(call _create_string,$($(1)))")
+tbash = @bash <(printf "$(call _create_string,$($(1)))")
+endif
+py-verbose = python3 <(printf "$(call _create_string,$($(1)))")
+# ---- [builtin recipes] ---- #
+ifeq (help,$(firstword $(MAKECMDGOALS)))
+  HELP_ARGS := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
+	export HELP_ARGS
+endif
+h help: ## show this help
+	$(call py,help_py)
+_help: export SHOW_HIDDEN=true
+_help: help
+ifdef PRINT_VARS
+TASKMK_VARS=$(subst $(eval ) ,<|>,$(foreach v,$(PRINT_VARS),$(v)=$($(v))))
+.PHONY: vars v
+v vars:
+	$(call py,vars_py,$(TASKMK_VARS))
+endif
+### |> -ws --hidden
+### task.mk builtins: |> -d --hidden
+_print-ansi: ## show all possible ansi color code combinations
+	$(call py,print_ansi_py)
+_update-task.mk: ## downloads version of task.mk (TASKMK_VERSION=)
+	$(call tprint,{a.b_cyan}Updating task.mk{a.end})
+	curl https://raw.githubusercontent.com/daylinmorgan/task.mk/$(TASKMK_VERSION)/task.mk -o .task.mk
+# functions to take f-string literals and pass to python print
+tprint = $(call py,print_py,$(1))
+tprint-verbose= $(call py-verbose,print_py,$(1))
+tconfirm = $(call py,confirm_py,$(1))
+.PHONY: h help _help _print-ansi _update-task.mk
+TASK_MAKEFILE_LIST := $(filter-out $(word $(words $(MAKEFILE_LIST)),$(MAKEFILE_LIST)),$(MAKEFILE_LIST))
+export MAKEFILE_LIST MAKE TASK_MAKEFILE_LIST
+ifndef INHERIT_SHELL
+SHELL := $(shell which bash)
+endif
+ifdef PHONIFY
+$(shell $(call py-verbose,phonify_py))
+endif

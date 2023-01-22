@@ -6,8 +6,15 @@
 ##- '$(parsers_py)' -##
 
 
+def check_item(item):
+    if not "goal" in item:
+        return False
+    args = parseargs(item.get("msgargs", ""))
+    return not args.not_phony
+
+
 def main():
-    items = " ".join((i["goal"] for i in parse_help(gen_makefile()) if "goal" in i))
+    items = " ".join((i["goal"] for i in parse_help(gen_makefile()) if check_item(i)))
     sys.stdout.write(".PHONY: " + items)
 
 
