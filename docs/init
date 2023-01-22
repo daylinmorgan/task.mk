@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -e
-LATEST_TASKMK_VERSION=v23.1.1
+LATEST_TASKMK_VERSION="v23.1.1"
 VERSION=${TASKMK_VERSION:-$LATEST_TASKMK_VERSION}
 printf "Initializing Task.mk (%s) for repo\n" "$VERSION"
 if [ -f "./.task.mk" ]; then
@@ -11,7 +11,7 @@ if [ -f "./.task.mk" ]; then
 fi
 curl -fsSL "https://raw.githubusercontent.com/daylinmorgan/task.mk/$VERSION/task.mk" -o .task.mk
 echo .task.mk >>.gitignore
-echo '-include .task.cfg.mk .task.mk' >>Makefile
+printf '\n-include .task.cfg.mk .task.mk\n' >>Makefile
 printf '$(if $(filter help,$(MAKECMDGOALS)),$(if $(wildcard .task.mk),,.task.mk: ; curl -fsSL https://raw.githubusercontent.com/daylinmorgan/task.mk/%s/task.mk -o .task.mk))' \
 	"$VERSION" \
 	>>Makefile
