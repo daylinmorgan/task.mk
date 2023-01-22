@@ -92,8 +92,8 @@ def fmt_goal(goal, msg, max_goal_len, argstr):
     args = parseargs(argstr)
     goal_style = args.goal_style.strip() if args.goal_style else "goal"
     msg_style = args.msg_style.strip() if args.msg_style else "msg"
-    # TODO: refactor this to be closer to parse_goal?
-    if not msg or (not os.getenv("SHOW_HIDDEN") and args.hidden):
+    ###- TODO: refactor this to be closer to parse_goal? -###
+    if not os.getenv("SHOW_HIDDEN") and args.hidden:
         return
 
     return (
@@ -112,14 +112,14 @@ def fmt_rawmsg(msg, argstr, maxlens):
     if msg:
         if args.align == "sep":
             lines.append(
-                f"{' '*(maxlens.goal+len(cfg.sep)+4)}{ansi.style(msg,msg_style)}"
+                f"{' '*(maxlens.goal+len(strip_ansi(cfg.sep))+4)}{ansi.style(msg,msg_style)}"
             )
         elif args.align == "center":
             lines.append(f"  {ansi.style(msg.center(sum(maxlens)),msg_style)}")
         else:
             lines.append(f"  {ansi.style(msg,msg_style)}")
     if args.divider:
-        lines.append(divider(len(cfg.sep) + sum(maxlens) + 2))
+        lines.append(divider(len(strip_ansi(cfg.sep)) + sum(maxlens) + 2))
     if args.whitespace:
         lines.append("\n")
 
@@ -130,6 +130,7 @@ def print_help():
     lines = [cfg.usage]
 
     items = list(parse_help(gen_makefile()))
+    ###- TODO: filter items before this step no msg no care -###
     maxlens = MaxLens(
         *(
             max((*(len(item[x]) for item in items if x in item), 0))

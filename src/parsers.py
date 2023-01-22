@@ -1,11 +1,10 @@
 #% extends "py-script.mk" %#
 #% block name %#parsers#% endblock %#
 #% block script %#
-import re
 import argparse
 
 ###- LSP TRICK ONLY
-import os, sys
+import os, re, sys
 
 # -###
 
@@ -52,6 +51,8 @@ def parse_help(file, hidden=False):
                 and not os.getenv("SHOW_HIDDEN")
                 and str(match.groupdict().get("goal")).startswith("_")
             ):
+                pass
+            elif not any(match.groupdict().get(k) for k in ('msg','msgargs')):
                 pass
             else:
                 yield {k: v for k, v in match.groupdict().items() if v is not None}

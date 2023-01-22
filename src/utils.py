@@ -2,9 +2,17 @@
 #% block name %#utils#% endblock %#
 #% block script %#
 import os
+import re
 import sys
 from dataclasses import dataclass
 
+def strip_ansi(txt):
+    """
+    Removes ANSI escape codes, as defined by ECMA-048 in
+    http://www.ecma-international.org/publications/files/ECMA-ST/Ecma-048.pdf
+    """
+    pattern = re.compile(r'\x1B\[\d+(;\d+){0,2}m')
+    return pattern.sub('', txt)
 
 @dataclass
 class Config:
@@ -121,6 +129,6 @@ class Ansi:
 a = ansi = Ansi()
 ###- the below $() variables are injected by make -###
 cfg = Config(
-    "$(DIVIDER)", "$(HELP_SEP)", f"""$(EPILOG)""", f"""$(USAGE)""", int("$(WRAP)")
+    "$(DIVIDER)", f"""$(HELP_SEP)""", f"""$(EPILOG)""", f"""$(USAGE)""", int("$(WRAP)")
 )
 #% endblock %#

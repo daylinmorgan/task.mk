@@ -1,7 +1,7 @@
 # }> [github.com/daylinmorgan/task.mk] <{ #
 # Copyright (c) 2022 Daylin Morgan
 # MIT License
-TASKMK_VERSION ?= v23.1.1-2-g25666e8-dev
+TASKMK_VERSION ?= v23.1.1-5-g9ee6d34-dev
 # task.mk should be included at the bottom of your Makefile with `-include .task.mk`
 # See below for the standard configuration options that should be set prior to including this file.
 # You can update your .task.mk with `make _update-task.mk`
@@ -92,8 +92,8 @@ def fmt_goal(goal, msg, max_goal_len, argstr):
     args = parseargs(argstr)
     goal_style = args.goal_style.strip() if args.goal_style else "goal"
     msg_style = args.msg_style.strip() if args.msg_style else "msg"
-    # TODO: refactor this to be closer to parse_goal?
-    if not msg or (not os.getenv("SHOW_HIDDEN") and args.hidden):
+    
+    if not os.getenv("SHOW_HIDDEN") and args.hidden:
         return
     return (
         ansi.style(f"  {goal:>{max_goal_len}}", goal_style)
@@ -109,20 +109,21 @@ def fmt_rawmsg(msg, argstr, maxlens):
     if msg:
         if args.align == "sep":
             lines.append(
-                f"{' '*(maxlens.goal+len(cfg.sep)+4)}{ansi.style(msg,msg_style)}"
+                f"{' '*(maxlens.goal+len(strip_ansi(cfg.sep))+4)}{ansi.style(msg,msg_style)}"
             )
         elif args.align == "center":
             lines.append(f"  {ansi.style(msg.center(sum(maxlens)),msg_style)}")
         else:
             lines.append(f"  {ansi.style(msg,msg_style)}")
     if args.divider:
-        lines.append(divider(len(cfg.sep) + sum(maxlens) + 2))
+        lines.append(divider(len(strip_ansi(cfg.sep)) + sum(maxlens) + 2))
     if args.whitespace:
         lines.append("\n")
     return lines
 def print_help():
     lines = [cfg.usage]
     items = list(parse_help(gen_makefile()))
+    
     maxlens = MaxLens(
         *(
             max((*(len(item[x]) for item in items if x in item), 0))
@@ -210,8 +211,16 @@ else:
 endef
 define  utils_py
 import os
+import re
 import sys
 from dataclasses import dataclass
+def strip_ansi(txt):
+    """
+    Removes ANSI escape codes, as defined by ECMA-048 in
+    http://www.ecma-international.org/publications/files/ECMA-ST/Ecma-048.pdf
+    """
+    pattern = re.compile(r'\x1B\[\d+(;\d+){0,2}m')
+    return pattern.sub('', txt)
 @dataclass
 class Config:
     div: str
@@ -309,7 +318,7 @@ class Ansi:
             return f"{self.__dict__[style]}{text}{self.__dict__['end']}"
 a = ansi = Ansi()
 cfg = Config(
-    "$(DIVIDER)", "$(HELP_SEP)", f"""$(EPILOG)""", f"""$(USAGE)""", int("$(WRAP)")
+    "$(DIVIDER)", f"""$(HELP_SEP)""", f"""$(EPILOG)""", f"""$(USAGE)""", int("$(WRAP)")
 )
 endef
 define  phonify_py
@@ -327,7 +336,6 @@ if __name__ == "__main__":
     main()
 endef
 define  parsers_py
-import re
 import argparse
 $(utils_py)
 pattern = re.compile(
@@ -364,6 +372,8 @@ def parse_help(file, hidden=False):
                 and not os.getenv("SHOW_HIDDEN")
                 and str(match.groupdict().get("goal")).startswith("_")
             ):
+                pass
+            elif not any(match.groupdict().get(k) for k in ('msg','msgargs')):
                 pass
             else:
                 yield {k: v for k, v in match.groupdict().items() if v is not None}

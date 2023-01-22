@@ -22,6 +22,7 @@ codes_names = {
     ]
 }
 
+
 for code in sorted(codes_names.keys(), key=lambda item: (len(item), item)):
     sys.stderr.write(
         f"{codes_names[code]:>20} {cfg.sep} {code+'*****'+ansi.end} {cfg.sep} {repr(code)}\n"
