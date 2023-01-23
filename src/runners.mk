@@ -1,5 +1,13 @@
 # ---- [python/bash script runner] ---- #
 ###-- modified from https://unix.stackexchange.com/a/223093 -###
+###- 
+# possible posix process substitions solution:
+# https://unix.stackexchange.com/a/639752 
+# -### 
+SHELL_CHECK ?= $(shell /bin/sh --version | grep 'bash|zsh|ksh')
+ifndef SHELL_CHECK
+$(error task.mk requires a process substition compatible shell)
+endif
 define _newline
 
 
