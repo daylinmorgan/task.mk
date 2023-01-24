@@ -27,9 +27,6 @@ tconfirm = $(call py,confirm_py,$(1))
 .PHONY: h help _help _print-ansi _update-task.mk
 TASK_MAKEFILE_LIST := $(filter-out $(word $(words $(MAKEFILE_LIST)),$(MAKEFILE_LIST)),$(MAKEFILE_LIST))
 export MAKEFILE_LIST MAKE TASK_MAKEFILE_LIST
-# ifndef INHERIT_SHELL
-# SHELL := $(shell which bash)
-# endif
 ifdef PHONIFY
 $(shell MAKEFILE_LIST='$(MAKEFILE_LIST)' $(call py-verbose,phonify_py))
 endif

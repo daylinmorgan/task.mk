@@ -1,7 +1,7 @@
 # }> [github.com/daylinmorgan/task.mk] <{ #
 # Copyright (c) 2022 Daylin Morgan
 # MIT License
-TASKMK_VERSION ?= v23.1.1-8-gbddd2f3-dev
+TASKMK_VERSION ?= v23.1.1-10-ge85d61c-dev
 # task.mk should be included at the bottom of your Makefile with `-include .task.mk`
 # See below for the standard configuration options that should be set prior to including this file.
 # You can update your .task.mk with `make _update-task.mk`
@@ -391,15 +391,15 @@ def parseargs(argstring):
 endef
 # ---- [python/bash script runner] ---- #
  
-SHELL_CHECK ?= $(shell /bin/sh --version | grep 'bash|zsh|ksh')
-ifndef SHELL_CHECK
-$(error task.mk requires a process substition compatible shell)
+TASKMK_SHELL ?= $(shell cat /etc/shells | grep -E '/(bash|zsh)' | head -n 1)
+ifndef TASKMK_SHELL
+$(warning WARNING! task.mk features require bash or zsh)
 endif
 define _newline
 
 
 endef
-_escape_shellstring = $(subst `,\`,$(subst ",\",$(subst $$,\$$,$(subst \,\\,$1))))
+_escape_shellstring = $(subst ','\'',$(subst `,\`,$(subst ",\",$(subst $$,\$$,$(subst \,\\,$1)))))
 _escape_printf = $(subst \,\\,$(subst %,%%,$1))
 _create_string = $(subst $(_newline),\n,$(call _escape_shellstring,$(call _escape_printf,$1)))
 _printline = printf -- "<----------------------------------->\n"
@@ -413,10 +413,10 @@ endef
 py = $(call _debug_runner,Python,python3,$($(1)))
 tbash = $(call _debug_runner,Bash,bash,$($(1)))
 else
-py = @python3 <(printf "$(call _create_string,$($(1)))")
-tbash = @bash <(printf "$(call _create_string,$($(1)))")
+py = @$(TASKMK_SHELL) -c 'python3 <(printf "$(call _create_string,$($(1)))")'
+tbash = @$(TASKMK_SHELL) -c '$(TASKMK_SHELL) <(printf "$(call _create_string,$($(1)))")'
 endif
-py-verbose = python3 <(printf "$(call _create_string,$($(1)))")
+py-verbose = $(TASKMK_SHELL) -c 'python3 <(printf "$(call _create_string,$($(1)))")'
 # ---- [builtin recipes] ---- #
 ifeq (help,$(firstword $(MAKECMDGOALS)))
   HELP_ARGS := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
@@ -444,11 +444,8 @@ tprint = $(call py,print_py,$(1))
 tprint-verbose= $(call py-verbose,print_py,$(1))
 tconfirm = $(call py,confirm_py,$(1))
 .PHONY: h help _help _print-ansi _update-task.mk
-TASK_MAKEFILE_LIST := $(filter-out $(word $(words $(MAKEFILE_LIST)),$(MAKEFILE_LIST)),$(MAKEFILE_LIST))
+TASK_MAKEFILE_LIST := $(filter-out .task.cfg.mk .task.mk,$(MAKEFILE_LIST))
 export MAKEFILE_LIST MAKE TASK_MAKEFILE_LIST
-# ifndef INHERIT_SHELL
-# SHELL := $(shell which bash)
-# endif
 ifdef PHONIFY
 $(shell MAKEFILE_LIST='$(MAKEFILE_LIST)' $(call py-verbose,phonify_py))
 endif
