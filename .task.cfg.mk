@@ -9,3 +9,7 @@ EPILOG = \nfor more info: gh.dayl.in/task.mk
 PRINT_VARS := VERSION SHELL
 PHONIFY = 1
 
+-include .task.mk 
+.task.mk: $(TEMPLATES) generate.py
+	$(call msg,re-jinjaing the local {a.b_cyan}.task.mk{a.end})
+	@./generate.py $(VERSION) > .task.mk || (echo "generator failed!!" && rm .task.mk)
