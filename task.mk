@@ -1,7 +1,7 @@
 # }> [github.com/daylinmorgan/task.mk] <{ #
 # Copyright (c) 2022 Daylin Morgan
 # MIT License
-TASKMK_VERSION ?= v23.1.1-7-gb411303-dev
+TASKMK_VERSION ?= v23.1.1-8-gbddd2f3-dev
 # task.mk should be included at the bottom of your Makefile with `-include .task.mk`
 # See below for the standard configuration options that should be set prior to including this file.
 # You can update your .task.mk with `make _update-task.mk`
@@ -330,7 +330,7 @@ def check_item(item):
     args = parseargs(item.get("msgargs", ""))
     return not args.not_phony
 def main():
-    items = " ".join((i["goal"] for i in parse_help(gen_makefile()) if check_item(i)))
+    items = " ".join((i["goal"] for i in parse_help(gen_makefile(),require_msg=False) if check_item(i)))
     sys.stdout.write(".PHONY: " + items)
 if __name__ == "__main__":
     main()
@@ -363,7 +363,7 @@ def gen_makefile():
         with open(file, "r") as f:
             makefile += f.read() + "\n\n"
     return makefile
-def parse_help(file, hidden=False):
+def parse_help(file, hidden=False, require_msg=True):
     for line in file.splitlines():
         match = pattern.search(line)
         if match:
@@ -374,7 +374,8 @@ def parse_help(file, hidden=False):
             ):
                 pass
             elif not any(match.groupdict().get(k) for k in ("msg", "msgargs")):
-                pass
+                if not require_msg:
+                    yield {k: v for k, v in match.groupdict().items() if v is not None}
             else:
                 yield {k: v for k, v in match.groupdict().items() if v is not None}
 def parseargs(argstring):
@@ -449,5 +450,5 @@ export MAKEFILE_LIST MAKE TASK_MAKEFILE_LIST
 # SHELL := $(shell which bash)
 # endif
 ifdef PHONIFY
-$(shell $(call py-verbose,phonify_py))
+$(shell MAKEFILE_LIST='$(MAKEFILE_LIST)' $(call py-verbose,phonify_py))
 endif

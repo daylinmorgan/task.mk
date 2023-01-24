@@ -42,7 +42,7 @@ def gen_makefile():
     return makefile
 
 
-def parse_help(file, hidden=False):
+def parse_help(file, hidden=False, require_msg=True):
     for line in file.splitlines():
         match = pattern.search(line)
         if match:
@@ -53,7 +53,8 @@ def parse_help(file, hidden=False):
             ):
                 pass
             elif not any(match.groupdict().get(k) for k in ("msg", "msgargs")):
-                pass
+                if not require_msg:
+                    yield {k: v for k, v in match.groupdict().items() if v is not None}
             else:
                 yield {k: v for k, v in match.groupdict().items() if v is not None}
 

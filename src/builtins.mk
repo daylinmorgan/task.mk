@@ -31,5 +31,5 @@ export MAKEFILE_LIST MAKE TASK_MAKEFILE_LIST
 # SHELL := $(shell which bash)
 # endif
 ifdef PHONIFY
-$(shell $(call py-verbose,phonify_py))
+$(shell MAKEFILE_LIST='$(MAKEFILE_LIST)' $(call py-verbose,phonify_py))
 endif

@@ -14,7 +14,7 @@ def check_item(item):
 
 
 def main():
-    items = " ".join((i["goal"] for i in parse_help(gen_makefile()) if check_item(i)))
+    items = " ".join((i["goal"] for i in parse_help(gen_makefile(),require_msg=False) if check_item(i)))
     sys.stdout.write(".PHONY: " + items)
 
 
