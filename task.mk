@@ -1,7 +1,7 @@
 # }> [github.com/daylinmorgan/task.mk] <{ #
 # Copyright (c) 2022 Daylin Morgan
 # MIT License
-TASKMK_VERSION ?= v23.1.1-10-ge85d61c-dev
+TASKMK_VERSION ?= v23.1.1-12-gb0f7493-dev
 # task.mk should be included at the bottom of your Makefile with `-include .task.mk`
 # See below for the standard configuration options that should be set prior to including this file.
 # You can update your .task.mk with `make _update-task.mk`
@@ -330,7 +330,13 @@ def check_item(item):
     args = parseargs(item.get("msgargs", ""))
     return not args.not_phony
 def main():
-    items = " ".join((i["goal"] for i in parse_help(gen_makefile(),require_msg=False) if check_item(i)))
+    items = " ".join(
+        (
+            i["goal"]
+            for i in parse_help(gen_makefile(), require_msg=False)
+            if check_item(i)
+        )
+    )
     sys.stdout.write(".PHONY: " + items)
 if __name__ == "__main__":
     main()
