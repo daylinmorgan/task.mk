@@ -25,8 +25,8 @@ assets: ## generate assets
 define release_sh
 ./generate.py $(subst v,,$(VERSION)) > task.mk
 sed -i 's/task.mk\/.*\/task.mk/task.mk\/$(VERSION)\/task.mk/g' README.md docs/index.md
-sed -i 's/TASKMK_VERSION=.*/TASKMK_VERSION=$(VERSION)/' docs/init
-git add task.mk README.md docs/index.md
+sed -i 's/TASKMK_VERSION=.*/TASKMK_VERSION="$(VERSION)"/' docs/init
+git add task.mk README.md docs/{index.md,init}
 git commit -m "release: $(VERSION)" --no-verify
 git tag $(VERSION)
 endef
