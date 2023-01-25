@@ -11,5 +11,5 @@ PHONIFY = 1
 
 -include .task.mk 
 .task.mk: $(TEMPLATES) generate.py
-	$(call msg,re-jinjaing the local {a.b_cyan}.task.mk{a.end})
+	$(call msg,re-jinjaing the local $(if $(tprint),{a.b_cyan}.task.mk{a.end},.task.mk))
 	@./generate.py $(VERSION) > .task.mk || (echo "generator failed!!" && rm .task.mk)
