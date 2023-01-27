@@ -1,10 +1,8 @@
-## deps-only | a task/target with dependencies
 .PHONY: deps-only
-deps-only: foo
+deps-only: foo ## a task/target with dependencies
 
-## foo | a dummy rule that depends on the local files
 .PHONY: foo
-foo: $(wildcard *)
+foo: $(wildcard *) ## a dummy rule that depends on the local files
 	@echo 'this is a dummy rule'
 
 # bar but no docstring
@@ -20,5 +18,5 @@ define USAGE
 endef
 
 .DEFAULT_GOAL = help
-include $(shell git rev-parse --show-toplevel)/task.mk
+include .task.mk
 

@@ -12,3 +12,7 @@
 [Recipe Help](./recipe-help)
 
 : Display the target, docstring and recipe for a given target then exit.
+
+[Phonify](./phonify)
+
+: Automatically generate the phony call for any documented tasks.

@@ -11,4 +11,4 @@ WRAP ?= 100
 # python f-string literals
 EPILOG ?=
 USAGE ?={ansi.header}usage{ansi.end}:\n  make <recipe>\n
-INHERIT_SHELL ?=
+PHONIFY ?=

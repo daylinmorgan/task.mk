@@ -1,7 +1,7 @@
 # }> [github.com/daylinmorgan/task.mk] <{ #
 # Copyright (c) 2022 Daylin Morgan
 # MIT License
-TASKMK_VERSION ?= v23.1.1-12-gb0f7493-dev
+TASKMK_VERSION ?= v23.1.1-18-g1b8bdaa-dev
 # task.mk should be included at the bottom of your Makefile with `-include .task.mk`
 # See below for the standard configuration options that should be set prior to including this file.
 # You can update your .task.mk with `make _update-task.mk`
@@ -19,10 +19,12 @@ WRAP ?= 100
 # python f-string literals
 EPILOG ?=
 USAGE ?={ansi.header}usage{ansi.end}:\n  make <recipe>\n
-INHERIT_SHELL ?=
+TASKMK_SHELL ?=
+PHONIFY ?=
 # ---- [python scripts] ---- #
 define  help_py
 from collections import namedtuple
+from pathlib import Path
 import subprocess
 from textwrap import wrap
 $(utils_py)
@@ -46,10 +48,14 @@ def recipe_help_header(goal):
         )
     else:
         return f"  {ansi.style(goal,'goal')}"
+def get_makefile_list():
+    pattern = re.compile(r'^\.?task.*?\.mk$$') 
+    makefiles = os.getenv("MAKEFILE_LIST", "").split()
+    return (f for f in makefiles if not pattern.match(Path(f).name))
 def get_goal_deps(goal="task.mk"):
     make = os.getenv("MAKE", "make")
     cmd = [make, "-p", "-n", "-i"]
-    for file in os.getenv("TASK_MAKEFILE_LIST", "").split():
+    for file in get_makefile_list():
         cmd.extend(["-f", file])
     database = subprocess.check_output(cmd, universal_newlines=True)
     dep_pattern = re.compile(r"^" + goal + ":(.*)?")
@@ -450,8 +456,7 @@ tprint = $(call py,print_py,$(1))
 tprint-verbose= $(call py-verbose,print_py,$(1))
 tconfirm = $(call py,confirm_py,$(1))
 .PHONY: h help _help _print-ansi _update-task.mk
-TASK_MAKEFILE_LIST := $(filter-out .task.cfg.mk .task.mk,$(MAKEFILE_LIST))
-export MAKEFILE_LIST MAKE TASK_MAKEFILE_LIST
+export MAKEFILE_LIST MAKE
 ifdef PHONIFY
 $(shell MAKEFILE_LIST='$(MAKEFILE_LIST)' $(call py-verbose,phonify_py))
 endif

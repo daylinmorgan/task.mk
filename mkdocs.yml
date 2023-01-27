@@ -3,18 +3,15 @@ site_url: https://gh.dayl.in/task.mk
 repo_url: https://github.com/daylinmorgan/task.mk
 edit_uri: edit/main/docs/
 repo_name: daylinmorgan/task.mk
+
 theme:
   name: material
-  custom_dir: docs/overrides
   features:
     - navigation.indexes
   palette:
     - scheme: default
 extra_css:
   - stylesheets/extra.css
-  - stylesheets/asciinema-player.css
-extra_javascript:
-  - javascripts/asciinema-player.min.js
 plugins:
   - search
   - git-revision-date-localized:
