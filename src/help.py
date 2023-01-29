@@ -2,6 +2,7 @@
 #% block name %#help#% endblock %#
 #% block script %#
 from collections import namedtuple
+from pathlib import Path
 import subprocess
 from textwrap import wrap
 
@@ -39,11 +40,15 @@ def recipe_help_header(goal):
     else:
         return f"  {ansi.style(goal,'goal')}"
 
+def get_makefile_list():
+    pattern = re.compile(r'^\.?task.*?\.mk$$') ###- make needs a double dollar -###
+    makefiles = os.getenv("MAKEFILE_LIST", "").split()
+    return (f for f in makefiles if not pattern.match(Path(f).name))
 
 def get_goal_deps(goal="task.mk"):
     make = os.getenv("MAKE", "make")
     cmd = [make, "-p", "-n", "-i"]
-    for file in os.getenv("TASK_MAKEFILE_LIST", "").split():
+    for file in get_makefile_list():
         cmd.extend(["-f", file])
     database = subprocess.check_output(cmd, universal_newlines=True)
     dep_pattern = re.compile(r"^" + goal + ":(.*)?")

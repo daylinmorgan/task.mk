@@ -25,8 +25,7 @@ tprint = $(call py,print_py,$(1))
 tprint-verbose= $(call py-verbose,print_py,$(1))
 tconfirm = $(call py,confirm_py,$(1))
 .PHONY: h help _help _print-ansi _update-task.mk
-TASK_MAKEFILE_LIST := $(filter-out .task.cfg.mk .task.mk,$(MAKEFILE_LIST))
-export MAKEFILE_LIST MAKE TASK_MAKEFILE_LIST
+export MAKEFILE_LIST MAKE
 ifdef PHONIFY
 $(shell MAKEFILE_LIST='$(MAKEFILE_LIST)' $(call py-verbose,phonify_py))
 endif
