@@ -7,12 +7,12 @@ msg = $(if $(tprint),$(call tprint,{a.bold}==> {a.magenta}$(1){a.end}),@echo '==
 bootstrap: env hooks ## generate local dev environment |> -ms b_magenta -gs b_cyan
 env: ##
 	$(call msg,Bootstrapping Environment)
-	@mamba create -p ./env python jinja2 black -y
-	@mamba run -p ./env pip install yartsu
+	@python -m venv .venv
+	@./.venv/bin/pip install jinja2 black yartsu
 hooks: ##
 	@git config core.hooksPath .githooks
 docs-env: ##
-	@mamba run -p ./env pip install mkdocs-material mkdocs-git-revision-date-localized-plugin
+	@./.venv/bin/pip install -r ./requirements-docs.txt
 
 l lint: ## lint the python
 	$(call msg,Linting)

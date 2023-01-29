@@ -1,4 +1,5 @@
 .task.cfg.dev.mk
 .task.mk
-env/
+.venv
+
 
