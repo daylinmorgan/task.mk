@@ -1,7 +1,7 @@
 # }> [github.com/daylinmorgan/task.mk] <{ #
 # Copyright (c) 2022 Daylin Morgan
 # MIT License
-TASKMK_VERSION ?= v23.1.1-18-g1b8bdaa-dev
+TASKMK_VERSION ?= 23.1.2
 # task.mk should be included at the bottom of your Makefile with `-include .task.mk`
 # See below for the standard configuration options that should be set prior to including this file.
 # You can update your .task.mk with `make _update-task.mk`
@@ -19,7 +19,6 @@ WRAP ?= 100
 # python f-string literals
 EPILOG ?=
 USAGE ?={ansi.header}usage{ansi.end}:\n  make <recipe>\n
-TASKMK_SHELL ?=
 PHONIFY ?=
 # ---- [python scripts] ---- #
 define  help_py
