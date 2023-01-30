@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -e
-LATEST_TASKMK_VERSION=v23.1.1
+LATEST_TASKMK_VERSION="v23.1.2"
 VERSION=${TASKMK_VERSION:-$LATEST_TASKMK_VERSION}
 printf "Initializing Task.mk (%s) for repo\n" "$VERSION"
 if [ -f "./.task.mk" ]; then
@@ -11,20 +11,22 @@ if [ -f "./.task.mk" ]; then
 fi
 curl -fsSL "https://raw.githubusercontent.com/daylinmorgan/task.mk/$VERSION/task.mk" -o .task.mk
 echo .task.mk >>.gitignore
-echo '-include .task.cfg.mk .task.mk' >>Makefile
-printf '$(if $(filter help,$(MAKECMDGOALS)),$(if $(wildcard .task.mk),,.task.mk: ; curl -fsSL https://raw.githubusercontent.com/daylinmorgan/task.mk/%s/task.mk -o .task.mk))' \
+printf '\n-include .task.cfg.mk\n' >>Makefile
+printf '%s %s\n' '-include' '.task.mk' >>.task.cfg.mk
+printf '$(if $(filter help,$(MAKECMDGOALS)),$(if $(wildcard .task.mk),,.task.mk: ; curl -fsSL https://raw.githubusercontent.com/daylinmorgan/task.mk/%s/task.mk -o .task.mk))\n' \
 	"$VERSION" \
-	>>Makefile
+	>>.task.cfg.mk
 
 printf ".task.mk files added to repo\n\n"
 echo "Do you want to commit these changes?"
-printf "RUN COMMAND: %s (Y/n) " \
-	"git add Makefile .gitignore && git commit -m \"chore: initialize .task.mk\""
+printf "Run the below command?\n\n  %s (Y/n) " \
+	"git add Makefile .gitignore .task.cfg.mk && git commit -m \"chore: initialize .task.mk\""
 
-read -r answer
+read -r answer </dev/tty
 # if echo "$answer" | grep -iq "^y" ;then
 if [ "$answer" != "${answer#[Yy]}" ]; then
-	git add Makefile .gitignore && git commit -m "chore: initialize .task.mk"
+	git add Makefile .gitignore .task.cfg.mk &&
+		git commit -m "chore: initialize .task.mk"
 	echo finished.
 else
 	echo finished.

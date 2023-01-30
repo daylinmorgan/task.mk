@@ -1,18 +1,13 @@
 MAKEFLAGS += --no-print-directory
-COLS ?= 60
-ROWS ?= 20
-EXAMPLES := check embedded recipe-help
-CASTS := $(addsuffix /demo.cast, $(EXAMPLES))
+EXAMPLES := check embedded recipe-help phonify
+GIFS := $(addsuffix /demo.gif, $(EXAMPLES))
 
-all: $(CASTS)
+all: $(GIFS)
 
-%/demo.cast: %/record.sh
-	asciinema rec --cols $(COLS) --rows $(ROWS) --overwrite -c $< $@
-
-check/demo.cast: COLS = 48
-check/demo.cast: ROWS = 12
+%/demo.gif: %/demo.tape %/Makefile
+	cd $* && vhs < demo.tape
 
 clean:
-	rm -rf $(CASTS)
+	rm -rf $(GIFS)
 
-.PHONY:all clean
+.PHONY: all clean

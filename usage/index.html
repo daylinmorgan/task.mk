@@ -17,7 +17,7 @@
         <link rel="next" href="../examples/">
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.6">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.8">
     
     
       
@@ -25,7 +25,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.558e4712.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.0d440cfe.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
@@ -45,8 +45,6 @@
     
     
       <link rel="stylesheet" href="../stylesheets/extra.css">
-    
-      <link rel="stylesheet" href="../stylesheets/asciinema-player.css">
     
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -246,7 +244,7 @@
   
     <li class="md-nav__item md-nav__item--active">
       
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
         
@@ -277,6 +275,60 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#builtin-recipes" class="md-nav__link">
+    Builtin Recipes
+  </a>
+  
+    <nav class="md-nav" aria-label="Builtin Recipes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#help" class="md-nav__link">
+    Help
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vars" class="md-nav__link">
+    Vars
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#builtin-functions" class="md-nav__link">
+    Builtin Functions
+  </a>
+  
+    <nav class="md-nav" aria-label="Builtin Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#phonify" class="md-nav__link">
+    Phonify
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tprint" class="md-nav__link">
+    Tprint
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#configuration" class="md-nav__link">
     Configuration
   </a>
@@ -284,8 +336,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#advanced-usage-embedded-python-scripts" class="md-nav__link">
-    Advanced Usage: Embedded Python Scripts
+  <a href="#advanced-usage-embedded-scripts" class="md-nav__link">
+    Advanced Usage: Embedded Scripts
   </a>
   
 </li>
@@ -311,12 +363,14 @@
       
       
       
-      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
       
       
         
           
             
+          
+        
           
         
           
@@ -338,7 +392,7 @@
           
         </div>
       
-      <nav class="md-nav" aria-label="Examples" data-md-level="1">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
         <label class="md-nav__title" for="__nav_3">
           <span class="md-nav__icon md-icon"></span>
           Examples
@@ -358,7 +412,7 @@
       
       
       
-      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_3_2" type="checkbox" id="__nav_3_2" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
       
       
         
@@ -375,7 +429,7 @@
           
         </div>
       
-      <nav class="md-nav" aria-label="Check" data-md-level="2">
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
         <label class="md-nav__title" for="__nav_3_2">
           <span class="md-nav__icon md-icon"></span>
           Check
@@ -402,7 +456,7 @@
       
       
       
-      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_3_3" type="checkbox" id="__nav_3_3" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
       
       
         
@@ -419,7 +473,7 @@
           
         </div>
       
-      <nav class="md-nav" aria-label="Embedded" data-md-level="2">
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
         <label class="md-nav__title" for="__nav_3_3">
           <span class="md-nav__icon md-icon"></span>
           Embedded
@@ -446,7 +500,51 @@
       
       
       
-      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_3_4" type="checkbox" id="__nav_3_4" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" >
+      
+      
+        
+          
+            
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../examples/phonify/">Phonify</a>
+          
+        </div>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_3_4">
+          <span class="md-nav__icon md-icon"></span>
+          Phonify
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5" >
       
       
         
@@ -463,8 +561,8 @@
           
         </div>
       
-      <nav class="md-nav" aria-label="Recipe help" data-md-level="2">
-        <label class="md-nav__title" for="__nav_3_4">
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_3_5">
           <span class="md-nav__icon md-icon"></span>
           Recipe help
         </label>
@@ -512,6 +610,60 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#builtin-recipes" class="md-nav__link">
+    Builtin Recipes
+  </a>
+  
+    <nav class="md-nav" aria-label="Builtin Recipes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#help" class="md-nav__link">
+    Help
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vars" class="md-nav__link">
+    Vars
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#builtin-functions" class="md-nav__link">
+    Builtin Functions
+  </a>
+  
+    <nav class="md-nav" aria-label="Builtin Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#phonify" class="md-nav__link">
+    Phonify
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tprint" class="md-nav__link">
+    Tprint
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#configuration" class="md-nav__link">
     Configuration
   </a>
@@ -519,8 +671,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#advanced-usage-embedded-python-scripts" class="md-nav__link">
-    Advanced Usage: Embedded Python Scripts
+  <a href="#advanced-usage-embedded-scripts" class="md-nav__link">
+    Advanced Usage: Embedded Scripts
   </a>
   
 </li>
@@ -545,90 +697,115 @@
 
 
 <h1 id="usage">Usage</h1>
-<p><code>Task.mk</code> will add access to a recipe <code>help</code> (also aliased to <code>h</code>).
-In order to use <code>make help</code> to you will need to add some custom comments to your <code>Makefile</code>.</p>
-<p>Deliberately, I don't get names from recipes themselves.
-This not only greatly simplifies the parsing but add's some opportunity to customize the output.
-Such as to document wildcard or redundant recipes.</p>
-<p>You can place these anywhere, but I recommend adding these notes directly above their relevant recipes.
-The format is <code>## &lt;recipe&gt; | &lt;msg&gt;</code></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c">## build | build the project</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nf">.PHONY</span><span class="o">:</span><span class="w"> </span><span class="n">build</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="nf">build</span><span class="o">:</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span>...
+<p><code>Task.mk</code> can be included in any standard <code>GNUMakefile</code>.
+If it's been properly sourced you will have access to the below features/recipes.</p>
+<p>See <a href="/task.mk/examples">examples</a> for more info.</p>
+<h2 id="builtin-recipes">Builtin Recipes</h2>
+<h3 id="help">Help</h3>
+<p>Invoked with either <code>make help</code> or <code>make h</code>.</p>
+<p>Adding goals to the builtin help recipe just requires documenting your <code>Makefile</code> with comments.
+The format is <code>## &lt;recipe&gt; |&gt; &lt;msg&gt;</code> or <code>&lt;recipe&gt;: ## &lt;msg&gt;</code></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c">## build |&gt; build the project</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nf">build</span><span class="o">:</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span>...
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="nf">build</span><span class="o">:</span><span class="w"> </span><span class="c">## build the project</span>
 </code></pre></div>
-<p>Now when you invoke <code>make help</code> it will parse these and generate your help output.</p>
-<p>In addition to a generic help output you can expose some configuration settings with <code>make vars</code>.
+<p>Now when you invoke <code>make help</code> it will parse these and generate your help output.
+In addition you can add raw text to the help output using the format <code>### &lt;rawmsg&gt;</code>.</p>
+<p>Both recipe documentation and raw messages can be modified with additional arguments delimited by <code>|&gt;</code>.</p>
+<p>For example:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c">### build related recipes |&gt; --align center --divider</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nf">build</span><span class="o">:</span><span class="w"> </span><span class="c">## build the project |&gt; --msg-style bold</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span>...
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="nf">package</span><span class="o">:</span><span class="w"> </span><span class="c">## package the project |&gt; -gs b_cyan</span>
+</code></pre></div>
+<p><code>Task.mk</code> can also generate recipe specific help regardless of whether a goal is documented.
+This can be invoked by appending the name of a recipe to help call: <code>make help build</code>.</p>
+<p>All recipes prefixed with and underscore will be hidden even if documented.
+However, they can be viewed by invoking <code>make _help</code>.</p>
+<h3 id="vars">Vars</h3>
+<p>In addition to a generic help output you can expose some configuration settings with <code>make vars</code> or <code>make v</code>.
 To do so define the variables you'd like to print with <code>PRINT_VARS := VAR1 VAR2 VAR3</code>.</p>
-<p>In addition to the <code>help</code> and <code>vars</code> recipes you can use a custom make function to format your text for fancier output.
-For this there are two options depending on your needs <code>tprint</code> or <code>tprint-sh</code>. (<code>tprint-sh</code> is for use within a multiline sub-shell that has already been silenced, see the version-check rule of this project's <code>Makefile</code> for an example.)</p>
+<h2 id="builtin-functions">Builtin Functions</h2>
+<h3 id="phonify">Phonify</h3>
+<p>Phonify is a new experimental feature of <code>task.mk</code> that solves one of the biggest gotchas of using <code>make</code> as a task runner!
+It stands to reason the tasks you document are likely to all be phony recipes
+Rather than write <code>.PHONY: &lt;goal&gt;</code> repeatedly, simply enable <code>task.mk</code>'s phonifier.</p>
+<p><code>Task.mk</code> will then parse your <code>Makefile</code> for documented tasks and 
+generate the necessary <code>.PHONY: &lt;recipes&gt;</code> line to ensure they are always executed.
+To use this feature set the <code>PHONIFY</code> environment variable before including <code>.task.mk</code>.
+To avoid adding a documented task/recipe to <code>.PHONY</code>, use <code>|&gt; --not-phony</code> after the recipe message.</p>
+<h3 id="tprint">Tprint</h3>
+<p>Besides the <code>help</code> and <code>vars</code> recipes you can use a custom make function to format your text for fancier output.
+For this there are two options depending on your needs <code>tprint</code> or <code>tprint-verbose</code>
+(<code>tprint-verbose</code> is for use within a multiline sub-shell that has already been silenced,
+see the version-check rule of this project's <code>Makefile</code> for an example).</p>
 <p>To use <code>tprint</code> you call it with the builtin <code>make</code> call function.
 It accepts only one argument: an unquoted f-string literal.
 All strings passed to <code>tprint</code> have access to an object <code>ansi</code> or <code>a</code> for simplicity.
 This stores ANSI escape codes which can be used to style your text.</p>
-<p><div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c">## build | compile the source</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nf">.PHONY</span><span class="o">:</span><span class="w"> </span><span class="n">build</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="nf">build</span><span class="o">:</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span><span class="k">$(</span>call<span class="w"> </span>tprint,<span class="o">{</span>a.cyan<span class="o">}</span>Build<span class="w"> </span>Starting<span class="o">{</span>a.end<span class="o">}</span><span class="k">)</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">  </span>...
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">  </span><span class="k">$(</span>call<span class="w"> </span>tprint,<span class="o">{</span>a.green<span class="o">}</span>Build<span class="w"> </span>Finished<span class="o">{</span>a.end<span class="o">}</span><span class="k">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nf">.PHONY</span><span class="o">:</span><span class="w"> </span><span class="n">build</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nf">build</span><span class="o">:</span><span class="w"> </span><span class="c">## compile the source</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span><span class="k">$(</span>call<span class="w"> </span>tprint,<span class="o">{</span>a.cyan<span class="o">}</span>Build<span class="w"> </span>Starting<span class="o">{</span>a.end<span class="o">}</span><span class="k">)</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">  </span>...
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">  </span><span class="k">$(</span>call<span class="w"> </span>tprint,<span class="o">{</span>a.green<span class="o">}</span>Build<span class="w"> </span>Finished<span class="o">{</span>a.end<span class="o">}</span><span class="k">)</span>
 </code></pre></div>
-See this projects <code>make info</code> for more examples of <code>tprint</code>.</p>
+<p>See this projects <code>make info</code> for more examples of <code>tprint</code>.</p>
 <p>To see the available colors and formatting(bold,italic,etc.) use the hidden recipe <code>make _print-ansi</code>.</p>
-<p><strong>Note</strong>: Any help commands starting with an underscore will be ignored.
-To view hidden <code>tasks</code> (or recipes in GNU Make land) you can use <code>make _help</code>.</p>
 <p>In addition, you can use custom colors using the builtin <code>ansi.custom</code> or (<code>a.custom</code>) method.
 It has two optional arguments <code>fg</code> and <code>bg</code>. Which can be used to specify either an 8-bit color from the <a href="https://en.wikipedia.org/wiki/8-bit_color">256 colors</a>.
 Or a tuple/list to define an RBG 24-bit color, for instance <code>a.custom(fg=(5,10,255))</code>.
 See this project's <code>make info</code> for an example.</p>
 <h2 id="configuration">Configuration</h2>
 <p>You can quickly customize some of the default behavior of <code>task.mk</code> by overriding the below variables prior to the <code>-include .task.mk</code>.
-These can also be included in a seperate file <code>.task.cfg.mk</code>.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c"># ---- [config] ---- #</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nv">HEADER_STYLE</span><span class="w"> </span><span class="o">?=</span><span class="w"> </span>b_cyan
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="nv">ACCENT_STYLE</span><span class="w"> </span><span class="o">?=</span><span class="w"> </span>b_yellow
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="nv">PARAMS_STYLE</span><span class="w"> </span><span class="o">?=</span><span class="w"> </span><span class="k">$(</span>ACCENT_STYLE<span class="k">)</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="nv">GOAL_STYLE</span><span class="w"> </span><span class="o">?=</span><span class="w"> </span><span class="k">$(</span>ACCENT_STYLE<span class="k">)</span>
-<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="nv">MSG_STYLE</span><span class="w"> </span><span class="o">?=</span><span class="w"> </span>faint
-<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="nv">DIVIDER_STYLE</span><span class="w"> </span><span class="o">?=</span><span class="w"> </span>default
-<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="nv">DIVIDER</span><span class="w"> </span><span class="o">?=</span><span class="w"> </span>─
-<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="nv">HELP_SEP</span><span class="w"> </span><span class="o">?=</span><span class="w"> </span>│
-<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="c"># python f-string literals</span>
-<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="nv">EPILOG</span><span class="w"> </span><span class="o">?=</span>
-<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="nv">USAGE</span><span class="w"> </span><span class="o">?={</span>ansi.<span class="k">$(</span>HEADER_STYLE<span class="k">)</span><span class="o">}</span>usage<span class="o">{</span>ansi.end<span class="o">}</span>:<span class="se">\n</span><span class="w">  </span>make<span class="w"> </span>&lt;recipe&gt;<span class="se">\n</span>
-<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="nv">INHERIT_SHELL</span><span class="w"> </span><span class="o">?=</span>
+These can also for instance included in a seperate file <code>.task.cfg.mk</code>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c"># ---- [config] ---- #</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nv">HEADER_STYLE</span><span class="w"> </span><span class="o">?=</span><span class="w"> </span>b_cyan
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="nv">ACCENT_STYLE</span><span class="w"> </span><span class="o">?=</span><span class="w"> </span>b_yellow
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="nv">PARAMS_STYLE</span><span class="w"> </span><span class="o">?=</span><span class="w"> </span><span class="k">$(</span>ACCENT_STYLE<span class="k">)</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="nv">GOAL_STYLE</span><span class="w"> </span><span class="o">?=</span><span class="w"> </span><span class="k">$(</span>ACCENT_STYLE<span class="k">)</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="nv">MSG_STYLE</span><span class="w"> </span><span class="o">?=</span><span class="w"> </span>faint
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="nv">DIVIDER_STYLE</span><span class="w"> </span><span class="o">?=</span><span class="w"> </span>default
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="nv">DIVIDER</span><span class="w"> </span><span class="o">?=</span><span class="w"> </span>─
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="nv">HELP_SEP</span><span class="w"> </span><span class="o">?=</span><span class="w"> </span>│
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="c"># python f-string literals</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="nv">EPILOG</span><span class="w"> </span><span class="o">?=</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="nv">USAGE</span><span class="w"> </span><span class="o">?={</span>ansi.<span class="k">$(</span>HEADER_STYLE<span class="k">)</span><span class="o">}</span>usage<span class="o">{</span>ansi.end<span class="o">}</span>:<span class="se">\n</span><span class="w">  </span>make<span class="w"> </span>&lt;recipe&gt;<span class="se">\n</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="nv">TASKMK_SHELL</span><span class="w"> </span><span class="o">?=</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="nv">PHONIFY</span><span class="w"> </span><span class="o">?=</span>
 </code></pre></div>
 <p>To use a custom color for one of the predefined configuration variables specify only the custom method.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nv">HEADER_STYLE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>custom<span class="o">(</span><span class="nv">fg</span><span class="o">=</span><span class="m">171</span>,bg<span class="o">=</span><span class="m">227</span><span class="o">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nv">HEADER_STYLE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>custom<span class="o">(</span><span class="nv">fg</span><span class="o">=</span><span class="m">171</span>,bg<span class="o">=</span><span class="m">227</span><span class="o">)</span>
 </code></pre></div>
 <p><strong>NOTE</strong>: <code>HELP_SEP</code> does not change the argument definitions syntax only the format of <code>make help</code>.</p>
-<h2 id="advanced-usage-embedded-python-scripts">Advanced Usage: Embedded Python Scripts</h2>
+<h2 id="advanced-usage-embedded-scripts">Advanced Usage: Embedded Scripts</h2>
 <p>You can take advantage of the builtin python script runner and write multi-line python scripts of your own.
 This is a simple example but a few lines of python in your <code>Makefile</code>
 may be easier than balancing sub-shells and strung together awk commands.</p>
 <p>When <code>make</code> expands the function it will take the parameters passed to <code>py</code> and expand them.
 <code>$(1)</code> is the variable name and <code>$(2)</code> in this case is the implicit pattern from the rule. Pay attention to quotes.
 If you need to debug your python script, use <code>TASKMK_DEBUG=1</code> when you run <code>make</code> and it will first print the script that will be piped to <code>python</code>.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="cp">define list_files_py</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="err">from</span><span class="w"> </span><span class="err">pathlib</span><span class="w"> </span><span class="err">import</span><span class="w"> </span><span class="err">Path</span>
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="err">print(</span><span class="s2">&quot;files in $(2)&quot;</span><span class="err">)</span>
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="err">print([f.name</span><span class="w"> </span><span class="err">for</span><span class="w"> </span><span class="err">f</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">(Path(</span><span class="s2">&quot;$(2)&quot;</span><span class="err">).iterdir())])</span>
-<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="cp">endef</span>
-<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>
-<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="c">## list-% | use pathlib.Path to list files</span>
-<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="nf">list-%</span><span class="o">:</span>
-<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">    </span><span class="k">$(</span>call<span class="w"> </span>py,list_files_py,<span class="nv">$*</span><span class="k">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="cp">define list_files_py</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="err">from</span><span class="w"> </span><span class="err">pathlib</span><span class="w"> </span><span class="err">import</span><span class="w"> </span><span class="err">Path</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="err">print(</span><span class="s2">&quot;files in $(2)&quot;</span><span class="err">)</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="err">print([f.name</span><span class="w"> </span><span class="err">for</span><span class="w"> </span><span class="err">f</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">(Path(</span><span class="s2">&quot;$(2)&quot;</span><span class="err">).iterdir())])</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="cp">endef</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="c">## list-% | use pathlib.Path to list files</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="nf">list-%</span><span class="o">:</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">    </span><span class="k">$(</span>call<span class="w"> </span>py,list_files_py,<span class="nv">$*</span><span class="k">)</span>
 </code></pre></div>
 <p>For what it's worth there is also a predefined function for <code>bash</code> (named <code>tbash</code>) as well should you need to accomplish something similar of more easily embedding your bash script rather than having to escape every line with a backslash.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="cp">define bash_script</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="nf">figlet task.mk 2&gt;/dev/null || echo &#39;no figlet </span><span class="o">:</span>(&#39;
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="err">echo</span><span class="w"> </span><span class="s2">&quot;This is from bash&quot;</span>
-<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="err">cat</span><span class="w"> </span><span class="err">/etc/hostname</span>
-<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="err">printf</span><span class="w"> </span><span class="s2">&quot;%s\n&quot;</span><span class="w"> </span><span class="s2">&quot;$(2)&quot;</span>
-<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="cp">endef</span>
-<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="nf">.PHONY</span><span class="o">:</span><span class="w"> </span><span class="n">test</span>-<span class="n">bash</span>
-<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="nf">test-bash</span><span class="o">:</span>
-<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">    </span><span class="k">$(</span>call<span class="w"> </span>tbash,bash_script,test<span class="w"> </span>bash<span class="w"> </span>multiline<span class="k">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="cp">define bash_script</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="nf">figlet task.mk 2&gt;/dev/null || echo &#39;no figlet </span><span class="o">:</span>(&#39;
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="err">echo</span><span class="w"> </span><span class="s2">&quot;This is from bash&quot;</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="err">cat</span><span class="w"> </span><span class="err">/etc/hostname</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="err">printf</span><span class="w"> </span><span class="s2">&quot;%s\n&quot;</span><span class="w"> </span><span class="s2">&quot;$(2)&quot;</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="cp">endef</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="nf">.PHONY</span><span class="o">:</span><span class="w"> </span><span class="n">test</span>-<span class="n">bash</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="nf">test-bash</span><span class="o">:</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">    </span><span class="k">$(</span>call<span class="w"> </span>tbash,bash_script,test<span class="w"> </span>bash<span class="w"> </span>multiline<span class="k">)</span>
 </code></pre></div>
 
   <hr>
@@ -636,7 +813,7 @@ If you need to debug your python script, use <code>TASKMK_DEBUG=1</code> when yo
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">January 19, 2023</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">January 27, 2023</span>
       
         <br>
         Created:
@@ -682,22 +859,11 @@ If you need to debug your python script, use <code>TASKMK_DEBUG=1</code> when yo
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.indexes"], "search": "../assets/javascripts/workers/search.e5c33ebb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.indexes"], "search": "../assets/javascripts/workers/search.db81ec45.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-
-  
-      <script src="../assets/javascripts/bundle.51d95adb.min.js"></script>
-      
-        <script src="../javascripts/asciinema-player.min.js"></script>
+      <script src="../assets/javascripts/bundle.a00a7c5e.min.js"></script>
       
     
-
-  
-  
-  
-
-
-
   </body>
 </html>

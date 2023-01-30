@@ -14,10 +14,10 @@
         <link rel="prev" href="../check/">
       
       
-        <link rel="next" href="../recipe-help/">
+        <link rel="next" href="../phonify/">
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.6">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.8">
     
     
       
@@ -25,7 +25,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.558e4712.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.0d440cfe.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.2505c338.min.css">
@@ -45,8 +45,6 @@
     
     
       <link rel="stylesheet" href="../../stylesheets/extra.css">
-    
-      <link rel="stylesheet" href="../../stylesheets/asciinema-player.css">
     
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -265,12 +263,14 @@
       
       
       
-      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
       
       
         
           
             
+          
+        
           
         
           
@@ -292,7 +292,7 @@
           
         </div>
       
-      <nav class="md-nav" aria-label="Examples" data-md-level="1">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
         <label class="md-nav__title" for="__nav_3">
           <span class="md-nav__icon md-icon"></span>
           Examples
@@ -312,7 +312,7 @@
       
       
       
-      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_3_2" type="checkbox" id="__nav_3_2" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
       
       
         
@@ -329,7 +329,7 @@
           
         </div>
       
-      <nav class="md-nav" aria-label="Check" data-md-level="2">
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
         <label class="md-nav__title" for="__nav_3_2">
           <span class="md-nav__icon md-icon"></span>
           Check
@@ -358,7 +358,7 @@
       
       
       
-      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_3_3" type="checkbox" id="__nav_3_3" checked>
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" checked>
       
       
         
@@ -375,7 +375,7 @@
           
         </div>
       
-      <nav class="md-nav" aria-label="Embedded" data-md-level="2">
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="true">
         <label class="md-nav__title" for="__nav_3_3">
           <span class="md-nav__icon md-icon"></span>
           Embedded
@@ -402,7 +402,51 @@
       
       
       
-      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_3_4" type="checkbox" id="__nav_3_4" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" >
+      
+      
+        
+          
+            
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../phonify/">Phonify</a>
+          
+        </div>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_3_4">
+          <span class="md-nav__icon md-icon"></span>
+          Phonify
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5" >
       
       
         
@@ -419,8 +463,8 @@
           
         </div>
       
-      <nav class="md-nav" aria-label="Recipe help" data-md-level="2">
-        <label class="md-nav__title" for="__nav_3_4">
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_3_5">
           <span class="md-nav__icon md-icon"></span>
           Recipe help
         </label>
@@ -479,50 +523,42 @@
 
 
 <h1 id="embedded">Embedded</h1>
-<div id="demo-cast"></div>
-
-<div class="highlight"><span class="filename">embedded.mk</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c">### examples of task.mk features | args: --divider --align center --msg-style b_red</span>
+<p><img alt="demo" src="demo.gif" /></p>
+<div class="highlight"><span class="filename">Makefile (embedded)</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c">### examples of task.mk features |&gt; --divider --align center --msg-style b_red</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="cp">define list_files_py</span>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="err">from</span><span class="w"> </span><span class="err">pathlib</span><span class="w"> </span><span class="err">import</span><span class="w"> </span><span class="err">Path</span>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="err">print(</span><span class="s2">&quot;files in $(2)&quot;</span><span class="err">)</span>
 <a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="err">print([f.name</span><span class="w"> </span><span class="err">for</span><span class="w"> </span><span class="err">f</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">(Path(</span><span class="s2">&quot;$(2)&quot;</span><span class="err">).iterdir())])</span>
 <a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="cp">endef</span>
 <a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="c">## list-% | use pathlib.Path to list files</span>
-<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="c">### name the directory in rule (make list-src) | args: --align sep</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="c">## list-% |&gt; use pathlib.Path to list files</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="c">### name the directory in rule (make list-src) |&gt; --align sep</span>
 <a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="nf">list-%</span><span class="o">:</span>
 <a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">    </span><span class="k">$(</span>call<span class="w"> </span>py,list_files_py,<span class="nv">$*</span><span class="k">)</span>
 <a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
-<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="c"># dollar signs will always be a problem</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="c"># dollar signs will always be a problem :|</span>
 <a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="cp">define bash_script</span>
 <a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="err">echo</span><span class="w"> </span><span class="s2">&quot;Is the process running bash? We can check with ps&quot;</span>
 <a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="err">ps</span><span class="w"> </span><span class="err">-o</span><span class="w"> </span><span class="nv">args</span><span class="o">=</span><span class="w"> </span>-p<span class="w"> </span><span class="nv">$$$$</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span>-m<span class="w"> </span><span class="m">1</span><span class="w"> </span>-o<span class="w"> </span><span class="s1">&#39;\w{0,5}sh&#39;</span>
-<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="cp">if [ -x &quot;$(command -v figlet)&quot; ]; then</span>
-<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;no figlet :(&#39;</span>
-<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="cp">else</span>
-<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;What text to figlet? &quot;</span>
-<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="w">    </span><span class="nb">read</span><span class="w"> </span>name
-<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="w">    </span>figlet<span class="w"> </span><span class="nv">$$</span>name
-<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="err">fi</span>
-<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="err">echo</span><span class="w"> </span><span class="s2">&quot;the argument below as given in the makefile itself&quot;</span>
-<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="err">echo</span><span class="w"> </span><span class="s2">&quot;it&#39;s expanded before the script is passed to bash&quot;</span>
-<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="err">printf</span><span class="w"> </span><span class="s2">&quot;%s\n&quot;</span><span class="w"> </span><span class="s2">&quot;$(2)&quot;</span>
-<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="cp">endef</span>
-<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>
-<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a><span class="c">## embedded-bash | bash script with pipes and make input</span>
-<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a><span class="nf">.PHONY</span><span class="o">:</span><span class="w"> </span><span class="n">embedded</span>-<span class="n">bash</span>
-<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a><span class="nf">embedded-bash</span><span class="o">:</span>
-<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a><span class="w">    </span><span class="k">$(</span>call<span class="w"> </span>tbash,bash_script,bash<span class="w"> </span>multiline<span class="w"> </span>is<span class="w"> </span>probably<span class="w"> </span>working<span class="k">)</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="err">echo</span><span class="w"> </span><span class="s2">&quot;Get input at runtime&quot;</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="err">printf</span><span class="w"> </span><span class="s2">&quot;type input now! &quot;</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="err">read</span><span class="w"> </span><span class="err">-r</span><span class="w"> </span><span class="err">name</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="err">echo</span><span class="w"> </span><span class="s2">&quot;you typed -&gt; $$name&quot;</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="err">echo</span><span class="w"> </span><span class="s2">&quot;the argument below as given in the makefile itself&quot;</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="err">echo</span><span class="w"> </span><span class="s2">&quot;it&#39;s expanded before the script is passed to bash&quot;</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="err">printf</span><span class="w"> </span><span class="s2">&quot;%s\n&quot;</span><span class="w"> </span><span class="s2">&quot;$(2)&quot;</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="cp">endef</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="nf">.PHONY</span><span class="o">:</span><span class="w"> </span><span class="n">embedded</span>-<span class="n">bash</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="nf">embedded-bash</span><span class="o">:</span><span class="w"> </span><span class="c">## bash script with pipes and make input</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="w">    </span><span class="k">$(</span>call<span class="w"> </span>tbash,bash_script,bash<span class="w"> </span>multiline<span class="w"> </span>is<span class="w"> </span>working<span class="w"> </span>🤞<span class="k">)</span>
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a><span class="cp">define USAGE</span>
+<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a><span class="nf">{a.$(HEADER_STYLE)}usage</span><span class="o">:</span>{<span class="n">a</span>.<span class="n">end</span>}\<span class="n">n</span>  <span class="n">make</span> &lt;<span class="n">recipe</span>&gt;\<span class="n">n</span>\<span class="n">n</span>  <span class="n">examples</span> <span class="n">of</span> <span class="n">embedded</span> <span class="n">scripts</span> <span class="n">in</span> `{<span class="n">a</span>.<span class="n">magenta</span>}<span class="n">Makefile</span>{<span class="n">a</span>.<span class="n">end</span>}`\<span class="n">n</span>
+<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a><span class="cp">endef</span>
 <a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>
-<a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a><span class="cp">define USAGE</span>
-<a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a><span class="nf">{a.$(HEADER_STYLE)}usage</span><span class="o">:</span>{<span class="n">a</span>.<span class="n">end</span>}
-<a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a><span class="w">    </span>make<span class="w"> </span>&lt;recipe&gt;
-<a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a>
-<a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a><span class="w">    </span>examples<span class="w"> </span>of<span class="w"> </span>embedded<span class="w"> </span>scripts<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="sb">`</span><span class="o">{</span>a.magenta<span class="o">}</span>Makefile<span class="o">{</span>a.end<span class="o">}</span><span class="sb">`</span>
-<a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a>
-<a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a><span class="cp">endef</span>
-<a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a><span class="nv">.DEFAULT_GOAL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">help</span>
-<a id="__codelineno-0-42" name="__codelineno-0-42" href="#__codelineno-0-42"></a><span class="cp">include $(shell git rev-parse --show-toplevel)/task.mk</span>
+<a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a><span class="nv">.DEFAULT_GOAL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">help</span>
+<a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a><span class="cp">include .task.mk</span>
 </code></pre></div>
 
   <hr>
@@ -530,7 +566,7 @@
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">September 19, 2022</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">January 27, 2023</span>
       
         <br>
         Created:
@@ -576,26 +612,11 @@
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.indexes"], "search": "../../assets/javascripts/workers/search.e5c33ebb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.indexes"], "search": "../../assets/javascripts/workers/search.db81ec45.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-
-  
-      <script src="../../assets/javascripts/bundle.51d95adb.min.js"></script>
-      
-        <script src="../../javascripts/asciinema-player.min.js"></script>
+      <script src="../../assets/javascripts/bundle.a00a7c5e.min.js"></script>
       
     
-
-  
-  
-  <script async>
-  AsciinemaPlayer.create('./demo.cast', document.getElementById('demo-cast'),{loop: true});
-  </script>
-  
-  
-
-
-
   </body>
 </html>
