@@ -13,8 +13,9 @@
 GNU make is an excellent build tool and the task runner we love to hate, but can't escape.
 So let's improve the UX to make it the best task runner it can be.
 
-`Task.mk`, is a standalone `Makefile` you can deploy alongside your own
-to add some QOL improvements for your users and fellow maintainers.
+`Task.mk`, is a standalone `Makefile` powered by a little magic (code golfing `python` inside of `make`) and little luck (absurd string manipulation and regexes). 
+You can deploy it alongside your own to add some QOL improvements for your users and fellow maintainers.
+
 
 Current Features:
 
