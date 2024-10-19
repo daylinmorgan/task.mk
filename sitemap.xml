@@ -2,37 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://gh.dayl.in/task.mk/</loc>
-         <lastmod>2023-01-30</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-10-19</lastmod>
     </url>
     <url>
          <loc>https://gh.dayl.in/task.mk/usage/</loc>
-         <lastmod>2023-01-30</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-10-19</lastmod>
     </url>
     <url>
          <loc>https://gh.dayl.in/task.mk/examples/</loc>
-         <lastmod>2023-01-30</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-10-19</lastmod>
     </url>
     <url>
          <loc>https://gh.dayl.in/task.mk/examples/check/</loc>
-         <lastmod>2023-01-30</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-10-19</lastmod>
     </url>
     <url>
          <loc>https://gh.dayl.in/task.mk/examples/embedded/</loc>
-         <lastmod>2023-01-30</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-10-19</lastmod>
     </url>
     <url>
          <loc>https://gh.dayl.in/task.mk/examples/phonify/</loc>
-         <lastmod>2023-01-30</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-10-19</lastmod>
     </url>
     <url>
          <loc>https://gh.dayl.in/task.mk/examples/recipe-help/</loc>
-         <lastmod>2023-01-30</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-10-19</lastmod>
     </url>
 </urlset>
